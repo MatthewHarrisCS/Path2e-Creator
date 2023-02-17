@@ -30,6 +30,7 @@ Three modes of generating stats:
 =====Schema=====
 table characterSheet
 	String name (PK):
+	int level 1-20
 	String class (FK to class):
 	String ancestry (fk to ancestry);
 
@@ -62,6 +63,7 @@ table class
 
 table language
 	String language
+	String rarity
 
 table ancestralLanguage
 	String name (PK/ FK to ancestry)
