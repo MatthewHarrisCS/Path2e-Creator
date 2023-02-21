@@ -1,9 +1,11 @@
 export class Ancestry {
-    name!: string;
-    hp!: number;
-    size!: string;
-    speed!: number;
-    boost1!: string;
-    boost2!: string;
-    flaw!: string;
+    constructor(
+        public name: string,
+        public hp: number,
+        public size: string,
+        public speed: number,
+        public boost1: string,
+        public boost2: string,
+        public flaw: string
+    ) {}
 }

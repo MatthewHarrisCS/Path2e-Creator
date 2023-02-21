@@ -1,6 +1,8 @@
 export class GameClass {
-    name!: string;
-    hp!: number;
-    keyAbility1!: string;
-    keyAbility2!: string;
+    constructor(
+        public name: string,
+        public hp: number,
+        public keyAbility1: string,
+        public keyAbility2: string
+    ) {}
 }

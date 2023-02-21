@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Ancestry } from 'ancestry-model';
 import { GameClass } from 'game-class-model';
 import { ANCESTRY_LIST, CLASS_LIST } from 'src/temp-db';
+import { StatForm } from './stat-form-model';
 
 @Component({
   selector: 'stat-form',
@@ -13,6 +14,7 @@ export class StatFormComponent {
   /* 
   
   TODO:
+  Angular FORMS?
   Choose between key abilities for classes with them
     Boolean to filter radio button? ngIf?
     Rogue's Racket choice
@@ -30,24 +32,26 @@ export class StatFormComponent {
   ancestryBoosts = "No ancestry selected";
   ancestrySelected = false;
   currentAncestry = null;
+  selectedBoosts = 0
 
   chooseBoosts = false;
 
-  hp = 5;
-  str = 10;
-  dex = 10;
-  con = 10;
-  int = 10;
-  wis = 10;
-  cha = 10;
+  model = new StatForm(5, 10, 10, 10, 10, 10, 10, 
+    false, false, false, false, false, false);
+
+  checkCount = 0;
 
   resetStats() {
-    this.str = 10;
-    this.dex = 10;
-    this.con = 10;
-    this.int = 10;
-    this.wis = 10;
-    this.cha = 10;
+    this.model.str = 10;
+    this.model.dex = 10;
+    this.model.con = 10;
+    this.model.int = 10;
+    this.model.wis = 10;
+    this.model.cha = 10;
+  }
+
+  freeCheck() {
+    console.log(this.model.strBoosted + ", " + this.model.dexBoosted + ", " + this.model.conBoosted + ", ");
   }
 
   calculate() {
@@ -58,7 +62,7 @@ export class StatFormComponent {
       // TEMP: replace with ability choice
       let chooseKey = 'keyAbility1';
 
-      this.hp = this.currentClass['hp'] + this.currentAncestry['hp'];
+      this.model.hp = this.currentClass['hp'] + this.currentAncestry['hp'];
 
       this.boostStat(this.currentClass[chooseKey], true);
       this.boostStat(this.currentAncestry['boost1'], true);
@@ -78,27 +82,27 @@ export class StatFormComponent {
 
     switch(boost) {
       case "Strength": {
-        this.str += change;
+        this.model.str += change;
         break;
       }
       case "Dexterity": {
-        this.dex += change;
+        this.model.dex += change;
         break;
       }
       case "Constitution": {
-        this.con += change;
+        this.model.con += change;
         break;
       }
       case "Intelligence": {
-        this.int += change;
+        this.model.int += change;
         break;
       }
       case "Wisdom": {
-        this.wis += change;
+        this.model.wis += change;
         break;
       }
       case "Charisma": {
-        this.cha += change;
+        this.model.cha += change;
       }
     }
   }
