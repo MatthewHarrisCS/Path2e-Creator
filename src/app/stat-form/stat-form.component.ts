@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Ancestry } from 'ancestry-model';
 import { GameClass } from 'game-class-model';
 import { ANCESTRY_LIST, CLASS_LIST } from 'src/temp-db';
-import { StatForm } from './stat-form-model';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'stat-form',
@@ -36,22 +36,52 @@ export class StatFormComponent {
 
   chooseBoosts = false;
 
-  model = new StatForm(5, 10, 10, 10, 10, 10, 10, 
-    false, false, false, false, false, false);
+  statForm = this.fb.group({
+    statBlock: this.fb.group({
+      hp:  [5,  [Validators.required, Validators.min(8), Validators.max(18)]],
+      str: [10, [Validators.required, Validators.min(8), Validators.max(18)]],
+      dex: [10, [Validators.required, Validators.min(8), Validators.max(18)]],
+      con: [10, [Validators.required, Validators.min(8), Validators.max(18)]],
+      int: [10, [Validators.required, Validators.min(8), Validators.max(18)]],
+      wis: [10, [Validators.required, Validators.min(8), Validators.max(18)]],
+      cha: [10, [Validators.required, Validators.min(8), Validators.max(18)]]
+    }),
+
+    boostBlock: this.fb.group({
+      strBoosted: [false],
+      dexBoosted: [false],
+      conBoosted: [false],
+      intBoosted: [false],
+      wisBoosted: [false],
+      chaBoosted: [false]
+    }) 
+  });
 
   checkCount = 0;
 
+  get statBlock(): any {
+    return this.statForm.get('statBlock');
+  }
+
+  get boostBlock(): any {
+    return this.statForm.get('boostBlock');
+  }
+
   resetStats() {
-    this.model.str = 10;
-    this.model.dex = 10;
-    this.model.con = 10;
-    this.model.int = 10;
-    this.model.wis = 10;
-    this.model.cha = 10;
+    this.statBlock.setValue(
+      {
+        hp: 5,
+        str: 10,
+        dex: 10,
+        con: 10,
+        int: 10,
+        wis: 10,
+        cha: 10
+      });
   }
 
   freeCheck() {
-    console.log(this.model.strBoosted + ", " + this.model.dexBoosted + ", " + this.model.conBoosted + ", ");
+    console.log(this.boostBlock.value);
   }
 
   calculate() {
@@ -62,7 +92,8 @@ export class StatFormComponent {
       // TEMP: replace with ability choice
       let chooseKey = 'keyAbility1';
 
-      this.model.hp = this.currentClass['hp'] + this.currentAncestry['hp'];
+      this.statBlock['controls'].hp.setValue(
+        this.currentClass['hp'] + this.currentAncestry['hp']);
 
       this.boostStat(this.currentClass[chooseKey], true);
       this.boostStat(this.currentAncestry['boost1'], true);
@@ -82,27 +113,33 @@ export class StatFormComponent {
 
     switch(boost) {
       case "Strength": {
-        this.model.str += change;
+        this.statBlock['controls'].str.setValue(
+          this.statBlock['controls'].str.value + change);
         break;
       }
       case "Dexterity": {
-        this.model.dex += change;
+        this.statBlock['controls'].dex.setValue(
+          this.statBlock['controls'].dex.value + change);
         break;
       }
       case "Constitution": {
-        this.model.con += change;
+        this.statBlock['controls'].con.setValue(
+          this.statBlock['controls'].con.value + change);
         break;
       }
       case "Intelligence": {
-        this.model.int += change;
+        this.statBlock['controls'].int.setValue(
+          this.statBlock['controls'].int.value + change);
         break;
       }
       case "Wisdom": {
-        this.model.wis += change;
+        this.statBlock['controls'].wis.setValue(
+          this.statBlock['controls'].wis.value + change);
         break;
       }
       case "Charisma": {
-        this.model.cha += change;
+        this.statBlock['controls'].cha.setValue(
+          this.statBlock['controls'].cha.value + change);
       }
     }
   }
@@ -155,4 +192,6 @@ export class StatFormComponent {
       this.currentAncestry = currentAncestry;
     }
   }
+
+  constructor(private fb: FormBuilder) { }
 }

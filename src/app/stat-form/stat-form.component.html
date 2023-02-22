@@ -24,31 +24,33 @@
 <ng-template #thenBlock><button name="Calculate" (click)="calculate()">Calculate</button></ng-template>
 <ng-template #elseBlock><button name="Calculate" disabled>Calculate</button></ng-template>
 
-<div>
-    <h3>Stats</h3>
-    <label>Health Points</label>
-    <input type="number" id="hp"  name="hp"  value="{{model.hp}}"  min="1"><br/>
-    <label>Strength</label>
-    <input type="number" id="str" name="str" value="{{model.str}}" min="8" max="18">
-    <label>Intelligence</label>
-    <input type="number" id="int" name="int" value="{{model.int}}" min="8" max="18"><br/>
-    <label>Dexterity</label>
-    <input type="number" id="dex" name="dex" value="{{model.dex}}" min="8" max="18">
-    <label>Wisdom</label>
-    <input type="number" id="wis" name="wis" value="{{model.wis}}" min="8" max="18"><br/>
-    <label>Constitution</label>
-    <input type="number" id="con" name="con" value="{{model.con}}" min="8" max="18">
-    <label>Charisma</label>
-    <input type="number" id="cha" name="cha" value="{{model.cha}}" min="8" max="18"><br/>
-</div>
+<div [formGroup]="statForm">
+    <div formGroupName="statBlock">
+        <h3>Stats</h3>
+        <label>Health Points</label>
+        <input type="number" id="hp"  name="hp"  formControlName="hp"  min="1"><br/>
+        <label>Strength</label>
+        <input type="number" id="str" name="str" formControlName="str" min="8" max="18">
+        <label>Intelligence</label>
+        <input type="number" id="int" name="int" formControlName="int" min="8" max="18"><br/>
+        <label>Dexterity</label>
+        <input type="number" id="dex" name="dex" formControlName="dex" min="8" max="18">
+        <label>Wisdom</label>
+        <input type="number" id="wis" name="wis" formControlName="wis" min="8" max="18"><br/>
+        <label>Constitution</label>
+        <input type="number" id="con" name="con" formControlName="con" min="8" max="18">
+        <label>Charisma</label>
+        <input type="number" id="cha" name="cha" formControlName="cha" min="8" max="18"><br/>
+    </div>
 
-<div>
-    <h3>Free Stats</h3>
-    <p>(choose 1)</p>
-    <input type="checkbox" [checked]="model.strBoosted" value="Strength"     (change)="freeCheck()"><label>Strength</label><br/>
-    <input type="checkbox" [checked]="model.dexBoosted" value="Dexterity"    (change)="freeCheck()"><label>Dexterity</label><br/>
-    <input type="checkbox" [checked]="model.conBoosted" value="Constitution" (change)="freeCheck()"><label>Constitution</label><br/>
-    <input type="checkbox" [checked]="model.intBoosted" value="Intelligence" (change)="freeCheck()"><label>Intelligence</label><br/>
-    <input type="checkbox" [checked]="model.wisBoosted" value="Wisdom"       (change)="freeCheck()"><label>Wisdom</label><br/>
-    <input type="checkbox" [checked]="model.chaBoosted" value="Charisma"     (change)="freeCheck()"><label>Charisma</label><br/>
+    <div formGroupName="boostBlock">
+        <h3>Free Stats</h3>
+        <p>(choose 1)</p>
+        <input type="checkbox" formControlName="strBoosted" value="Strength"     (change)="freeCheck()"><label>Strength</label><br/>
+        <input type="checkbox" formControlName="dexBoosted" value="Dexterity"    (change)="freeCheck()"><label>Dexterity</label><br/>
+        <input type="checkbox" formControlName="conBoosted" value="Constitution" (change)="freeCheck()"><label>Constitution</label><br/>
+        <input type="checkbox" formControlName="intBoosted" value="Intelligence" (change)="freeCheck()"><label>Intelligence</label><br/>
+        <input type="checkbox" formControlName="wisBoosted" value="Wisdom"       (change)="freeCheck()"><label>Wisdom</label><br/>
+        <input type="checkbox" formControlName="chaBoosted" value="Charisma"     (change)="freeCheck()"><label>Charisma</label><br/>
+    </div>
 </div>
