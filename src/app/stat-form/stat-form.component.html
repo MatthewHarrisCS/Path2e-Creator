@@ -1,30 +1,33 @@
-<p>
-    <label>Select a class</label><br/>
-    <select id="classSelect" #c (change)="showClassBoosts(c.value)">
-        <option>---</option>
-        <option *ngFor="let class of classes">
-            {{class.name}}
-        </option>
-    </select><br/>
-    <label [textContent]="classBoosts"></label>
-</p>
-
-<p>
-    <label>Select an ancestry</label><br/>
-    <select id="ancestrySelect" #a (change)="showAncestryBoosts(a.value)">
-        <option>---</option>
-        <option *ngFor="let ancestry of ancestries">
-            {{ancestry.name}}
-        </option>
-    </select><br/>
-    <label [textContent]="ancestryBoosts"></label>
-</p>
-
-<div *ngIf="classSelected && ancestrySelected; then thenBlock else elseBlock"></div>
-<ng-template #thenBlock><button name="Calculate" (click)="calculate()">Calculate</button></ng-template>
-<ng-template #elseBlock><button name="Calculate" disabled>Calculate</button></ng-template>
-
 <div [formGroup]="statForm">
+    <p>
+        <label>Select a class</label><br/>
+        <select id="classSelect" #c (change)="showClassBoosts(c.value)">
+            <option>---</option>
+            <option *ngFor="let class of classes">
+                {{class.name}}
+            </option>
+        </select><br/>
+        <label [textContent]="classBoosts"></label>
+    </p>
+
+    <p>
+        <label>Select an ancestry</label><br/>
+        <select id="ancestrySelect" #a (change)="showAncestryBoosts(a.value)">
+            <option>---</option>
+            <option *ngFor="let ancestry of ancestries">
+                {{ancestry.name}}
+            </option>
+        </select><br/>
+        <label [textContent]="ancestryBoosts"></label>
+    </p>
+
+    <p>
+        <input type="checkbox" formControlName="chooseBoosts" (change)="boostBlock.reset(); checkCount = 0">
+        <label>Free choice</label>
+    </p>
+
+    <button name="Calculate" (click)="calculate()" [disabled]="!classSelected || !ancestrySelected">Calculate</button>
+
     <div formGroupName="statBlock">
         <h3>Stats</h3>
         <label>Health Points</label>
@@ -45,12 +48,24 @@
 
     <div formGroupName="boostBlock">
         <h3>Free Stats</h3>
-        <p>(choose 1)</p>
-        <input type="checkbox" formControlName="strBoosted" value="Strength"     (change)="freeCheck()"><label>Strength</label><br/>
-        <input type="checkbox" formControlName="dexBoosted" value="Dexterity"    (change)="freeCheck()"><label>Dexterity</label><br/>
-        <input type="checkbox" formControlName="conBoosted" value="Constitution" (change)="freeCheck()"><label>Constitution</label><br/>
-        <input type="checkbox" formControlName="intBoosted" value="Intelligence" (change)="freeCheck()"><label>Intelligence</label><br/>
-        <input type="checkbox" formControlName="wisBoosted" value="Wisdom"       (change)="freeCheck()"><label>Wisdom</label><br/>
-        <input type="checkbox" formControlName="chaBoosted" value="Charisma"     (change)="freeCheck()"><label>Charisma</label><br/>
+        <p>(Choose {{chooseBoosts ? 2 : 1}})</p>
+        <input type="checkbox" [attr.disabled]="freeCheck('strBoosted')" 
+            formControlName="strBoosted" (change)="freeCount($event)">
+            <label>Strength</label><br/>
+        <input type="checkbox" [attr.disabled]="freeCheck('dexBoosted')"
+            formControlName="dexBoosted" (change)="freeCount($event)">
+            <label>Dexterity</label><br/>
+        <input type="checkbox" [attr.disabled]="freeCheck('conBoosted')" 
+            formControlName="conBoosted" (change)="freeCount($event)">
+            <label>Constitution</label><br/>
+        <input type="checkbox" [attr.disabled]="freeCheck('intBoosted')" 
+            formControlName="intBoosted" (change)="freeCount($event)">
+            <label>Intelligence</label><br/>
+        <input type="checkbox" [attr.disabled]="freeCheck('wisBoosted')" 
+            formControlName="wisBoosted" (change)="freeCount($event)">
+            <label>Wisdom</label><br/>
+        <input type="checkbox" [attr.disabled]="freeCheck('chaBoosted')" 
+            formControlName="chaBoosted" (change)="freeCount($event)">
+            <label>Charisma</label><br/>
     </div>
 </div>

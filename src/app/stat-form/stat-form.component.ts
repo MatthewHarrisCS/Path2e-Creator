@@ -18,9 +18,7 @@ export class StatFormComponent {
   Choose between key abilities for classes with them
     Boolean to filter radio button? ngIf?
     Rogue's Racket choice
-  Choose free stats
-    Free choice option (USE chooseBoosts)
-    Additional choice for humans OR free choose
+  Free stats default for Human (disable button)
 
   */
 
@@ -32,9 +30,8 @@ export class StatFormComponent {
   ancestryBoosts = "No ancestry selected";
   ancestrySelected = false;
   currentAncestry = null;
-  selectedBoosts = 0
 
-  chooseBoosts = false;
+  checkCount = 0;
 
   statForm = this.fb.group({
     statBlock: this.fb.group({
@@ -54,10 +51,12 @@ export class StatFormComponent {
       intBoosted: [false],
       wisBoosted: [false],
       chaBoosted: [false]
-    }) 
+    }),
+
+    chooseBoosts: false
+
   });
 
-  checkCount = 0;
 
   get statBlock(): any {
     return this.statForm.get('statBlock');
@@ -65,6 +64,10 @@ export class StatFormComponent {
 
   get boostBlock(): any {
     return this.statForm.get('boostBlock');
+  }
+
+  get chooseBoosts(): any {
+    return this.statForm.get('chooseBoosts')?.value;
   }
 
   resetStats() {
@@ -80,8 +83,21 @@ export class StatFormComponent {
       });
   }
 
-  freeCheck() {
-    console.log(this.boostBlock.value);
+  freeCount(e: Event) {
+    // Increment or decrement the counter depending on
+    // whether the checkbox was checked or unchecked
+    this.checkCount = ((e.target as HTMLInputElement).checked 
+      ? this.checkCount+1 : this.checkCount-1);
+  }
+
+  freeCheck(boost: string) {
+    // Check three options before allowing user to select a checkbox:
+    // Either (the choose boosts option is on and hasn't exceeded 2
+    return ((this.chooseBoosts && this.checkCount >= 2)
+    // OR the choose boosts option is off and hasn't exceeded 1)
+        || (!this.chooseBoosts && this.checkCount >= 1))
+    // AND the checkbox must not already be selected
+        && !this.boostBlock.controls[boost].value ? true : null;
   }
 
   calculate() {
@@ -95,10 +111,19 @@ export class StatFormComponent {
       this.statBlock['controls'].hp.setValue(
         this.currentClass['hp'] + this.currentAncestry['hp']);
 
+      // Get boosts from class and ancestry
       this.boostStat(this.currentClass[chooseKey], true);
       this.boostStat(this.currentAncestry['boost1'], true);
       this.boostStat(this.currentAncestry['boost2'], true);
       this.boostStat(this.currentAncestry['flaw'], false);
+
+      // Get boosts from free choice(s)
+      if (this.boostBlock['controls'].strBoosted.value) this.boostStat("Strength", true);
+      if (this.boostBlock['controls'].dexBoosted.value) this.boostStat("Dexterity", true);
+      if (this.boostBlock['controls'].conBoosted.value) this.boostStat("Constitution", true);
+      if (this.boostBlock['controls'].intBoosted.value) this.boostStat("Intelligence", true);
+      if (this.boostBlock['controls'].wisBoosted.value) this.boostStat("Wisdom", true);
+      if (this.boostBlock['controls'].chaBoosted.value) this.boostStat("Charisma", true);
     }
   }
 
