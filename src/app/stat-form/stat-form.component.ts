@@ -3,6 +3,7 @@ import { Ancestry } from 'ancestry-model';
 import { GameClass } from 'game-class-model';
 import { ANCESTRY_LIST, CLASS_LIST } from 'src/temp-db';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Dice } from 'src/dice';
 
 @Component({
   selector: 'stat-form',
@@ -14,8 +15,10 @@ export class StatFormComponent {
   /* 
   
   TODO:
-  Angular FORMS?
   Choose between key abilities for classes with them
+  No flaw on free choice for non-Humans
+  Backgrounds (SQL, temp-db, and new tab)
+    Make model for selection (boost str, selected, and current)
     Boolean to filter radio button? ngIf?
     Rogue's Racket choice
   Free stats default for Human (disable button)
@@ -33,6 +36,9 @@ export class StatFormComponent {
 
   checkCount = 0;
 
+  rolledStats = [0, 0, 0, 0, 0, 0];
+  rolledStr = [" ", " ", " ", " ", " ", " "];
+
   statForm = this.fb.group({
     statBlock: this.fb.group({
       hp:  [5,  [Validators.required, Validators.min(8), Validators.max(18)]],
@@ -45,12 +51,12 @@ export class StatFormComponent {
     }),
 
     boostBlock: this.fb.group({
-      strBoosted: [false],
-      dexBoosted: [false],
-      conBoosted: [false],
-      intBoosted: [false],
-      wisBoosted: [false],
-      chaBoosted: [false]
+      strBoosted: false,
+      dexBoosted: false,
+      conBoosted: false,
+      intBoosted: false,
+      wisBoosted: false,
+      chaBoosted: false
     }),
 
     chooseBoosts: false
@@ -71,6 +77,7 @@ export class StatFormComponent {
   }
 
   resetStats() {
+
     this.statBlock.setValue(
       {
         hp: 5,
@@ -81,6 +88,11 @@ export class StatFormComponent {
         wis: 10,
         cha: 10
       });
+  }
+
+  resetRolls() {
+    this.rolledStats = [0, 0, 0, 0, 0, 0];
+    this.rolledStr = [" ", " ", " ", " ", " ", " "];
   }
 
   freeCount(e: Event) {
@@ -98,6 +110,16 @@ export class StatFormComponent {
         || (!this.chooseBoosts && this.checkCount >= 1))
     // AND the checkbox must not already be selected
         && !this.boostBlock.controls[boost].value ? true : null;
+  }
+
+  freeDisable() {
+
+    if (this.currentAncestry != null && this.currentAncestry['name'] == 'Human') {
+      this.statForm['controls'].chooseBoosts.setValue(true);
+      return true;
+    } else {
+      return null;
+    }
   }
 
   calculate() {
@@ -169,7 +191,32 @@ export class StatFormComponent {
     }
   }
 
+  rollStats() {
+    this.resetRolls();
+    let roll = new Dice();
+    let diceToRoll = [0, 0, 0, 0];
+
+    for (let i = 0; i < 6; i++) {
+      for (let j = 0; j < 4; j++) {
+        diceToRoll[j] = roll.d6();
+      }
+
+      diceToRoll.sort();
+
+      for (let j = 1; j < 4; j++) {
+        this.rolledStats[i] += diceToRoll[j];
+      }
+      this.rolledStr[i] = 
+        "|" + diceToRoll[0] + "| " + 
+        diceToRoll[1] + " " + 
+        diceToRoll[2] + " " + 
+        diceToRoll[3] + " = " +
+        this.rolledStats[i];
+    }
+  }
+
   showClassBoosts(name: string) {
+
     if (name == "---") {
       this.classBoosts = "No class selected";
       this.classSelected = false;
@@ -191,6 +238,7 @@ export class StatFormComponent {
   }
 
   showAncestryBoosts(name: string) {
+
     if (name == "---") {
       this.ancestryBoosts = "No ancestry selected";
       this.ancestrySelected = false;
@@ -216,6 +264,12 @@ export class StatFormComponent {
       this.ancestrySelected = true;
       this.currentAncestry = currentAncestry;
     }
+  }
+
+  submitCheck() {
+
+    return !this.classSelected || !this.ancestrySelected || 
+          !((this.chooseBoosts && this.checkCount >= 2) || (!this.chooseBoosts && this.checkCount >= 1))
   }
 
   constructor(private fb: FormBuilder) { }

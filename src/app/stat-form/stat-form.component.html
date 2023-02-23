@@ -22,11 +22,37 @@
     </p>
 
     <p>
-        <input type="checkbox" formControlName="chooseBoosts" (change)="boostBlock.reset(); checkCount = 0">
-        <label>Free choice</label>
+        <input type="checkbox" id="freeBox" formControlName="chooseBoosts" 
+            [attr.disabled]="freeDisable()" (change)="boostBlock.reset(); checkCount = 0">
+        <label for="freeBox">Free choice</label>
     </p>
 
-    <button name="Calculate" (click)="calculate()" [disabled]="!classSelected || !ancestrySelected">Calculate</button>
+    <div formGroupName="boostBlock">
+        <h3>Free Stats</h3>
+        <p>(Choose {{chooseBoosts ? 2 : 1}})</p>
+        <input type="checkbox" [attr.disabled]="freeCheck('strBoosted')" 
+            id="strBoost" formControlName="strBoosted" (change)="freeCount($event)">
+            <label for="strBoost">Strength</label><br/>
+        <input type="checkbox" [attr.disabled]="freeCheck('dexBoosted')"
+            id="dexBoost" formControlName="dexBoosted" (change)="freeCount($event)">
+            <label for="dexBoost">Dexterity</label><br/>
+        <input type="checkbox" [attr.disabled]="freeCheck('conBoosted')" 
+            id="conBoost" formControlName="conBoosted" (change)="freeCount($event)">
+            <label for="conBoost">Constitution</label><br/>
+        <input type="checkbox" [attr.disabled]="freeCheck('intBoosted')" 
+            id="intBoost" formControlName="intBoosted" (change)="freeCount($event)">
+            <label for="intBoost">Intelligence</label><br/>
+        <input type="checkbox" [attr.disabled]="freeCheck('wisBoosted')" 
+            id="wisBoost" formControlName="wisBoosted" (change)="freeCount($event)">
+            <label for="wisBoost">Wisdom</label><br/>
+        <input type="checkbox" [attr.disabled]="freeCheck('chaBoosted')" 
+            id="chaBoost" formControlName="chaBoosted" (change)="freeCount($event)">
+            <label for="chaBoost">Charisma</label><br/>
+    </div>
+
+    <p>
+        <button name="Calculate" (click)="calculate()" [disabled]="submitCheck()">Calculate</button>
+    </p>
 
     <div formGroupName="statBlock">
         <h3>Stats</h3>
@@ -45,27 +71,14 @@
         <label>Charisma</label>
         <input type="number" id="cha" name="cha" formControlName="cha" min="8" max="18"><br/>
     </div>
+<!--  TEMP  -->
+    <button (click)="rollStats()"></button>
+    <p>1 {{rolledStr[0]}}</p>
+    <p>2 {{rolledStr[1]}}</p>
+    <p>3 {{rolledStr[2]}}</p>
+    <p>4 {{rolledStr[3]}}</p>
+    <p>5 {{rolledStr[4]}}</p>
+    <p>6 {{rolledStr[5]}}</p>
+<!--  TEMP  -->
 
-    <div formGroupName="boostBlock">
-        <h3>Free Stats</h3>
-        <p>(Choose {{chooseBoosts ? 2 : 1}})</p>
-        <input type="checkbox" [attr.disabled]="freeCheck('strBoosted')" 
-            formControlName="strBoosted" (change)="freeCount($event)">
-            <label>Strength</label><br/>
-        <input type="checkbox" [attr.disabled]="freeCheck('dexBoosted')"
-            formControlName="dexBoosted" (change)="freeCount($event)">
-            <label>Dexterity</label><br/>
-        <input type="checkbox" [attr.disabled]="freeCheck('conBoosted')" 
-            formControlName="conBoosted" (change)="freeCount($event)">
-            <label>Constitution</label><br/>
-        <input type="checkbox" [attr.disabled]="freeCheck('intBoosted')" 
-            formControlName="intBoosted" (change)="freeCount($event)">
-            <label>Intelligence</label><br/>
-        <input type="checkbox" [attr.disabled]="freeCheck('wisBoosted')" 
-            formControlName="wisBoosted" (change)="freeCount($event)">
-            <label>Wisdom</label><br/>
-        <input type="checkbox" [attr.disabled]="freeCheck('chaBoosted')" 
-            formControlName="chaBoosted" (change)="freeCount($event)">
-            <label>Charisma</label><br/>
-    </div>
 </div>
