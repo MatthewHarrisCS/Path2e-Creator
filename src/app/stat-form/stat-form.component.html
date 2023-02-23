@@ -7,7 +7,7 @@
                 {{class.name}}
             </option>
         </select><br/>
-        <label [textContent]="classBoosts"></label>
+        <label [textContent]="class.details"></label>
     </p>
 
     <p>
@@ -18,7 +18,7 @@
                 {{ancestry.name}}
             </option>
         </select><br/>
-        <label [textContent]="ancestryBoosts"></label>
+        <label [textContent]="ancestry.details"></label>
     </p>
 
     <p>
@@ -26,6 +26,19 @@
             [attr.disabled]="freeDisable()" (change)="boostBlock.reset(); checkCount = 0">
         <label for="freeBox">Free choice</label>
     </p>
+    
+    <!--  TEMP  -->
+    <button (click)="rollStats()">Roll Stats</button><br/>
+    <div *ngFor="let block of stats; index as i" id="statBlock" >
+        <label>{{rolledStr[i] }} </label>
+        <select>
+            <option>---</option>
+            <option *ngFor="let stat of stats">
+                {{stat}}
+            </option>
+        </select><br/>
+    </div><br/>
+    <!--  TEMP  -->
 
     <div formGroupName="boostBlock">
         <h3>Free Stats</h3>
@@ -71,14 +84,4 @@
         <label>Charisma</label>
         <input type="number" id="cha" name="cha" formControlName="cha" min="8" max="18"><br/>
     </div>
-<!--  TEMP  -->
-    <button (click)="rollStats()"></button>
-    <p>1 {{rolledStr[0]}}</p>
-    <p>2 {{rolledStr[1]}}</p>
-    <p>3 {{rolledStr[2]}}</p>
-    <p>4 {{rolledStr[3]}}</p>
-    <p>5 {{rolledStr[4]}}</p>
-    <p>6 {{rolledStr[5]}}</p>
-<!--  TEMP  -->
-
 </div>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Ancestry } from 'ancestry-model';
 import { GameClass } from 'game-class-model';
+import { Identifier } from 'identifier-model';
 import { ANCESTRY_LIST, CLASS_LIST } from 'src/temp-db';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Dice } from 'src/dice';
@@ -25,14 +26,17 @@ export class StatFormComponent {
 
   */
 
+  stats = ["Strength", 
+          "Dexterity", 
+          "Constitution", 
+          "Intelligence", 
+          "Wisdom", 
+          "Charisma"];
+
   classes = CLASS_LIST;
   ancestries = ANCESTRY_LIST;
-  classBoosts = "No class selected";
-  classSelected = false;
-  currentClass = null;
-  ancestryBoosts = "No ancestry selected";
-  ancestrySelected = false;
-  currentAncestry = null;
+  class = new Identifier("No class selected", false, null);
+  ancestry = new Identifier("No ancestry selected", false, null)
 
   checkCount = 0;
 
@@ -114,7 +118,7 @@ export class StatFormComponent {
 
   freeDisable() {
 
-    if (this.currentAncestry != null && this.currentAncestry['name'] == 'Human') {
+    if (this.ancestry.current != null && this.ancestry.current['name'] == 'Human') {
       this.statForm['controls'].chooseBoosts.setValue(true);
       return true;
     } else {
@@ -124,20 +128,20 @@ export class StatFormComponent {
 
   calculate() {
 
-    if (this.currentClass != null && this.currentAncestry != null) {
+    if (this.class.current != null && this.ancestry.current != null) {
       
       this.resetStats();
       // TEMP: replace with ability choice
       let chooseKey = 'keyAbility1';
 
       this.statBlock['controls'].hp.setValue(
-        this.currentClass['hp'] + this.currentAncestry['hp']);
+        this.class.current['hp'] + this.ancestry.current['hp']);
 
       // Get boosts from class and ancestry
-      this.boostStat(this.currentClass[chooseKey], true);
-      this.boostStat(this.currentAncestry['boost1'], true);
-      this.boostStat(this.currentAncestry['boost2'], true);
-      this.boostStat(this.currentAncestry['flaw'], false);
+      this.boostStat(this.class.current[chooseKey], true);
+      this.boostStat(this.ancestry.current['boost1'], true);
+      this.boostStat(this.ancestry.current['boost2'], true);
+      this.boostStat(this.ancestry.current['flaw'], false);
 
       // Get boosts from free choice(s)
       if (this.boostBlock['controls'].strBoosted.value) this.boostStat("Strength", true);
@@ -211,64 +215,65 @@ export class StatFormComponent {
         diceToRoll[1] + " " + 
         diceToRoll[2] + " " + 
         diceToRoll[3] + " = " +
-        this.rolledStats[i];
+        (this.rolledStats[i] < 10 ? 
+          ("0" + this.rolledStats[i]) : this.rolledStats[i]);
     }
   }
 
   showClassBoosts(name: string) {
 
     if (name == "---") {
-      this.classBoosts = "No class selected";
-      this.classSelected = false;
-      this.currentClass = null;
+      this.class.details = "No class selected";
+      this.class.selected = false;
+      this.class.current = null;
     } else {
       let currentClass = this.classes.find((x: GameClass) => x.name == name);
-      this.classBoosts = `
+      this.class.details = `
         ${currentClass.name}: 
         +${currentClass.hp} HP, 
         +2 in ${currentClass.keyAbility1}`;
 
       if (currentClass.keyAbility2 != null) {
-        this.classBoosts = this.classBoosts.concat(` or ${currentClass.keyAbility2}`);
+        this.class.details = this.class.details.concat(` or ${currentClass.keyAbility2}`);
       }
       
-      this.classSelected = true;
-      this.currentClass = currentClass;
+      this.class.selected = true;
+      this.class.current = currentClass;
     }
   }
 
   showAncestryBoosts(name: string) {
 
     if (name == "---") {
-      this.ancestryBoosts = "No ancestry selected";
-      this.ancestrySelected = false;
-      this.currentAncestry = null;
+      this.ancestry.details = "No ancestry selected";
+      this.ancestry.selected = false;
+      this.ancestry.current = null;
     } else {
       let currentAncestry = this.ancestries.find((x: Ancestry) => x.name == name);
-      this.ancestryBoosts = `
+      this.ancestry.details = `
         ${currentAncestry.name}:
         ${currentAncestry.hp} HP, 
         ${currentAncestry.size} Size, 
         Speed of ${currentAncestry.speed} ft`; 
 
       if (name == "Human" || this.chooseBoosts) {
-        this.ancestryBoosts = this.ancestryBoosts.concat(`, +2 in two stats of your choice`);
+        this.ancestry.details = this.ancestry.details.concat(`, +2 in two stats of your choice`);
       } else {
-        this.ancestryBoosts = this.ancestryBoosts.concat(`
+        this.ancestry.details = this.ancestry.details.concat(`
           +2 in ${currentAncestry.boost1}, 
           +2 in ${currentAncestry.boost2}, 
           +2 in stat of your choice, and 
           -2 in ${currentAncestry.flaw}`);
       }
 
-      this.ancestrySelected = true;
-      this.currentAncestry = currentAncestry;
+      this.ancestry.selected = true;
+      this.ancestry.current = currentAncestry;
     }
   }
 
   submitCheck() {
 
-    return !this.classSelected || !this.ancestrySelected || 
+    return !this.class.selected || !this.ancestry.selected || 
           !((this.chooseBoosts && this.checkCount >= 2) || (!this.chooseBoosts && this.checkCount >= 1))
   }
 
