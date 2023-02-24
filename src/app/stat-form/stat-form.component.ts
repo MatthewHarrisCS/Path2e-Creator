@@ -17,12 +17,10 @@ export class StatFormComponent {
   
   TODO:
   Choose between key abilities for classes with them
-  No flaw on free choice for non-Humans
   Backgrounds (SQL, temp-db, and new tab)
     Make model for selection (boost str, selected, and current)
     Boolean to filter radio button? ngIf?
     Rogue's Racket choice
-  Free stats default for Human (disable button)
 
   */
 
@@ -63,8 +61,8 @@ export class StatFormComponent {
       chaBoosted: false
     }),
 
-    chooseBoosts: false
-
+    chooseBoosts: false,
+    classKey: [true, Validators.required]
   });
 
 
@@ -97,6 +95,10 @@ export class StatFormComponent {
   resetRolls() {
     this.rolledStats = [0, 0, 0, 0, 0, 0];
     this.rolledStr = [" ", " ", " ", " ", " ", " "];
+  }
+
+  classRadio(boost: string) {
+    return this.class.current != null ? this.class.current[boost] : "N/A"
   }
 
   freeCount(e: Event) {
@@ -157,8 +159,9 @@ export class StatFormComponent {
 
     let change = 2;
 
-    // If flaw, negate change
+    // If marked as flaw and free choice is off, negate change
     if(!isBoost) {
+      if (this.chooseBoosts) return;
       change = -2;
     }
 
@@ -196,6 +199,7 @@ export class StatFormComponent {
   }
 
   rollStats() {
+    
     this.resetRolls();
     let roll = new Dice();
     let diceToRoll = [0, 0, 0, 0];

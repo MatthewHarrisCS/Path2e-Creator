@@ -1,4 +1,5 @@
 <div [formGroup]="statForm">
+    <h3>Class</h3>
     <p>
         <label>Select a class</label><br/>
         <select id="classSelect" #c (change)="showClassBoosts(c.value)">
@@ -7,9 +8,19 @@
                 {{class.name}}
             </option>
         </select><br/>
-        <label [textContent]="class.details"></label>
+        <label [textContent]="class.details"></label><br/>
     </p>
 
+    <div [hidden]="class.current?.keyAbility2 == null">
+        <input type="radio" formControlName="classKey" id="true"
+            [value]="true"  name="classKey">
+            <label for="true">{{classRadio("keyAbility1")}}</label><br/>
+        <input type="radio" formControlName="classKey" id="false"
+            [value]="false" name="classKey">
+            <label for="false">{{classRadio("keyAbility2")}}</label>
+    </div>
+
+    <h3>Ancestry</h3>
     <p>
         <label>Select an ancestry</label><br/>
         <select id="ancestrySelect" #a (change)="showAncestryBoosts(a.value)">
@@ -28,6 +39,7 @@
     </p>
     
     <!--  TEMP  -->
+    <h3>Roll Stats (temp)</h3>
     <button (click)="rollStats()">Roll Stats</button><br/>
     <div *ngFor="let block of stats; index as i" id="statBlock" >
         <label>{{rolledStr[i] }} </label>
