@@ -1,99 +1,141 @@
 <div [formGroup]="statForm">
-    <h3>Class</h3>
-    <p>
-        <label>Select a class</label><br/>
-        <select id="classSelect" #c (change)="showClassBoosts(c.value)">
-            <option>---</option>
-            <option *ngFor="let class of classes">
-                {{class.name}}
-            </option>
-        </select><br/>
-        <label [textContent]="class.details"></label><br/>
-    </p>
+    <div class="container">
 
-    <div [hidden]="class.current?.keyAbility2 == null">
-        <input type="radio" formControlName="classKey" id="true"
-            [value]="true"  name="classKey">
-            <label for="true">{{classRadio("keyAbility1")}}</label><br/>
-        <input type="radio" formControlName="classKey" id="false"
-            [value]="false" name="classKey">
-            <label for="false">{{classRadio("keyAbility2")}}</label>
+        <div class="identityBox">
+            <h3>Ancestry</h3>
+            <label>Select an ancestry</label><br/>
+            <select id="ancestrySelect" #a (change)="showAncestryBoosts(a.value)">
+                <option>---</option>
+                <option *ngFor="let ancestry of ancestries">
+                    {{ancestry.name}}
+                </option>
+            </select><br/>
+            <input type="checkbox" id="freeBox" formControlName="chooseBoosts" 
+                [attr.disabled]="freeDisable()" (change)="showAncestryBoosts(a.value); boostBlock.reset(); checkCount = 0">
+            <label for="freeBox">Free choice</label><br/>
+            <label [textContent]="ancestry.details"></label>
+        </div>
+
+        <div class="identityBox">
+            <h3>Background</h3>
+            <label>Select a background</label><br/>
+            <select id="backgroundSelect" #b (change)="showBackgroundBoosts(b.value)">
+                <option>---</option>
+                <option *ngFor="let background of backgrounds">
+                    {{background.name}}
+                </option>
+            </select><br/>
+            <label [textContent]="background.details"></label><br/>
+        
+            <div [hidden]="background.current?.keyAbility2 == null">
+                <input type="radio" formControlName="backgroundKey" id="true"
+                    [value]="true"  name="backgroundKey">
+                    <label for="true">{{backgroundRadio("keyAbility1")}}</label><br/>
+                <input type="radio" formControlName="backgroundKey" id="false"
+                    [value]="false" name="backgroundKey">
+                    <label for="false">{{backgroundRadio("keyAbility2")}}</label>
+            </div>
+        </div>
+
+        <div class="identityBox">
+            <h3>Class</h3>
+            <label>Select a class</label><br/>
+            <select id="classSelect" #c (change)="showClassBoosts(c.value)">
+                <option>---</option>
+                <option *ngFor="let class of classes">
+                    {{class.name}}
+                </option>
+            </select><br/>
+            <label [textContent]="class.details"></label><br/>
+        
+            <div [hidden]="class.current?.keyAbility2 == null">
+                <input type="radio" formControlName="classKey" id="true"
+                    [value]="true"  name="classKey">
+                    <label for="true">{{classRadio("keyAbility1")}}</label><br/>
+                <input type="radio" formControlName="classKey" id="false"
+                    [value]="false" name="classKey">
+                    <label for="false">{{classRadio("keyAbility2")}}</label>
+            </div>
+        </div>
+
+        <div class="freeBox" formGroupName="boostBlock">
+            <h3>Free Stats</h3>
+            <p>(Choose {{chooseBoosts ? 2 : 1}})</p>
+            <input type="checkbox" [attr.disabled]="freeCheck('strBoosted')" 
+                id="strBoost" formControlName="strBoosted" (change)="freeCount($event)">
+                <label for="strBoost">Strength</label><br/>
+            <input type="checkbox" [attr.disabled]="freeCheck('dexBoosted')"
+                id="dexBoost" formControlName="dexBoosted" (change)="freeCount($event)">
+                <label for="dexBoost">Dexterity</label><br/>
+            <input type="checkbox" [attr.disabled]="freeCheck('conBoosted')" 
+                id="conBoost" formControlName="conBoosted" (change)="freeCount($event)">
+                <label for="conBoost">Constitution</label><br/>
+            <input type="checkbox" [attr.disabled]="freeCheck('intBoosted')" 
+                id="intBoost" formControlName="intBoosted" (change)="freeCount($event)">
+                <label for="intBoost">Intelligence</label><br/>
+            <input type="checkbox" [attr.disabled]="freeCheck('wisBoosted')" 
+                id="wisBoost" formControlName="wisBoosted" (change)="freeCount($event)">
+                <label for="wisBoost">Wisdom</label><br/>
+            <input type="checkbox" [attr.disabled]="freeCheck('chaBoosted')" 
+                id="chaBoost" formControlName="chaBoosted" (change)="freeCount($event)">
+                <label for="chaBoost">Charisma</label><br/>
+        </div>
+
+        <!--  TEMP  -->
+        <div class="rollBox">
+            <h3>Roll Stats (temp)</h3>
+            <button style="margin-bottom: 10px;" (click)="rollStats()">Roll Stats</button><br/>
+            <div *ngFor="let block of stats; index as i" id="statBlock" >
+                <label>{{rolledStr[i] }} </label>
+                <select>
+                    <option>---</option>
+                    <option *ngFor="let stat of stats">
+                        {{stat}}
+                    </option>
+                </select><br/>
+            </div>
+            <input type="checkbox" id="rollBox" formControlName="chooseRoll">
+            <label for="rollBox" style="padding-top: 10px;">Use rolled stats</label><br/>
+        </div>
+        <!--  TEMP  -->
+
     </div>
-
-    <h3>Ancestry</h3>
-    <p>
-        <label>Select an ancestry</label><br/>
-        <select id="ancestrySelect" #a (change)="showAncestryBoosts(a.value)">
-            <option>---</option>
-            <option *ngFor="let ancestry of ancestries">
-                {{ancestry.name}}
-            </option>
-        </select><br/>
-        <label [textContent]="ancestry.details"></label>
-    </p>
-
-    <p>
-        <input type="checkbox" id="freeBox" formControlName="chooseBoosts" 
-            [attr.disabled]="freeDisable()" (change)="boostBlock.reset(); checkCount = 0">
-        <label for="freeBox">Free choice</label>
-    </p>
     
-    <!--  TEMP  -->
-    <h3>Roll Stats (temp)</h3>
-    <button (click)="rollStats()">Roll Stats</button><br/>
-    <div *ngFor="let block of stats; index as i" id="statBlock" >
-        <label>{{rolledStr[i] }} </label>
-        <select>
-            <option>---</option>
-            <option *ngFor="let stat of stats">
-                {{stat}}
-            </option>
-        </select><br/>
-    </div><br/>
-    <!--  TEMP  -->
-
-    <div formGroupName="boostBlock">
-        <h3>Free Stats</h3>
-        <p>(Choose {{chooseBoosts ? 2 : 1}})</p>
-        <input type="checkbox" [attr.disabled]="freeCheck('strBoosted')" 
-            id="strBoost" formControlName="strBoosted" (change)="freeCount($event)">
-            <label for="strBoost">Strength</label><br/>
-        <input type="checkbox" [attr.disabled]="freeCheck('dexBoosted')"
-            id="dexBoost" formControlName="dexBoosted" (change)="freeCount($event)">
-            <label for="dexBoost">Dexterity</label><br/>
-        <input type="checkbox" [attr.disabled]="freeCheck('conBoosted')" 
-            id="conBoost" formControlName="conBoosted" (change)="freeCount($event)">
-            <label for="conBoost">Constitution</label><br/>
-        <input type="checkbox" [attr.disabled]="freeCheck('intBoosted')" 
-            id="intBoost" formControlName="intBoosted" (change)="freeCount($event)">
-            <label for="intBoost">Intelligence</label><br/>
-        <input type="checkbox" [attr.disabled]="freeCheck('wisBoosted')" 
-            id="wisBoost" formControlName="wisBoosted" (change)="freeCount($event)">
-            <label for="wisBoost">Wisdom</label><br/>
-        <input type="checkbox" [attr.disabled]="freeCheck('chaBoosted')" 
-            id="chaBoost" formControlName="chaBoosted" (change)="freeCount($event)">
-            <label for="chaBoost">Charisma</label><br/>
+    <div class="calculate container">
+        <button name="Calculate" (click)="calculate()" [disabled]="submitCheck()">Calculate</button>
     </div>
 
-    <p>
-        <button name="Calculate" (click)="calculate()" [disabled]="submitCheck()">Calculate</button>
-    </p>
-
-    <div formGroupName="statBlock">
-        <h3>Stats</h3>
-        <label>Health Points</label>
-        <input type="number" id="hp"  name="hp"  formControlName="hp"  min="1"><br/>
-        <label>Strength</label>
-        <input type="number" id="str" name="str" formControlName="str" min="8" max="18">
-        <label>Intelligence</label>
-        <input type="number" id="int" name="int" formControlName="int" min="8" max="18"><br/>
-        <label>Dexterity</label>
-        <input type="number" id="dex" name="dex" formControlName="dex" min="8" max="18">
-        <label>Wisdom</label>
-        <input type="number" id="wis" name="wis" formControlName="wis" min="8" max="18"><br/>
-        <label>Constitution</label>
-        <input type="number" id="con" name="con" formControlName="con" min="8" max="18">
-        <label>Charisma</label>
-        <input type="number" id="cha" name="cha" formControlName="cha" min="8" max="18"><br/>
+    <div class="container">
+        <div class="statBox" formGroupName="statBlock">
+            <h3>Stats</h3>
+            <div>
+                <label>Health Points</label>
+                <input type="number" id="hp"  name="hp"  formControlName="hp"  min="1">
+            </div>
+            <div>
+                <label>Strength</label>
+                <input type="number" id="str" name="str" formControlName="str" min="8" max="18">
+            </div>
+            <div>
+                <label>Intelligence</label>
+                <input type="number" id="int" name="int" formControlName="int" min="8" max="18">
+            </div>
+            <div>
+                <label>Dexterity</label>
+                <input type="number" id="dex" name="dex" formControlName="dex" min="8" max="18">
+            </div>
+            <div>
+                <label>Wisdom</label>
+                <input type="number" id="wis" name="wis" formControlName="wis" min="8" max="18">
+            </div>
+            <div>
+                <label>Constitution</label>
+                <input type="number" id="con" name="con" formControlName="con" min="8" max="18">
+            </div>
+            <div>
+                <label>Charisma</label>
+                <input type="number" id="cha" name="cha" formControlName="cha" min="8" max="18">
+            </div>
+        </div>
     </div>
 </div>

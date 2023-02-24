@@ -1,0 +1,61 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-grow: 2;
+    justify-content:space-evenly;
+}
+
+.identityBox {
+    width: 220px;
+    height: 270px;
+    color: red;
+    outline: auto;
+    padding: 10px;
+    padding-top: 0;
+    white-space: pre-line;
+}
+    .identityBox label {
+        color: green;
+        display: inline-block;
+        padding-top: 10px;
+    }
+
+
+.freeBox {
+    color: blue;
+    outline: auto;
+    padding: 10px;
+    padding-top: 0;
+}
+
+.rollBox {
+    color: goldenrod;
+    outline: auto;
+    padding: 10px;
+    padding-top: 0;
+}
+    .rollBox label {
+        display: inline-block;
+        min-width: 90px;
+    }
+
+.calculate {
+    padding: 10px;
+}
+
+.statBox {
+    color: purple;
+    outline: auto;
+    padding: 10px;
+    padding-top: 0;
+}
+    .statBox label {
+        display: inline-block;
+        min-width: 100px;
+    }
+
+    .statBox input {
+        width: 35px;
+        margin-right: 10px;
+    }

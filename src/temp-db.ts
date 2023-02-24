@@ -129,3 +129,181 @@ export const CLASS_LIST: any = [
         keyAbility2: null
     },
 ]
+
+export const BACKGROUND_LIST: any = [
+    {
+        name: "Acolyte",
+        keyAbility1: "Intelligence",
+        keyAbility2: "Wisdom"
+    },
+    {
+        name: "Acrobat",
+        keyAbility1: "Strength",
+        keyAbility2: "Dexterity"
+    },
+    {
+        name: "Animal Whisperer",
+        keyAbility1: "Wisdom",
+        keyAbility2: "Charisma"
+    },
+    {
+        name: "Artisan",
+        keyAbility1: "Strength",
+        keyAbility2: "Intelligence"
+    },
+    {
+        name: "Artist",
+        keyAbility1: "Dexterity",
+        keyAbility2: "Charisma"
+    },
+    {
+        name: "Barkeep",
+        keyAbility1: "Constitution",
+        keyAbility2: "Charisma"
+    },
+    {
+        name: "Barrister",
+        keyAbility1: "Intelligence",
+        keyAbility2: "Charisma"
+    },
+    {
+        name: "Bounty Hunter",
+        keyAbility1: "Strength",
+        keyAbility2: "Wisdom"
+    },
+    {
+        name: "Charlatan",
+        keyAbility1: "Intelligence",
+        keyAbility2: "Charisma"
+    },
+    {
+        name: "Criminal",
+        keyAbility1: "Dexterity",
+        keyAbility2: "Intelligence"
+    },
+    {
+        name: "Detective",
+        keyAbility1: "Intelligence",
+        keyAbility2: "Wisdom"
+    },
+    {
+        name: "Emissary",
+        keyAbility1: "Intelligence",
+        keyAbility2: "Charisma"
+    },
+    {
+        name: "Entertainer",
+        keyAbility1: "Dexterity",
+        keyAbility2: "Charisma"
+    },
+    {
+        name: "Farmhand",
+        keyAbility1: "Constitution",
+        keyAbility2: "Wisdom"
+    },
+    {
+        name: "Field Medic",
+        keyAbility1: "Constitution",
+        keyAbility2: "Wisdom"
+    },
+    {
+        name: "Fortune Teller",
+        keyAbility1: "Intelligence",
+        keyAbility2: "Charisma"
+    },
+    {
+        name: "Gambler",
+        keyAbility1: "Dexterity",
+        keyAbility2: "Charisma"
+    },
+    {
+        name: "Gladiator",
+        keyAbility1: "Strength",
+        keyAbility2: "Charisma"
+    },
+    {
+        name: "Guard",
+        keyAbility1: "Strength",
+        keyAbility2: "Charisma"
+    },
+    {
+        name: "Herbalist",
+        keyAbility1: "Constitution",
+        keyAbility2: "Wisdom"
+    },
+    {
+        name: "Hermit",
+        keyAbility1: "Constitution",
+        keyAbility2: "Intelligence"
+    },
+    {
+        name: "Hunter",
+        keyAbility1: "Dexterity",
+        keyAbility2: "Wisdom"
+    },
+    {
+        name: "Laborer",
+        keyAbility1: "Strength",
+        keyAbility2: "Constitution"
+    },
+    {
+        name: "Martial Disciple",
+        keyAbility1: "Strength",
+        keyAbility2: "Dexterity"
+    },
+    {
+        name: "Merchant",
+        keyAbility1: "Intelligence",
+        keyAbility2: "Charisma"
+    },
+    {
+        name: "Miner",
+        keyAbility1: "Strength",
+        keyAbility2: "Wisdom"
+    },
+    {
+        name: "Noble",
+        keyAbility1: "Intelligence",
+        keyAbility2: "Charisma"
+    },
+    {
+        name: "Nomad",
+        keyAbility1: "Constitution",
+        keyAbility2: "Wisdom"
+    },
+    {
+        name: "Prisoner",
+        keyAbility1: "Strength",
+        keyAbility2: "Constitution"
+    },
+    {
+        name: "Sailor",
+        keyAbility1: "Strength",
+        keyAbility2: "Dexterity"
+    },
+    {
+        name: "Scholar",
+        keyAbility1: "Intelligence",
+        keyAbility2: "Wisdom"
+    },
+    {
+        name: "Scout",
+        keyAbility1: "Dexterity",
+        keyAbility2: "Wisdom"
+    },
+    {
+        name: "Street Urchin",
+        keyAbility1: "Dexterity",
+        keyAbility2: "Constitution"
+    },
+    {
+        name: "Tinker",
+        keyAbility1: "Dexterity",
+        keyAbility2: "Intelligence"
+    },
+    {
+        name: "Warrior",
+        keyAbility1: "Strength",
+        keyAbility2: "Constitution"
+    }
+]
