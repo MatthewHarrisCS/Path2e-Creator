@@ -58,9 +58,27 @@
             </div>
         </div>
 
+        <!--  IN PROGRESS  -->
+        <div class="rollBox">
+            <h3>Roll Stats (temp)</h3>
+            <input type="checkbox" id="rollBox" formControlName="chooseRoll">
+            <label for="rollBox" style="padding-top: 10px;">Use rolled stats</label><br/>
+            <button style="margin-bottom: 10px;" (click)="rollStats()">Roll Stats</button><br/>
+            <div *ngFor="let block of rolledStr; index as i" id="statBlock" >
+                <label>{{block}} </label>
+                <select #s (change)="rollSelect(s.value, i)">
+                    <option>---</option>
+                    <option *ngFor="let stat of rollFilter(i)">
+                        {{stat.name}}
+                    </option>
+                </select><br/>
+            </div>
+        </div>
+        <!--  IN PROGRESS  -->
+
         <div class="freeBox" formGroupName="boostBlock">
             <h3>Free Stats</h3>
-            <p>(Choose {{chooseBoosts ? 2 : 1}})</p>
+            <p>(Choose {{chooseBoosts ? boostLimit : boostLimit - 1}})</p>
             <input type="checkbox" [attr.disabled]="freeCheck('strBoosted')" 
                 id="strBoost" formControlName="strBoosted" (change)="freeCount($event)">
                 <label for="strBoost">Strength</label><br/>
@@ -80,25 +98,6 @@
                 id="chaBoost" formControlName="chaBoosted" (change)="freeCount($event)">
                 <label for="chaBoost">Charisma</label><br/>
         </div>
-
-        <!--  TEMP  -->
-        <div class="rollBox">
-            <h3>Roll Stats (temp)</h3>
-            <button style="margin-bottom: 10px;" (click)="rollStats()">Roll Stats</button><br/>
-            <div *ngFor="let block of stats; index as i" id="statBlock" >
-                <label>{{rolledStr[i] }} </label>
-                <select>
-                    <option>---</option>
-                    <option *ngFor="let stat of stats">
-                        {{stat}}
-                    </option>
-                </select><br/>
-            </div>
-            <input type="checkbox" id="rollBox" formControlName="chooseRoll">
-            <label for="rollBox" style="padding-top: 10px;">Use rolled stats</label><br/>
-        </div>
-        <!--  TEMP  -->
-
     </div>
     
     <div class="calculate container">

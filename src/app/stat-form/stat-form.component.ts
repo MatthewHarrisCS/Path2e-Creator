@@ -16,19 +16,11 @@ export class StatFormComponent {
   /* 
   
   TODO:
-  Backgrounds (SQL, temp-db, and new tab)
-    Make model for selection (boost str, selected, and current)
-    Boolean to filter radio button? ngIf?
+    Roll Stats - full implementation
+    Backend to save character
     Rogue's Racket choice
 
   */
-
-  stats = ["Strength", 
-          "Dexterity", 
-          "Constitution", 
-          "Intelligence", 
-          "Wisdom", 
-          "Charisma"];
 
   ancestries = ANCESTRY_LIST;
   backgrounds = BACKGROUND_LIST;
@@ -41,6 +33,12 @@ export class StatFormComponent {
 
   rolledStats = [0, 0, 0, 0, 0, 0];
   rolledStr = [" ", " ", " ", " ", " ", " "];
+  stats = [{name: "Strength", at: -1}, 
+           {name: "Dexterity", at:-1}, 
+           {name: "Constitution", at: -1}, 
+           {name: "Intelligence", at: -1}, 
+           {name: "Wisdom", at: -1}, 
+           {name: "Charisma", at: -1}];
 
   statForm = this.fb.group({
     statBlock: this.fb.group({
@@ -64,6 +62,7 @@ export class StatFormComponent {
 
     chooseRoll: false,
     chooseBoosts: false,
+    boostLimit: 2,
     backgroundKey: true,
     classKey: true
   });
@@ -79,6 +78,10 @@ export class StatFormComponent {
 
   get chooseBoosts(): any {
     return this.statForm.get('chooseBoosts')?.value;
+  }
+
+  get boostLimit(): any {
+    return this.statForm.get('boostLimit')?.value;
   }
 
   resetStats() {
@@ -133,6 +136,21 @@ export class StatFormComponent {
     } else {
       return null;
     }
+  }
+
+  rollSelect(stat: string, index: number) {
+    // Remove the index of the unselected entry (if exists)
+    console.log(this.stats);
+    this.stats.forEach(x => {if (x.at == index) x.at = -1;});
+
+    // Register the index for the chosen stat
+    this.stats.forEach(x => {if (x.name == stat) x.at = index;});
+    console.log(this.stats);
+
+  }
+
+  rollFilter(index: number) {
+    return this.stats.filter(x => x.at == -1 || x.at == index);
   }
 
   calculate() {
@@ -312,8 +330,11 @@ export class StatFormComponent {
 
   submitCheck() {
 
+    if (this.boostLimit == null) return false;
+
     return !this.ancestry.selected || !this.background.selected || !this.class.selected ||
-          !((this.chooseBoosts && this.checkCount >= 2) || (!this.chooseBoosts && this.checkCount >= 1))
+          !((this.chooseBoosts && this.checkCount >= this.boostLimit) || 
+          (!this.chooseBoosts && this.checkCount >= this.boostLimit-1));
   }
 
   constructor(private fb: FormBuilder) { }
