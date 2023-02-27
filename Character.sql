@@ -44,12 +44,24 @@ CREATE TABLE background (
     keyAbility2 VARCHAR(12) CHECK (keyAbility2 IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma", "Racket"))
 );
 
+
+CREATE TABLE racket (
+	name VARCHAR(16) PRIMARY KEY,
+    train1 VARCHAR(32),
+    train2 VARCHAR(32),
+    keyAbility VARCHAR(12) CHECK (keyAbility IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"))
+);
+
 INSERT INTO ancestry VALUES ("Dwarf", 10, "Medium", 20, "Constitution", "Wisdom", "Charisma");
 INSERT INTO ancestry VALUES ("Elf", 6, "Medium", 30, "Dexterity", "Intelligence", "Constitution");
 INSERT INTO ancestry VALUES ("Gnome", 8, "Small", 25, "Constitution", "Charisma", "Strength");
 INSERT INTO ancestry VALUES ("Goblin", 6, "Small", 25, "Dexterity", "Charisma", "Wisdom");
 INSERT INTO ancestry VALUES ("Halfling", 6, "Small", 25, "Dexterity", "Wisdom", "Strength");
 INSERT INTO ancestry VALUES ("Human", 8, "Medium", 25, null, null, null);
+
+INSERT INTO racket VALUES ("Ruffian", "", "", "Strength");
+INSERT INTO racket VALUES ("Scoundrel", "", "", "Charisma");
+INSERT INTO racket VALUES ("Thief", "", "", null);
 
 INSERT INTO class VALUES ("Alchemist", 8, "Intelligence", null);
 INSERT INTO class VALUES ("Barbarian", 12, "Strength", null);

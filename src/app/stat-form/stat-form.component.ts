@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { Ancestry } from 'ancestry-model';
-import { GameClass } from 'game-class-model';
-import { Identifier } from 'identifier-model';
-import { ANCESTRY_LIST, BACKGROUND_LIST, CLASS_LIST } from 'src/temp-db';
+import { Ancestry } from 'src/models/ancestry';
+import { GameClass } from 'src/models/game-class';
+import { Identifier } from 'src/models/identifier';
+import { Racket } from 'src/models/racket';
+import { ANCESTRY_LIST, BACKGROUND_LIST, CLASS_LIST, RACKET_LIST } from 'src/temp-db';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Dice } from 'src/dice';
+import { STRING_TYPE } from '@angular/compiler';
 
 @Component({
   selector: 'stat-form',
@@ -13,36 +15,42 @@ import { Dice } from 'src/dice';
 })
 export class StatFormComponent {
 
+  constructor(private fb: FormBuilder) { }
+
+  ngOnInit() { this.rollStats(); }
+
+
   /* 
   
   TODO:
     Roll Stats - full implementation
     Backend to save character
-    Rogue's Racket choice
 
   */
 
   ancestries = ANCESTRY_LIST;
   backgrounds = BACKGROUND_LIST;
   classes = CLASS_LIST;
+  rackets = RACKET_LIST;
   ancestry = new Identifier("No ancestry selected", false, null);
   background = new Identifier("No background selected", false, null);
   class = new Identifier("No class selected", false, null);
+  racket = new Identifier("", false, null);
 
   checkCount = 0;
 
   rolledStats = [0, 0, 0, 0, 0, 0];
-  rolledStr = [" ", " ", " ", " ", " ", " "];
-  stats = [{name: "Strength", at: -1}, 
-           {name: "Dexterity", at:-1}, 
-           {name: "Constitution", at: -1}, 
-           {name: "Intelligence", at: -1}, 
-           {name: "Wisdom", at: -1}, 
-           {name: "Charisma", at: -1}];
+  rolledString = [" ", " ", " ", " ", " ", " "];
+  stats = [{name: "Strength", acr: "str", at: -1}, 
+           {name: "Dexterity", acr: "dex", at:-1}, 
+           {name: "Constitution", acr: "con", at: -1}, 
+           {name: "Intelligence", acr: "int", at: -1}, 
+           {name: "Wisdom", acr: "wis", at: -1}, 
+           {name: "Charisma", acr: "cha", at: -1}];
 
   statForm = this.fb.group({
     statBlock: this.fb.group({
-      hp:  [5,  [Validators.required, Validators.min(8), Validators.max(18)]],
+      hp:  [12, [Validators.required, Validators.min(12)]],
       str: [10, [Validators.required, Validators.min(8), Validators.max(18)]],
       dex: [10, [Validators.required, Validators.min(8), Validators.max(18)]],
       con: [10, [Validators.required, Validators.min(8), Validators.max(18)]],
@@ -76,6 +84,10 @@ export class StatFormComponent {
     return this.statForm.get('boostBlock');
   }
 
+  get chooseRoll(): any {
+    return this.statForm.get('chooseRoll')?.value;
+  }
+
   get chooseBoosts(): any {
     return this.statForm.get('chooseBoosts')?.value;
   }
@@ -84,11 +96,15 @@ export class StatFormComponent {
     return this.statForm.get('boostLimit')?.value;
   }
 
+  get classKey(): any {
+    return this.statForm.get('classKey')?.value;
+  }
+
   resetStats() {
 
     this.statBlock.setValue(
       {
-        hp: 5,
+        hp:  12,
         str: 10,
         dex: 10,
         con: 10,
@@ -100,7 +116,13 @@ export class StatFormComponent {
 
   resetRolls() {
     this.rolledStats = [0, 0, 0, 0, 0, 0];
-    this.rolledStr = [" ", " ", " ", " ", " ", " "];
+    this.rolledString = [" ", " ", " ", " ", " ", " "];
+    this.stats = [{name: "Strength", acr: "str", at: -1}, 
+                  {name: "Dexterity", acr: "dex", at:-1}, 
+                  {name: "Constitution", acr: "con", at: -1}, 
+                  {name: "Intelligence", acr: "int", at: -1}, 
+                  {name: "Wisdom", acr: "wis", at: -1}, 
+                  {name: "Charisma", acr: "cha", at: -1}];
   }
 
   backgroundRadio(boost: string) {
@@ -123,14 +145,14 @@ export class StatFormComponent {
     // Either (the choose boosts option is on and hasn't exceeded 2
     return ((this.chooseBoosts && this.checkCount >= 2)
     // OR the choose boosts option is off and hasn't exceeded 1)
-        || (!this.chooseBoosts && this.checkCount >= 1))
+        || (!this.chooseBoosts && this.checkCount >= this.boostLimit - 1))
     // AND the checkbox must not already be selected
         && !this.boostBlock.controls[boost].value ? true : null;
   }
 
   freeDisable() {
 
-    if (this.ancestry.current != null && this.ancestry.current['name'] == 'Human') {
+    if (this.ancestry.current != null && this.ancestry.current['boost1'] == null) {
       this.statForm['controls'].chooseBoosts.setValue(true);
       return true;
     } else {
@@ -140,12 +162,10 @@ export class StatFormComponent {
 
   rollSelect(stat: string, index: number) {
     // Remove the index of the unselected entry (if exists)
-    console.log(this.stats);
     this.stats.forEach(x => {if (x.at == index) x.at = -1;});
 
     // Register the index for the chosen stat
     this.stats.forEach(x => {if (x.name == stat) x.at = index;});
-    console.log(this.stats);
 
   }
 
@@ -153,15 +173,47 @@ export class StatFormComponent {
     return this.stats.filter(x => x.at == -1 || x.at == index);
   }
 
-  calculate() {
+  rollSet() {
 
+    //
+    //
+    // IN PROGRESS
+    //
+    //
+    let arr = [0, 0, 0, 0, 0, 0];
+    for (let i = 0; i < 6; i++) {
+      let currentStat = this.stats.find(x => x.at == i);
+      console.log(currentStat);
+      if (currentStat?.acr != undefined) {
+        arr[i] = this.rolledStats[this.statBlock.controls[currentStat?.acr]?.index];
+      }
+    }
+
+    console.log(arr);
+
+    this.statBlock.setValue(
+      {
+        hp:  12,
+        str: arr[0],
+        dex: arr[1],
+        con: arr[2],
+        int: arr[3],
+        wis: arr[4],
+        cha: arr[5]
+      });
+  }
+
+  calculate() {
+    // Doesn't calculate unless all of the properties exists
     if (this.ancestry.current != null && this.background.current != null && this.class.current != null) {
       
       this.resetStats();
 
-      this.statBlock['controls'].hp.setValue(
-        this.class.current['hp'] + this.ancestry.current['hp']);
+      if(this.chooseRoll) {
+        this.rollSet();
+      }
 
+      // Set the health to 
       this.statBlock['controls'].hp.setValue(
         this.class.current['hp'] + this.ancestry.current['hp']);
 
@@ -189,7 +241,11 @@ export class StatFormComponent {
       if (this.class.current.keyAbility2 == null || this.statForm.get("classKey")?.value) {
         this.boostStat(this.class.current['keyAbility1'], true);
       } else {
-        this.boostStat(this.class.current['keyAbility2'], true);
+        if (this.class.current['keyAbility2'] == "Racket") {
+          this.boostStat(this.racket.current['keyAbility'], true);
+        } else {
+          this.boostStat(this.class.current['keyAbility2'], true);
+        }
       }
     }
   }
@@ -253,7 +309,7 @@ export class StatFormComponent {
       for (let j = 1; j < 4; j++) {
         this.rolledStats[i] += diceToRoll[j];
       }
-      this.rolledStr[i] = 
+      this.rolledString[i] = 
         "|" + diceToRoll[0] + "| " + 
         diceToRoll[1] + " " + 
         diceToRoll[2] + " " + 
@@ -275,11 +331,14 @@ export class StatFormComponent {
         ${currentAncestry.size} Size
         Speed of ${currentAncestry.speed} ft\n`; 
 
-      if (name == "Human" || this.chooseBoosts) {
-        this.ancestry.details = this.ancestry.details.concat(`Two +2 Free Stats`);
+      if (currentAncestry.boost1 == null || this.chooseBoosts) {
+        this.ancestry.details = 
+          this.chooseRoll ? 
+            this.ancestry.details.concat(`+2 Free Stat\n`) : 
+            this.ancestry.details.concat(`Two +2 Free Stats\n`);
       } else {
-        this.ancestry.details = this.ancestry.details.concat(`+2 Free Stat
-          +2 in ${currentAncestry.boost1}
+        if (!this.chooseRoll) this.ancestry.details = this.ancestry.details.concat(`+2 Free Stat\n`);
+        this.ancestry.details = this.ancestry.details.concat(`+2 in ${currentAncestry.boost1}
           +2 in ${currentAncestry.boost2}
           –2 in ${currentAncestry.flaw}`);
       }
@@ -328,14 +387,33 @@ export class StatFormComponent {
     }
   }
 
+  showRacketBoosts(name: string) {
+
+    if (name == "---") {
+      this.racket.details = "";
+      this.racket.selected = false;
+      this.racket.current = null;
+    } else {
+      let currentRacket = this.rackets.find((x: Racket) => x.name == name);
+      
+      if (currentRacket.keyAbility != null) {
+        this.racket.details = `+2 in ${currentRacket.keyAbility}`;
+      } else {
+        this.racket.details = "";
+      }
+      
+      this.racket.selected = true;
+      this.racket.current = currentRacket;
+    }
+  }
+
   submitCheck() {
 
     if (this.boostLimit == null) return false;
 
-    return !this.ancestry.selected || !this.background.selected || !this.class.selected ||
-          !((this.chooseBoosts && this.checkCount >= this.boostLimit) || 
-          (!this.chooseBoosts && this.checkCount >= this.boostLimit-1));
+    return !this.ancestry.selected || !this.background.selected || 
+    !this.class.selected || (!this.classKey && !this.racket.selected) ||
+    !((this.chooseBoosts && this.checkCount >= this.boostLimit) || 
+     (!this.chooseBoosts && this.checkCount >= this.boostLimit - 1));
   }
-
-  constructor(private fb: FormBuilder) { }
 }

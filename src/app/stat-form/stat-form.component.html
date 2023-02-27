@@ -1,6 +1,7 @@
 <div [formGroup]="statForm">
     <div class="container">
 
+        <!--  Ancestry  --->
         <div class="identityBox">
             <h3>Ancestry</h3>
             <label>Select an ancestry</label><br/>
@@ -16,6 +17,7 @@
             <label [textContent]="ancestry.details"></label>
         </div>
 
+        <!--  Background  --->
         <div class="identityBox">
             <h3>Background</h3>
             <label>Select a background</label><br/>
@@ -37,17 +39,19 @@
             </div>
         </div>
 
+        <!--  Class  --->
         <div class="identityBox">
             <h3>Class</h3>
             <label>Select a class</label><br/>
-            <select id="classSelect" #c (change)="showClassBoosts(c.value)">
+            <select id="classSelect" #c (change)="showClassBoosts(c.value);">
                 <option>---</option>
                 <option *ngFor="let class of classes">
                     {{class.name}}
                 </option>
             </select><br/>
             <label [textContent]="class.details"></label><br/>
-        
+            
+            <!-- Radio Buttons for multiple key abilities --->
             <div [hidden]="class.current?.keyAbility2 == null">
                 <input type="radio" formControlName="classKey" id="true"
                     [value]="true"  name="classKey">
@@ -55,27 +59,38 @@
                 <input type="radio" formControlName="classKey" id="false"
                     [value]="false" name="classKey">
                     <label for="false">{{classRadio("keyAbility2")}}</label>
+
+                <!-- Rackets --->
+                <div [hidden]="class.current?.keyAbility2 != 'Racket'">
+                    <select [disabled]="classKey" id="racketSelect" #r (change)="showRacketBoosts(r.value)">
+                        <option>---</option>
+                        <option *ngFor="let racket of rackets">
+                            {{racket.name}}
+                        </option>
+                    </select><br/>
+                    <label>{{classKey ? '' : racket.details}}</label>
+                </div>
             </div>
         </div>
 
-        <!--  IN PROGRESS  -->
+        <!--  Roll Stats  --->
         <div class="rollBox">
             <h3>Roll Stats (temp)</h3>
-            <input type="checkbox" id="rollBox" formControlName="chooseRoll">
+            <input type="checkbox" id="rollBox" formControlName="chooseRoll" (change)="showAncestryBoosts(a.value); ;">
             <label for="rollBox" style="padding-top: 10px;">Use rolled stats</label><br/>
-            <button style="margin-bottom: 10px;" (click)="rollStats()">Roll Stats</button><br/>
-            <div *ngFor="let block of rolledStr; index as i" id="statBlock" >
+            <div *ngFor="let block of rolledString; index as i" id="statBlock" >
                 <label>{{block}} </label>
-                <select #s (change)="rollSelect(s.value, i)">
+                <select [disabled]="!chooseRoll" class="rollDrop" #s (change)="rollSelect(s.value, i)">
                     <option>---</option>
                     <option *ngFor="let stat of rollFilter(i)">
                         {{stat.name}}
                     </option>
                 </select><br/>
             </div>
+            <button style="margin-bottom: 10px;" (click)="rollStats()">Reroll Stats</button><br/>
         </div>
-        <!--  IN PROGRESS  -->
 
+        <!--  Free Stats  --->
         <div class="freeBox" formGroupName="boostBlock">
             <h3>Free Stats</h3>
             <p>(Choose {{chooseBoosts ? boostLimit : boostLimit - 1}})</p>
@@ -100,10 +115,12 @@
         </div>
     </div>
     
+    <!--  Calculate Button  --->
     <div class="calculate container">
         <button name="Calculate" (click)="calculate()" [disabled]="submitCheck()">Calculate</button>
     </div>
 
+    <!--  Stats  --->
     <div class="container">
         <div class="statBox" formGroupName="statBlock">
             <h3>Stats</h3>
@@ -116,20 +133,20 @@
                 <input type="number" id="str" name="str" formControlName="str" min="8" max="18">
             </div>
             <div>
-                <label>Intelligence</label>
-                <input type="number" id="int" name="int" formControlName="int" min="8" max="18">
-            </div>
-            <div>
                 <label>Dexterity</label>
                 <input type="number" id="dex" name="dex" formControlName="dex" min="8" max="18">
             </div>
             <div>
-                <label>Wisdom</label>
-                <input type="number" id="wis" name="wis" formControlName="wis" min="8" max="18">
-            </div>
-            <div>
                 <label>Constitution</label>
                 <input type="number" id="con" name="con" formControlName="con" min="8" max="18">
+            </div>
+            <div>
+                <label>Intelligence</label>
+                <input type="number" id="int" name="int" formControlName="int" min="8" max="18">
+            </div>
+            <div>
+                <label>Wisdom</label>
+                <input type="number" id="wis" name="wis" formControlName="wis" min="8" max="18">
             </div>
             <div>
                 <label>Charisma</label>

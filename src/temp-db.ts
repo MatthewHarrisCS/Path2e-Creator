@@ -307,3 +307,18 @@ export const BACKGROUND_LIST: any = [
         keyAbility2: "Constitution"
     }
 ]
+
+export const RACKET_LIST: any = [
+    {
+        name: "Ruffian",
+        keyAbility: "Strength"
+    },
+    {
+        name: "Scoundrel",
+        keyAbility: "Charisma"
+    },
+    {
+        name: "Thief",
+        keyAbility: null
+    }
+]
