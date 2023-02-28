@@ -5,14 +5,14 @@
         <div class="identityBox">
             <h3>Ancestry</h3>
             <label>Select an ancestry</label><br/>
-            <select id="ancestrySelect" #a (change)="showAncestryBoosts(a.value)">
+            <select id="ancestrySelect" #a (change)="setAncestry(a.value)">
                 <option>---</option>
                 <option *ngFor="let ancestry of ancestries">
                     {{ancestry.name}}
                 </option>
             </select><br/>
             <input type="checkbox" id="freeBox" formControlName="chooseBoosts" 
-                [attr.disabled]="freeDisable()" (change)="showAncestryBoosts(a.value); boostBlock.reset(); checkCount = 0">
+                [attr.disabled]="freeDisable()" (change)="setAncestry(a.value); boostBlock.reset(); checkCount = 0">
             <label for="freeBox">Free choice</label><br/>
             <label [textContent]="ancestry.details"></label>
         </div>
@@ -21,7 +21,7 @@
         <div class="identityBox">
             <h3>Background</h3>
             <label>Select a background</label><br/>
-            <select id="backgroundSelect" #b (change)="showBackgroundBoosts(b.value)">
+            <select id="backgroundSelect" #b (change)="setBackground(b.value)">
                 <option>---</option>
                 <option *ngFor="let background of backgrounds">
                     {{background.name}}
@@ -43,7 +43,7 @@
         <div class="identityBox">
             <h3>Class</h3>
             <label>Select a class</label><br/>
-            <select id="classSelect" #c (change)="showClassBoosts(c.value);">
+            <select id="classSelect" #c (change)="setClass(c.value);">
                 <option>---</option>
                 <option *ngFor="let class of classes">
                     {{class.name}}
@@ -62,7 +62,7 @@
 
                 <!-- Rackets --->
                 <div [hidden]="class.current?.keyAbility2 != 'Racket'">
-                    <select [disabled]="classKey" id="racketSelect" #r (change)="showRacketBoosts(r.value)">
+                    <select [disabled]="classKey" id="racketSelect" #r (change)="setRacket(r.value)">
                         <option>---</option>
                         <option *ngFor="let racket of rackets">
                             {{racket.name}}
@@ -75,8 +75,8 @@
 
         <!--  Roll Stats  --->
         <div class="rollBox">
-            <h3>Roll Stats (temp)</h3>
-            <input type="checkbox" id="rollBox" formControlName="chooseRoll" (change)="showAncestryBoosts(a.value); ;">
+            <h3>Roll Stats</h3>
+            <input type="checkbox" id="rollBox" formControlName="chooseRoll" (change)="setAncestry(a.value); boostBlock.reset(); checkCount = 0">
             <label for="rollBox" style="padding-top: 10px;">Use rolled stats</label><br/>
             <div *ngFor="let block of rolledString; index as i" id="statBlock" >
                 <label>{{block}} </label>
@@ -93,7 +93,7 @@
         <!--  Free Stats  --->
         <div class="freeBox" formGroupName="boostBlock">
             <h3>Free Stats</h3>
-            <p>(Choose {{chooseBoosts ? boostLimit : boostLimit - 1}})</p>
+            <p>({{boostLimit != 0 ? "Choose " + boostLimit : "N/A"}})</p>
             <input type="checkbox" [attr.disabled]="freeCheck('strBoosted')" 
                 id="strBoost" formControlName="strBoosted" (change)="freeCount($event)">
                 <label for="strBoost">Strength</label><br/>
@@ -117,7 +117,7 @@
     
     <!--  Calculate Button  --->
     <div class="calculate container">
-        <button name="Calculate" (click)="calculate()" [disabled]="submitCheck()">Calculate</button>
+        <button name="Calculate" (click)="calculate()" [disabled]="calcDisable()">Calculate</button>
     </div>
 
     <!--  Stats  --->
