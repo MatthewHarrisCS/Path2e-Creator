@@ -3,10 +3,10 @@ import { Ancestry } from 'src/models/ancestry';
 import { GameClass } from 'src/models/game-class';
 import { Identifier } from 'src/models/identifier';
 import { Racket } from 'src/models/racket';
-import { ANCESTRY_LIST, BACKGROUND_LIST, CLASS_LIST, RACKET_LIST } from 'src/temp-db';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Dice } from 'src/dice';
-import { STRING_TYPE } from '@angular/compiler';
+import { BackendService } from '../services/backend/backend.service';
+import { Background } from 'src/models/background';
 
 @Component({
   selector: 'stat-form',
@@ -15,17 +15,19 @@ import { STRING_TYPE } from '@angular/compiler';
 })
 export class StatFormComponent {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private backend: BackendService) { }
 
   // Roll stats on component initialization
-  ngOnInit() { this.rollStats(); }
+  ngOnInit() { 
+    this.getData();
+    this.rollStats(); 
+  }
 
-  /* TODO: Backend */
+  ancestries: Ancestry[] = [];
+  backgrounds: Background[] = [];
+  classes: GameClass[] = [];
+  rackets: Racket[] = [];
 
-  ancestries = ANCESTRY_LIST;
-  backgrounds = BACKGROUND_LIST;
-  classes = CLASS_LIST;
-  rackets = RACKET_LIST;
   ancestry = new Identifier("No ancestry selected", false, null);
   background = new Identifier("No background selected", false, null);
   class = new Identifier("No class selected", false, null);
@@ -102,6 +104,14 @@ export class StatFormComponent {
     // Return true if chooseRoll is unselected OR if selected, 
     // if all roll stat dropdown menus have been set
     return !this.chooseRoll || this.stats.find(x => x.at == -1) == undefined;
+  }
+
+  //
+  getData() {
+    this.backend.getAncestries().subscribe(ancestries => this.ancestries = ancestries);
+    this.backend.getBackgrounds().subscribe(backgrounds => this.backgrounds = backgrounds);
+    this.backend.getClasses().subscribe(classes => this.classes = classes);
+    this.backend.getRackets().subscribe(rackets => this.rackets = rackets);
   }
 
   // resetStats(): restore default values to the stat block
@@ -380,12 +390,12 @@ export class StatFormComponent {
     } else {
       // Find the selected ancestry in the list and save the details as a string
       let currentAncestry = this.ancestries.find((x: Ancestry) => x.name == name);
-      this.ancestry.details = `${currentAncestry.hp} HP
-        ${currentAncestry.size} Size
-        Speed of ${currentAncestry.speed} ft\n`; 
+      this.ancestry.details = `${currentAncestry?.hp} HP
+        ${currentAncestry?.size} Size
+        Speed of ${currentAncestry?.speed} ft\n`; 
 
       // Record the correct amount of boosts depending on the ancestry selected
-      if (currentAncestry.boost1 == null || this.chooseBoosts) {
+      if (currentAncestry?.boost1 == null || this.chooseBoosts) {
         this.ancestry.details = 
           this.chooseRoll ? 
             this.ancestry.details.concat(`+2 Free Stat\n`) : 
@@ -393,8 +403,8 @@ export class StatFormComponent {
       } else {
         if (!this.chooseRoll) this.ancestry.details = this.ancestry.details.concat(`+2 Free Stat\n`);
         this.ancestry.details = this.ancestry.details.concat(`+2 in ${currentAncestry.boost1}
-          +2 in ${currentAncestry.boost2}
-          –2 in ${currentAncestry.flaw}`);
+          +2 in ${currentAncestry?.boost2}
+          –2 in ${currentAncestry?.flaw}`);
       }
 
       // Set the selected boolean and save the ancestry database entry
@@ -412,11 +422,11 @@ export class StatFormComponent {
       this.background.current = null;
     } else {
       // Find the selected background in the list and save the details as a string
-      let currentBackground = this.backgrounds.find((x: GameClass) => x.name == name);
-      this.background.details = `+2 in ${currentBackground.keyAbility1}`;
+      let currentBackground = this.backgrounds.find((x: Background) => x.name == name);
+      this.background.details = `+2 in ${currentBackground?.keyAbility1}`;
 
       // If there is a second key ability, add it to the detail string
-      if (currentBackground.keyAbility2 != null) {
+      if (currentBackground?.keyAbility2 != null) {
         this.background.details = this.background.details.concat(` or ${currentBackground.keyAbility2}`);
       }
       
@@ -436,11 +446,11 @@ export class StatFormComponent {
     } else {
       // Find the selected class in the list and save the details as a string
       let currentClass = this.classes.find((x: GameClass) => x.name == name);
-      this.class.details = `+${currentClass.hp} HP
-        +2 in ${currentClass.keyAbility1}`;
+      this.class.details = `+${currentClass?.hp} HP
+        +2 in ${currentClass?.keyAbility1}`;
 
       // If there is a second key ability, add it to the detail string
-      if (currentClass.keyAbility2 != null) {
+      if (currentClass?.keyAbility2 != null) {
         this.class.details = this.class.details.concat(` or ${currentClass.keyAbility2}`);
       }
       
@@ -462,7 +472,7 @@ export class StatFormComponent {
       let currentRacket = this.rackets.find((x: Racket) => x.name == name);
       
       // If the racket has a boost, save the details as a string
-      if (currentRacket.keyAbility != null) {
+      if (currentRacket?.keyAbility != null) {
         this.racket.details = `+2 in ${currentRacket.keyAbility}`;
       } else {
         this.racket.details = "";
