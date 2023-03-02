@@ -1,4 +1,5 @@
-USE db;
+USE path2e_db;
+DROP TABLE IF EXISTS racket;
 DROP TABLE IF EXISTS background;
 DROP TABLE IF EXISTS characterStats;
 DROP TABLE IF EXISTS characterMain;
@@ -10,16 +11,21 @@ DROP TABLE IF EXISTS ancestry;
 CREATE TABLE ancestry (
 	name VARCHAR(16) PRIMARY KEY,
     hp INT NOT NULL,
-    size VARCHAR(16) CHECK (size IN ("Small", "Medium")) NOT NULL,
+    size VARCHAR(16) NOT NULL
+		CHECK (size IN ("Small", "Medium")),
     speed INT NOT NULL,
-    boost1 VARCHAR(12) CHECK (boost1 IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma")),
-    boost2 VARCHAR(12) CHECK (boost2 IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma")),
-    flaw VARCHAR(12) CHECK (flaw IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"))
+    boost1 VARCHAR(12) 
+		CHECK (boost1 IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma")),
+    boost2 VARCHAR(12) 
+		CHECK (boost2 IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma")),
+    flaw VARCHAR(12) 
+		CHECK (flaw IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"))
 );
 
 CREATE TABLE language (
 	name VARCHAR(12) PRIMARY KEY,
-    rarity VARCHAR(8) CHECK (rarity IN ("Commmon", "Uncommon", "Secret")) NOT NULL
+    rarity VARCHAR(8) NOT NULL
+		CHECK (rarity IN ("Commmon", "Uncommon", "Secret"))
 );
 
 CREATE TABLE ancestralLanguage (
@@ -33,15 +39,19 @@ CREATE TABLE ancestralLanguage (
 CREATE TABLE class (
 	name VARCHAR(16) PRIMARY KEY,
     hp INT NOT NULL,
-    keyAbility1 VARCHAR(12) CHECK (keyAbility1 IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma")) NOT NULL,
-    keyAbility2 VARCHAR(12) CHECK (keyAbility2 IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma", "Racket"))
+    keyAbility1 VARCHAR(12) NOT NULL
+		CHECK (keyAbility1 IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma")),
+    keyAbility2 VARCHAR(12) 
+		CHECK (keyAbility2 IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma", "Racket"))
 );
 
 CREATE TABLE background (
 	name VARCHAR(16) PRIMARY KEY,
     feat VARCHAR(64) NOT NULL, /*Add skill 1 and skill 2*/
-    keyAbility1 VARCHAR(12) CHECK (keyAbility1 IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma")) NOT NULL,
-    keyAbility2 VARCHAR(12) CHECK (keyAbility2 IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma", "Racket"))
+    keyAbility1 VARCHAR(12) NOT NULL
+		CHECK (keyAbility1 IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma")),
+    keyAbility2 VARCHAR(12) 
+		CHECK (keyAbility2 IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma", "Racket"))
 );
 
 
@@ -49,7 +59,8 @@ CREATE TABLE racket (
 	name VARCHAR(16) PRIMARY KEY,
     train1 VARCHAR(32),
     train2 VARCHAR(32),
-    keyAbility VARCHAR(12) CHECK (keyAbility IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"))
+    keyAbility VARCHAR(12) 
+		CHECK (keyAbility IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"))
 );
 
 INSERT INTO ancestry VALUES ("Dwarf", 10, "Medium", 20, "Constitution", "Wisdom", "Charisma");
