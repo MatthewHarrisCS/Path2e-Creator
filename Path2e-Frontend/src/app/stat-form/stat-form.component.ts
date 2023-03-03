@@ -108,10 +108,10 @@ export class StatFormComponent {
 
   //
   getData() {
-    this.backend.getAncestries().subscribe(ancestries => this.ancestries = ancestries);
-    this.backend.getBackgrounds().subscribe(backgrounds => this.backgrounds = backgrounds);
-    this.backend.getClasses().subscribe(classes => this.classes = classes);
-    this.backend.getRackets().subscribe(rackets => this.rackets = rackets);
+    this.backend.getAncestries().subscribe(x => this.ancestries = x);
+    this.backend.getBackgrounds().subscribe(x => this.backgrounds = x);
+    this.backend.getClasses().subscribe(x => this.classes = x);
+    this.backend.getRackets().subscribe(x => this.rackets = x);
   }
 
   // resetStats(): restore default values to the stat block
@@ -176,6 +176,7 @@ export class StatFormComponent {
   freeCount(e: Event) {
     // Increment or decrement the counter depending on
     // whether the checkbox was checked or unchecked
+    this.getData();
     this.checkCount = ((e.target as HTMLInputElement).checked 
       ? this.checkCount+1 : this.checkCount-1);
   }

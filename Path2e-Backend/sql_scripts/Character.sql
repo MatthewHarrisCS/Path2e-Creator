@@ -54,7 +54,6 @@ CREATE TABLE background (
 		CHECK (keyAbility2 IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma", "Racket"))
 );
 
-
 CREATE TABLE racket (
 	name VARCHAR(16) PRIMARY KEY,
     train1 VARCHAR(32),

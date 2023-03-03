@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
-import { IsAlphanumeric, IsEmail, Min, MinLength, NotContains } from "class-validator";
+import { Min } from "class-validator";
 import { ValidStat } from "../validators/validStat";
 
 @Entity({ name: 'ancestry' } )
