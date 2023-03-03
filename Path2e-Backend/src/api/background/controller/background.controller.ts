@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { BackgroundService } from '../service/background.service';
 
-@Controller('background')
+@Controller('api/background')
 export class BackgroundController {
     constructor(private service: BackgroundService) {}
 
@@ -9,5 +9,5 @@ export class BackgroundController {
     async getBackgrounds() {
         const backgrounds = await this.service.findBackgrounds();
         return backgrounds;
-}
+    }
 }

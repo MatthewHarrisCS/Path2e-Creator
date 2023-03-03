@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { AncestryService } from '../service/ancestry.service';
 
-@Controller('ancestry')
+@Controller('api/ancestry')
 export class AncestryController {
     constructor(private service: AncestryService) {}
 

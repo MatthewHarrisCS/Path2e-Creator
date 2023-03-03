@@ -1,4 +1,4 @@
-import { registerDecorator, ValidationOptions, ValidationArguments } from 'class-validator';
+import { registerDecorator, ValidationOptions } from 'class-validator';
 
 export function ValidStat(validationOptions?: ValidationOptions) {
   return function (object: Object, propertyName: string) {
@@ -17,7 +17,8 @@ export function ValidStat(validationOptions?: ValidationOptions) {
              value == "Constitution" ||
              value == "Intelligence" ||
              value == "Wisdom" ||
-             value == "Charisma");
+             value == "Charisma" ||
+             value == "Racket");
         },
       },
     });

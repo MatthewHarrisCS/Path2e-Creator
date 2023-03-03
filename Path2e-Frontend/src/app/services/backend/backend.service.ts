@@ -5,14 +5,13 @@ import { Ancestry } from 'src/models/ancestry';
 import { Background } from 'src/models/background';
 import { GameClass } from 'src/models/game-class';
 import { Racket } from 'src/models/racket';
-import { BACKGROUND_LIST, CLASS_LIST, RACKET_LIST } from 'src/temp-db';
 
 @Injectable({ providedIn: 'root' })
 export class BackendService {
 
   constructor(private http: HttpClient) {}
 
-  private urlBase: string = "http://localhost:4201";
+  private urlBase: string = "http://localhost:4201/api";
 
   getAncestries(): Observable<Ancestry[]> {
     return this.http.get<Ancestry[]>(this.urlBase + "/ancestry");
@@ -23,12 +22,10 @@ export class BackendService {
   }
   
   getClasses(): Observable<GameClass[]> {
-    const classes = of(CLASS_LIST);
-    return classes;
+    return this.http.get<GameClass[]>(this.urlBase + "/class");
   }
   
   getRackets(): Observable<Racket[]> {
-    const rackets = of(RACKET_LIST);
-    return rackets;
+    return this.http.get<Racket[]>(this.urlBase + "/racket");
   }
 }
