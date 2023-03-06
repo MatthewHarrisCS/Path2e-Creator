@@ -1,6 +1,14 @@
 <div [formGroup]="statForm">
     <div class="container">
 
+        <div class="nameBox">
+            <h3>Character Name</h3>
+            <label>Name your character</label><br/>
+            <input type="text" id="characterName" #n formControlName="characterName" maxlength="32"><br/>
+            <label>{{n.value.length <= 0 ? "Enter a name" : 
+                (nameCheck(n.value) ? "" : "Allowed characters: \na-z, A-Z, 0-9, \", ', and -")}}</label><br/>
+        </div>
+
         <!--  Ancestry  --->
         <div class="identityBox">
             <h3>Ancestry</h3>
@@ -103,9 +111,9 @@
             <input type="checkbox" [attr.disabled]="freeCheck('conBoosted')" 
                 id="conBoost" formControlName="conBoosted" (change)="freeCount($event)">
                 <label for="conBoost">Constitution</label><br/>
-            <input type="checkbox" [attr.disabled]="freeCheck('intBoosted')" 
-                id="intBoost" formControlName="intBoosted" (change)="freeCount($event)">
-                <label for="intBoost">Intelligence</label><br/>
+            <input type="checkbox" [attr.disabled]="freeCheck('itlBoosted')" 
+                id="itlBoost" formControlName="itlBoosted" (change)="freeCount($event)">
+                <label for="itlBoost">Intelligence</label><br/>
             <input type="checkbox" [attr.disabled]="freeCheck('wisBoosted')" 
                 id="wisBoost" formControlName="wisBoosted" (change)="freeCount($event)">
                 <label for="wisBoost">Wisdom</label><br/>
@@ -142,7 +150,7 @@
             </div>
             <div>
                 <label>Intelligence</label>
-                <input type="number" id="int" name="int" formControlName="int" min="8" max="18">
+                <input type="number" id="itl" name="itl" formControlName="itl" min="8" max="18">
             </div>
             <div>
                 <label>Wisdom</label>

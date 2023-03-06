@@ -1,4 +1,5 @@
 USE path2e_db;
+DROP TABLE IF EXISTS characterSheet;
 DROP TABLE IF EXISTS racket;
 DROP TABLE IF EXISTS background;
 DROP TABLE IF EXISTS characterStats;
@@ -121,5 +122,24 @@ INSERT INTO background VALUES ("Scout", "", "Dexterity", "Wisdom");
 INSERT INTO background VALUES ("Street Urchin", "", "Dexterity", "Constitution");
 INSERT INTO background VALUES ("Tinker", "", "Dexterity", "Intelligence");
 INSERT INTO background VALUES ("Warrior", "", "Strength", "Constitution");
+
+CREATE TABLE characterSheet (
+	name VARCHAR(32) PRIMARY KEY,
+    ancestry VARCHAR(16) NOT NULL, -- FOREIGN KEY
+    background VARCHAR(16) NOT NULL, -- FOREIGN KEY
+    class VARCHAR(16) NOT NULL, -- FOREIGN KEY
+    hp  INT,
+    str INT,
+    dex INT,
+    con INT, 
+    itl INT,
+    wis INT,
+    cha INT,
+	FOREIGN KEY (ancestry) REFERENCES ancestry (name),
+	FOREIGN KEY (background) REFERENCES background (name),
+	FOREIGN KEY (class) REFERENCES class (name)
+    
+    -- more (stats)?
+);
 
 SELECT * FROM background;

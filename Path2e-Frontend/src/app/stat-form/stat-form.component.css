@@ -6,6 +6,20 @@
     justify-content:space-evenly;
 }
 
+
+.nameBox {
+    width: 178px;
+    height: 270px;
+    outline: auto;
+    padding: 10px;
+    padding-top: 0;
+    white-space: pre-line;
+}
+    .nameBox label {
+        display: inline-block;
+        padding-top: 10px;
+    }
+
 .identityBox {
     width: 220px;
     height: 270px;

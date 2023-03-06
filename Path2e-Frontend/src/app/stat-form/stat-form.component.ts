@@ -46,12 +46,15 @@ export class StatFormComponent {
 
   // statForm: All of the values interactible through the UI
   statForm = this.fb.group({
+
+    characterName: "",
+
     statBlock: this.fb.group({
       hp:  [12, [Validators.required, Validators.min(12)]],
       str: [10, [Validators.required, Validators.min(8), Validators.max(18)]],
       dex: [10, [Validators.required, Validators.min(8), Validators.max(18)]],
       con: [10, [Validators.required, Validators.min(8), Validators.max(18)]],
-      int: [10, [Validators.required, Validators.min(8), Validators.max(18)]],
+      itl: [10, [Validators.required, Validators.min(8), Validators.max(18)]],
       wis: [10, [Validators.required, Validators.min(8), Validators.max(18)]],
       cha: [10, [Validators.required, Validators.min(8), Validators.max(18)]]
     }),
@@ -60,7 +63,7 @@ export class StatFormComponent {
       strBoosted: false,
       dexBoosted: false,
       conBoosted: false,
-      intBoosted: false,
+      itlBoosted: false,
       wisBoosted: false,
       chaBoosted: false
     }),
@@ -123,7 +126,7 @@ export class StatFormComponent {
         str: 10,
         dex: 10,
         con: 10,
-        int: 10,
+        itl: 10,
         wis: 10,
         cha: 10
       });
@@ -144,6 +147,15 @@ export class StatFormComponent {
                   {index: 5, at: -1, name: "Charisma"}];
   }
 
+  nameCheck(name: string) {
+    return name.match("^[\\w-'\" ]+$") != null;
+  }
+  
+  nameCheckSource() {
+    let name = this.statForm.get("characterName")?.value;
+    return name != undefined ? this.nameCheck(name) : false;
+  }
+
   // boundStat(): sets a given stat to a legal value
   boundStat(stat: any) {
     // Sets the given stat value within the 8-18 range if necessary
@@ -157,7 +169,7 @@ export class StatFormComponent {
     this.boundStat(this.statBlock['controls'].str);
     this.boundStat(this.statBlock['controls'].dex);
     this.boundStat(this.statBlock['controls'].con);
-    this.boundStat(this.statBlock['controls'].int);
+    this.boundStat(this.statBlock['controls'].itl);
     this.boundStat(this.statBlock['controls'].wis);
     this.boundStat(this.statBlock['controls'].cha);
   }
@@ -176,7 +188,6 @@ export class StatFormComponent {
   freeCount(e: Event) {
     // Increment or decrement the counter depending on
     // whether the checkbox was checked or unchecked
-    this.getData();
     this.checkCount = ((e.target as HTMLInputElement).checked 
       ? this.checkCount+1 : this.checkCount-1);
   }
@@ -244,7 +255,7 @@ export class StatFormComponent {
         str: arr[0],
         dex: arr[1],
         con: arr[2],
-        int: arr[3],
+        itl: arr[3],
         wis: arr[4],
         cha: arr[5]
       });
@@ -275,7 +286,7 @@ export class StatFormComponent {
     if (this.boostBlock['controls'].strBoosted.value) this.boostStat("Strength", true);
     if (this.boostBlock['controls'].dexBoosted.value) this.boostStat("Dexterity", true);
     if (this.boostBlock['controls'].conBoosted.value) this.boostStat("Constitution", true);
-    if (this.boostBlock['controls'].intBoosted.value) this.boostStat("Intelligence", true);
+    if (this.boostBlock['controls'].itlBoosted.value) this.boostStat("Intelligence", true);
     if (this.boostBlock['controls'].wisBoosted.value) this.boostStat("Wisdom", true);
     if (this.boostBlock['controls'].chaBoosted.value) this.boostStat("Charisma", true);
 
@@ -331,8 +342,8 @@ export class StatFormComponent {
         break;
       }
       case "Intelligence": {
-        this.statBlock['controls'].int.setValue(
-          this.statBlock['controls'].int.value + change);
+        this.statBlock['controls'].itl.setValue(
+          this.statBlock['controls'].itl.value + change);
         break;
       }
       case "Wisdom": {
@@ -493,7 +504,8 @@ export class StatFormComponent {
     //   * The Rogue's racket is chosen but no option has been selected
     //   * There are still free stat options available
     //   * Roll Stats has been selected but not all options have been set
-    return !this.ancestry.selected || !this.background.selected || 
+    return (!this.nameCheckSource()) ||
+    !this.ancestry.selected || !this.background.selected || 
     !this.class.selected || (!this.classKey && !this.racket.selected) ||
     !(this.checkCount >= this.boostLimit) || !this.rollSelected;
   }
