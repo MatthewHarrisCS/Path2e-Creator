@@ -1,4 +1,5 @@
 USE path2e_db;
+DROP TABLE IF EXISTS characterSheet;
 DROP TABLE IF EXISTS user;
 
 CREATE TABLE user (
@@ -10,6 +11,7 @@ CREATE TABLE user (
 		CHECK ((password NOT LIKE '% %') AND (LENGTH(password) >= 8))
 );
 
-INSERT INTO user VALUES ("great.googly.moogly@gmail.com", "MMonogram3", "carlnum2");
+INSERT INTO user VALUES ("greatgooglymoogly@gmail.com", "MMonogram3", "carlnum2");
+INSERT INTO user VALUES ("tony.duke.evers@delphigym.com", "Duke", "PunchOut");
 
 SELECT * FROM user;

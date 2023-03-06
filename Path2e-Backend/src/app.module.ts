@@ -9,6 +9,8 @@ import { Class } from './typeorm/entities/class';
 import { ClassModule } from './api/class/class.module';
 import { Racket } from './typeorm/entities/racket';
 import { RacketModule } from './api/racket/racket.module';
+import { CharacterSheet } from './typeorm/entities/characterSheet';
+import { CharacterModule } from './api/character/character.module';
 
 @Module({
   imports: [
@@ -19,11 +21,12 @@ import { RacketModule } from './api/racket/racket.module';
       username: 'matthewharriscs', // FOR DEV
       password: 'path2e-pw', // FOR DEV
       database: 'path2e_db',
-      entities: [User, Ancestry, Background, Class, Racket],
+      entities: [User, Ancestry, Background, Class, Racket, CharacterSheet],
       synchronize: true }), 
     AncestryModule, 
     BackgroundModule, 
     ClassModule, 
-    RacketModule]
+    RacketModule,
+    CharacterModule]
 })
 export class AppModule {}

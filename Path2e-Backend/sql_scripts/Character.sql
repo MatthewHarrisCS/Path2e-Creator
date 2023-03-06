@@ -123,23 +123,27 @@ INSERT INTO background VALUES ("Street Urchin", "", "Dexterity", "Constitution")
 INSERT INTO background VALUES ("Tinker", "", "Dexterity", "Intelligence");
 INSERT INTO background VALUES ("Warrior", "", "Strength", "Constitution");
 
-CREATE TABLE characterSheet (
-	name VARCHAR(32) PRIMARY KEY,
+CREATE TABLE charactersheet (
+	name VARCHAR(32) NOT NULL,
+	user VARCHAR(64) NOT NULL,
     ancestry VARCHAR(16) NOT NULL, -- FOREIGN KEY
     background VARCHAR(16) NOT NULL, -- FOREIGN KEY
     class VARCHAR(16) NOT NULL, -- FOREIGN KEY
-    hp  INT,
-    str INT,
-    dex INT,
-    con INT, 
-    itl INT,
-    wis INT,
-    cha INT,
+    hp  INT NOT NULL CHECK (hp >= 12),
+    str INT NOT NULL CHECK (str >= 8),
+    dex INT NOT NULL CHECK (dex >= 8),
+    con INT NOT NULL CHECK (con >= 8), 
+    itl INT NOT NULL CHECK (itl >= 8),
+    wis INT NOT NULL CHECK (wis >= 8),
+    cha INT NOT NULL CHECK (cha >= 8),
+    PRIMARY KEY (name, user),
+    FOREIGN KEY (user) REFERENCES user (email)
+		ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (ancestry) REFERENCES ancestry (name),
 	FOREIGN KEY (background) REFERENCES background (name),
 	FOREIGN KEY (class) REFERENCES class (name)
-    
-    -- more (stats)?
 );
 
-SELECT * FROM background;
+INSERT INTO characterSheet VALUES ( "Duke of the Dreadmarsh", "tony.duke.evers@delphigym.com", "Goblin", "Merchant", "Alchemist", 12, 10, 10, 10, 10, 10, 10);
+
+SELECT * FROM characterSheet;
