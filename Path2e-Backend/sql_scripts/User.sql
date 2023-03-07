@@ -13,5 +13,6 @@ CREATE TABLE user (
 
 INSERT INTO user VALUES ("greatgooglymoogly@gmail.com", "MMonogram3", "carlnum2");
 INSERT INTO user VALUES ("tony.duke.evers@delphigym.com", "Duke", "PunchOut");
+INSERT INTO user VALUES ("test@temporary.com", "Me", "doesntmatter");
 
 SELECT * FROM user;

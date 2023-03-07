@@ -9,13 +9,12 @@ export class CharacterController {
     @Get()
     async getCharacters() {
         const characters = await this.service.findCharacters();
-        console.log("controller");
         return characters;
     }
 
     @Post()
     async createCharacter(@Body() createCharacterDto: CreateCharacterDto) {
-        this.service.createCharacter(createCharacterDto);
+        return this.service.createCharacter(createCharacterDto);
     }
 
 }

@@ -3,7 +3,7 @@ export class CreateCharacterDto {
     user: string;
     ancestry: string;
     background: string;
-    class: string;
+    gameClass: string;
     hp: number;
     str: number;
     dex: number;

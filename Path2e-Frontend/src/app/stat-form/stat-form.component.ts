@@ -7,6 +7,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Dice } from 'src/dice';
 import { BackendService } from '../services/backend/backend.service';
 import { Background } from 'src/models/background';
+import { CharacterSheet } from 'src/models/charactersheet';
 
 @Component({
   selector: 'stat-form',
@@ -508,5 +509,28 @@ export class StatFormComponent {
     !this.ancestry.selected || !this.background.selected || 
     !this.class.selected || (!this.classKey && !this.racket.selected) ||
     !(this.checkCount >= this.boostLimit) || !this.rollSelected;
+  }
+
+  saveCharacter() {
+
+    const newName = this.statForm.get('characterName')?.value
+
+    if (newName != undefined) {
+      const newCharacter = new CharacterSheet(
+        /* name */ newName,
+        /* user */ "test@temporary.com", // Replace when login implemented
+        /* ancestry */ this.ancestry.current.name,
+        /* background */ this.background.current.name,
+        /* class */ this.class.current.name,
+        /* hp  */ this.statBlock.get('hp').value,
+        /* str */ this.statBlock.get('str').value,
+        /* dex */ this.statBlock.get('dex').value,
+        /* con */ this.statBlock.get('con').value,
+        /* itl */ this.statBlock.get('itl').value,
+        /* wis */ this.statBlock.get('wis').value,
+        /* cha */ this.statBlock.get('cha').value);
+        console.log("component");
+      this.backend.saveCharacter(newCharacter).subscribe(x => console.log(x));
+    }
   }
 }

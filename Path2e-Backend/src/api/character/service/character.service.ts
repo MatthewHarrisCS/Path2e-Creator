@@ -12,7 +12,7 @@ export class CharacterService {
     ) {}
 
     findCharacters() {
-        return this.characters.find({relations: ['ancestry', 'background', 'class']});
+        return this.characters.find({relations: ['ancestry', 'background', 'gameClass']});
     }
 
     createCharacter(body: CreateCharacterDto) {
