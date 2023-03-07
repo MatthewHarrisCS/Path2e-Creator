@@ -9,6 +9,7 @@ export class CharacterController {
     @Get()
     async getCharacters() {
         const characters = await this.service.findCharacters();
+        console.log("controller");
         return characters;
     }
 

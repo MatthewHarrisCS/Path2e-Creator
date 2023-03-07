@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CharacterSheet } from 'src/typeorm/entities/charactersheet';
+import { CharacterSheet } from 'src/typeorm/entities/characterSheet';
 import { Repository } from 'typeorm';
 import { CreateCharacterDto } from '../dtos/createCharacter.dto';
 
@@ -12,10 +12,13 @@ export class CharacterService {
     ) {}
 
     findCharacters() {
-        return this.characters.find();
+        return this.characters.find({relations: ['ancestry', 'background', 'class']});
     }
 
     createCharacter(body: CreateCharacterDto) {
-        console.log(body);
+        const newCharacter = this.characters.create(body);
+        const saveCharacter = this.characters.save(newCharacter)
+            .catch((err: any) => {console.log(err) });
+        return saveCharacter;
     }
 }

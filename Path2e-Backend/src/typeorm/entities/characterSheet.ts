@@ -35,7 +35,7 @@ export class CharacterSheet {
         onDelete: "CASCADE", onUpdate: "CASCADE", nullable: false
     })
     @JoinColumn({ name: "class" })
-    gameClass: string;
+    class: string;
 
     @Column("int") 
     @Min(12) 

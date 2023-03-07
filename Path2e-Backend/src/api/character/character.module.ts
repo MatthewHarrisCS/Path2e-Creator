@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CharacterSheet } from 'src/typeorm/entities/charactersheet';
+import { CharacterSheet } from 'src/typeorm/entities/characterSheet';
 import { CharacterController } from './controller/character.controller';
 import { CharacterService } from './service/character.service';
 
