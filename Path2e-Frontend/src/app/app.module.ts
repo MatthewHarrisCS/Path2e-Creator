@@ -5,18 +5,23 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { StatFormComponent } from './stat-form/stat-form.component';
 import { BackendService } from './services/backend/backend.service';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { LoginComponent } from './login/login.component';
+import { AuthService } from './services/auth/auth.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    StatFormComponent
+    StatFormComponent,
+    UserProfileComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [BackendService],
+  providers: [AuthService, BackendService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -16,7 +16,7 @@ import { CharacterSheet } from 'src/models/charactersheet';
 })
 export class StatFormComponent {
 
-  constructor(private fb: FormBuilder, private backend: BackendService) { }
+  constructor(private fb: FormBuilder, private backend: BackendService) {}
 
   // Roll stats on component initialization
   ngOnInit() { 

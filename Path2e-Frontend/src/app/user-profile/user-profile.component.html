@@ -1,0 +1,10 @@
+<div class="identityBox">
+    <h3>Ancestry</h3>
+    <label>Select an ancestry</label><br/>
+    <select id="characterSelect" #c (change)="setCharacter(c.value)">
+        <option>---</option>
+        <option *ngFor="let character of characters">
+            {{character.name}}
+        </option>
+    </select><br/>
+</div>

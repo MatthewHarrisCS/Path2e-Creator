@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Ancestry } from 'src/models/ancestry';
 import { Background } from 'src/models/background';
+import { CharacterList } from 'src/models/characterlist';
 import { CharacterSheet } from 'src/models/charactersheet';
 import { GameClass } from 'src/models/game-class';
 import { Racket } from 'src/models/racket';
@@ -30,9 +31,13 @@ export class BackendService {
     return this.http.get<Racket[]>(this.urlBase + "/racket");
   }
 
+  getCharacters(email: string): Observable<CharacterList[]> {
+    let params = new HttpParams().set("paramUser", email)
+    return this.http.get<CharacterList[]>(this.urlBase + "/character", {params: params});
+  }
+
   saveCharacter(body: CharacterSheet): Observable<CharacterSheet> {
     console.log(body);
-    console.log("fe service");
     return this.http.post<CharacterSheet>((this.urlBase + "/character"), body);
   }
 }

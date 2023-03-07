@@ -128,7 +128,7 @@ CREATE TABLE charactersheet (
 	user VARCHAR(64) NOT NULL,
     ancestry VARCHAR(16) NOT NULL, -- FOREIGN KEY
     background VARCHAR(16) NOT NULL, -- FOREIGN KEY
-    class VARCHAR(16) NOT NULL, -- FOREIGN KEY
+    gameClass VARCHAR(16) NOT NULL, -- FOREIGN KEY
     hp  INT NOT NULL CHECK (hp >= 12),
     str INT NOT NULL CHECK (str >= 8),
     dex INT NOT NULL CHECK (dex >= 8),
@@ -141,7 +141,7 @@ CREATE TABLE charactersheet (
 		ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (ancestry) REFERENCES ancestry (name),
 	FOREIGN KEY (background) REFERENCES background (name),
-	FOREIGN KEY (class) REFERENCES class (name)
+	FOREIGN KEY (gameClass) REFERENCES class (name)
 );
 
 INSERT INTO characterSheet VALUES ( "Duke of the Dreadmarsh", "tony.duke.evers@delphigym.com", "Goblin", "Merchant", "Alchemist", 12, 10, 10, 10, 10, 10, 10);
