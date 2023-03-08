@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { CharacterList } from 'src/models/characterlist';
+import { CharacterList } from 'src/models/character-list';
 import { User } from 'src/models/user';
 import { AuthService } from '../services/auth/auth.service';
 import { BackendService } from '../services/backend/backend.service';

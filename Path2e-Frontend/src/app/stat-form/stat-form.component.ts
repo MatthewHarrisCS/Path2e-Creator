@@ -7,7 +7,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Dice } from 'src/dice';
 import { BackendService } from '../services/backend/backend.service';
 import { Background } from 'src/models/background';
-import { CharacterSheet } from 'src/models/charactersheet';
+import { CharacterSheet } from 'src/models/character-sheet';
 
 @Component({
   selector: 'stat-form',

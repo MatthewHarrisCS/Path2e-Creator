@@ -1,1 +1,5 @@
-<p>login works!</p>
+<div [formGroup]="loginForm">
+    <input type="text" formControlName="email" placeholder="Email"><br>
+    <input type="password" formControlName="password" placeholder="Password"><br>
+    <button (click)="login()" [disabled]="loginDisable()">Submit</button>
+</div>

@@ -1,3 +1,6 @@
 <div><h1>Path 2e Creator</h1><p>(Working title, CSS to be implemented)</p></div>
-<user-profile/>
-<stat-form/>
+<login #l/>
+<div *ngIf="l.authenticated">
+    <user-profile/>
+    <stat-form/>
+</div>

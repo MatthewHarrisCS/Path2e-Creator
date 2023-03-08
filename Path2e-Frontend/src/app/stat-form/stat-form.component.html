@@ -125,7 +125,6 @@
     
     <!--  Calculate Button  --->
     <div class="calculate container">
-        <button name="Calculate" (click)="calculate()" [disabled]="calcDisable()">Calculate</button>
     </div>
 
     <!--  Stats  --->
@@ -163,9 +162,11 @@
         </div>
     </div>
 
-    <!--  Save Button  --->
+    <!--  Calculate and Save Buttons  --->
     <div class="calculate container">
-        <button name="Save" (click)="saveCharacter()" [disabled]="calcDisable()">Save to Database</button>
+        <div>
+            <button name="Calculate" (click)="calculate()" [disabled]="calcDisable()">Calculate</button>
+            <button name="Save" (click)="saveCharacter()" [disabled]="calcDisable()">Save to Database</button>
+        </div>
     </div>
-
 </div>

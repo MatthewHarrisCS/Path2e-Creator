@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Ancestry } from 'src/models/ancestry';
 import { Background } from 'src/models/background';
-import { CharacterList } from 'src/models/characterlist';
-import { CharacterSheet } from 'src/models/charactersheet';
+import { CharacterList } from 'src/models/character-list';
+import { CharacterSheet } from 'src/models/character-sheet';
 import { GameClass } from 'src/models/game-class';
 import { Racket } from 'src/models/racket';
 

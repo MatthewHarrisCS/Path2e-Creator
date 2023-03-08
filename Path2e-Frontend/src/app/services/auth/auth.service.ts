@@ -10,11 +10,18 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  tmpUser: User = {email: "test@temporary.com", username: ""};
+  user: User = {email: "", username: ""};
   private urlBase: string = "http://localhost:4201/auth";
 
+  setUser(login: any): boolean {
+    this.user.email = login.email;
+    console.log(this.user.email);
+    
+    return true;
+  }
+
   getCurrentUser(): Observable<User> {
-    return of(this.tmpUser); // TEMPORARY
+    return of(this.user); // TEMPORARY
   //return this.http.get<Observable<User>(this.urlBase);
   }
 }
