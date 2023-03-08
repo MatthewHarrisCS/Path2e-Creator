@@ -11,8 +11,11 @@ export class CharacterService {
         @InjectRepository(CharacterSheet) private characters: Repository<CharacterSheet>,
     ) {}
 
-    findCharacters() {
-        return this.characters.find({relations: ['ancestry', 'background', 'gameClass']});
+    findCharacters(user) {
+        return this.characters.find({
+            relations: ['ancestry', 'background', 'gameClass'],
+            where: { user: user }
+        });
     }
 
     createCharacter(body: CreateCharacterDto) {

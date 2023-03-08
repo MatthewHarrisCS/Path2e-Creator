@@ -32,7 +32,7 @@ export class BackendService {
   }
 
   getCharacters(email: string): Observable<CharacterList[]> {
-    let params = new HttpParams().set("paramUser", email)
+    let params = new HttpParams().set("user", email)
     return this.http.get<CharacterList[]>(this.urlBase + "/character", {params: params});
   }
 

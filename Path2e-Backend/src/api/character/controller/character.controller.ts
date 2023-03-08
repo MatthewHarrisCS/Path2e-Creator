@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Query } from '@nestjs/common/decorators';
 import { CreateCharacterDto } from '../dtos/createCharacter.dto';
 import { CharacterService } from '../service/character.service';
 
@@ -7,13 +8,8 @@ export class CharacterController {
     constructor(private service: CharacterService) {}
 
     @Get()
-    async getCharacters(@Param() params) {
-        //
-        //
-        // IMPLEMENT PARAMETERS FOR USER-SPECIFIC CHARACTERS
-        //
-        //
-        const characters = await this.service.findCharacters();
+    async getCharacters(@Query('user') user: string) {
+        const characters = await this.service.findCharacters(user);
         return characters;
     }
 
