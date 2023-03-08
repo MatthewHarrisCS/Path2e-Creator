@@ -12,8 +12,6 @@ export class User {
     @IsAlphanumeric()
     username: string;
 
-    @Column("varchar", { length: 32 })
-    @MinLength(8)
-    @NotContains(" ")
+    @Column("char", { length: 64 })
     password: string;
 }

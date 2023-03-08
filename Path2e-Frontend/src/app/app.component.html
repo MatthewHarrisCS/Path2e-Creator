@@ -1,6 +1,13 @@
-<div><h1>Path 2e Creator</h1><p>(Working title, CSS to be implemented)</p></div>
-<login #l/>
+<div [hidden]="l.authenticated">
+    <h1>Welcome</h1>
+    <login #l />
+</div>
 <div *ngIf="l.authenticated">
+    <div>
+        <h1>Path 2e Creator</h1>
+        <p>(Working title, CSS to be implemented)</p>
+        <button (click)="l.logout()">Log out</button>
+    </div>
     <user-profile/>
     <stat-form/>
 </div>

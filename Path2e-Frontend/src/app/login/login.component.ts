@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
+import { SHA256 } from 'crypto-js';
 
 @Component({
   selector: 'login',
@@ -20,8 +21,22 @@ export class LoginComponent {
 
   login() {
     if (!this.loginDisable()) {
-      this.authenticated = this.auth.setUser(this.loginForm.value);
+
+      const email = this.loginForm.get('email')?.value;
+      const password = this.loginForm.get('password')?.value;
+      if (password == undefined) return;
+
+      // Hash algorithm to avoid storing plaintext passwords
+      const cpassword = SHA256(password).toString();
+
+      this.authenticated = this.auth.setUser({email: email, password: cpassword});
     }
+  }
+
+  logout() {
+    this.loginForm.setValue({email: "", password: ""});
+    this.auth.setUser(this.loginForm.value);
+    this.authenticated = false;
   }
 
   //loginDisable(): disable the submit button if either the email

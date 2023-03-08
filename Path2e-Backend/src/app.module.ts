@@ -11,6 +11,7 @@ import { Racket } from './typeorm/entities/racket';
 import { RacketModule } from './api/racket/racket.module';
 import { CharacterSheet } from './typeorm/entities/characterSheet';
 import { CharacterModule } from './api/character/character.module';
+import { AuthModule } from './api/auth/auth.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { CharacterModule } from './api/character/character.module';
       database: 'path2e_db',
       entities: [User, Ancestry, Background, Class, Racket, CharacterSheet],
       synchronize: true }), 
+    AuthModule,
     AncestryModule, 
     BackgroundModule, 
     ClassModule, 

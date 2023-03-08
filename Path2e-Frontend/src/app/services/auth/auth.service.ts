@@ -14,10 +14,13 @@ export class AuthService {
   private urlBase: string = "http://localhost:4201/auth";
 
   setUser(login: any): boolean {
-    this.user.email = login.email;
-    console.log(this.user.email);
     
-    return true;
+    // find the entry and return true if successfully logged in
+    this.http.post<User>(this.urlBase + "/login", login).subscribe(x => 
+      {return x;})
+    
+    // return false if no entry returned
+    return false;
   }
 
   getCurrentUser(): Observable<User> {
