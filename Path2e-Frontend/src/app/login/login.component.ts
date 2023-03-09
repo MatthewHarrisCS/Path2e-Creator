@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
 import { SHA256 } from 'crypto-js';
+import { CookieService } from 'ngx-cookie-service'; 
 
 @Component({
   selector: 'login',
@@ -34,6 +35,7 @@ export class LoginComponent {
             console.log(x);
             if (x != null) {
               this.auth.setCurrentUser(x);
+              localStorage.setItem('currentUser', JSON.stringify(x));
               this.authenticated = true;
             }
           });
@@ -43,6 +45,7 @@ export class LoginComponent {
   logout() {
     this.loginForm.setValue({email: "", password: ""});
     this.auth.setCurrentUser({email: "", username: ""});
+    localStorage.removeItem('currentUser');
     this.authenticated = false;
   }
 

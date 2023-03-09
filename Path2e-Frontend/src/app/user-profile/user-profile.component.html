@@ -1,6 +1,5 @@
 <div class="identityBox">
-    <h3>Ancestry</h3>
-    <label>Select an ancestry</label><br/>
+    <h3>View Characters for {{user.username}}</h3>
     <select id="characterSelect" #c (change)="setCharacter(c.value)">
         <option>---</option>
         <option *ngFor="let character of characters">

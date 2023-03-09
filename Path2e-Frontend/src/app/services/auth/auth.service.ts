@@ -15,14 +15,14 @@ export class AuthService {
 
   logUser(login: any): Observable<User> {
     // find the entry and return true if successfully logged in
-    return this.http.post<User>(this.urlBase + "/login", login);
+    return this.http.post<User>(this.urlBase + "/login", login, {withCredentials: true});
   }
 
   setCurrentUser(user: User) {
     this.user = user;
   }
 
-  getCurrentUser(): Observable<User> {
-    return of(this.user);
+  getCurrentUser(): User {
+    return this.user;
   }
 }

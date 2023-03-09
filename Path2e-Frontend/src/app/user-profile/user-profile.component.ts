@@ -19,16 +19,12 @@ export class UserProfileComponent {
     this.getData();
   }
 
-  private user: User = {email: "", username: ""};
+  public user: User = {email: "", username: ""};
   public characters: CharacterList[] = [];
 
   getData() {
-    this.auth.getCurrentUser().subscribe(x => 
-      {
-        this.user = x;
-        this.backend.getCharacters(this.user.email)
-          .subscribe(y => this.characters = y);
-      });
+    this.user = this.auth.getCurrentUser();
+    this.backend.getCharacters(this.user.email).subscribe(y => this.characters = y);
   }
   
   setCharacter(name: string) {

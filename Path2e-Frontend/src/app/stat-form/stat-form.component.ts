@@ -8,6 +8,7 @@ import { Dice } from 'src/dice';
 import { BackendService } from '../services/backend/backend.service';
 import { Background } from 'src/models/background';
 import { CharacterSheet } from 'src/models/character-sheet';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'stat-form',
@@ -16,7 +17,10 @@ import { CharacterSheet } from 'src/models/character-sheet';
 })
 export class StatFormComponent {
 
-  constructor(private fb: FormBuilder, private backend: BackendService) {}
+  constructor(
+    private fb: FormBuilder, 
+    private auth: AuthService,
+    private backend: BackendService) {}
 
   // Roll stats on component initialization
   ngOnInit() { 
@@ -526,7 +530,7 @@ export class StatFormComponent {
     if (newName != undefined) {
       const newCharacter = new CharacterSheet(
         /* name */ newName,
-        /* user */ "test@temporary.com", // Replace when login implemented
+        /* user */ this.auth.getCurrentUser().email,
         /* ancestry */ this.ancestry.current.name,
         /* background */ this.background.current.name,
         /* class */ this.class.current.name,
