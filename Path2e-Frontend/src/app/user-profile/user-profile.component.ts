@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { CharacterList } from 'src/models/character-list';
 import { User } from 'src/models/user';
 import { AuthService } from '../services/auth/auth.service';
@@ -13,7 +12,6 @@ import { BackendService } from '../services/backend/backend.service';
 export class UserProfileComponent {
 
   constructor(
-    private fb: FormBuilder, 
     private backend: BackendService, 
     private auth: AuthService) {}
 
@@ -21,13 +19,16 @@ export class UserProfileComponent {
     this.getData();
   }
 
-  user: User = {email: "", username: ""};
-  characters: CharacterList[] = [];
+  private user: User = {email: "", username: ""};
+  public characters: CharacterList[] = [];
 
   getData() {
-    this.auth.getCurrentUser().subscribe(x => {this.user = x;
-      this.backend.getCharacters(this.user.email).subscribe(y => this.characters = y);
-    });
+    this.auth.getCurrentUser().subscribe(x => 
+      {
+        this.user = x;
+        this.backend.getCharacters(this.user.email)
+          .subscribe(y => this.characters = y);
+      });
   }
   
   setCharacter(name: string) {

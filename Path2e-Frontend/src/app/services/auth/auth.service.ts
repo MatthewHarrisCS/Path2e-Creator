@@ -10,21 +10,19 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  user: User = {email: "", username: ""};
+  private user: User = {email: "", username: ""};
   private urlBase: string = "http://localhost:4201/auth";
 
-  setUser(login: any): boolean {
-    
+  logUser(login: any): Observable<User> {
     // find the entry and return true if successfully logged in
-    this.http.post<User>(this.urlBase + "/login", login).subscribe(x => 
-      {return x;})
-    
-    // return false if no entry returned
-    return false;
+    return this.http.post<User>(this.urlBase + "/login", login);
+  }
+
+  setCurrentUser(user: User) {
+    this.user = user;
   }
 
   getCurrentUser(): Observable<User> {
-    return of(this.user); // TEMPORARY
-  //return this.http.get<Observable<User>(this.urlBase);
+    return of(this.user);
   }
 }

@@ -14,7 +14,7 @@ export class LoginComponent {
 
   public authenticated = false;
 
-  loginForm = this.fb.group({
+  public loginForm = this.fb.group({
     email: "",
     password: ""
   });
@@ -28,14 +28,21 @@ export class LoginComponent {
 
       // Hash algorithm to avoid storing plaintext passwords
       const cpassword = SHA256(password).toString();
-
-      this.authenticated = this.auth.setUser({email: email, password: cpassword});
+      this.auth.logUser({email: email, password: cpassword})
+        .subscribe(x => 
+          {
+            console.log(x);
+            if (x != null) {
+              this.auth.setCurrentUser(x);
+              this.authenticated = true;
+            }
+          });
     }
   }
 
   logout() {
     this.loginForm.setValue({email: "", password: ""});
-    this.auth.setUser(this.loginForm.value);
+    this.auth.setCurrentUser({email: "", username: ""});
     this.authenticated = false;
   }
 
