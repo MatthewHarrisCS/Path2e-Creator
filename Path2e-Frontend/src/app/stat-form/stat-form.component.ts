@@ -24,29 +24,31 @@ export class StatFormComponent {
     this.rollStats(); 
   }
 
-  ancestries: Ancestry[] = [];
-  backgrounds: Background[] = [];
-  classes: GameClass[] = [];
-  rackets: Racket[] = [];
+  public ancestries: Ancestry[] = [];
+  public backgrounds: Background[] = [];
+  public classes: GameClass[] = [];
+  public rackets: Racket[] = [];
 
-  ancestry = new Identifier("No ancestry selected", false, null);
-  background = new Identifier("No background selected", false, null);
-  class = new Identifier("No class selected", false, null);
-  racket = new Identifier("", false, null);
+  public ancestry = new Identifier("No ancestry selected", false, null);
+  public background = new Identifier("No background selected", false, null);
+  public class = new Identifier("No class selected", false, null);
+  public racket = new Identifier("", false, null);
 
-  checkCount = 0;
+  private checkCount = 0;
 
-  rolledStats = [0, 0, 0, 0, 0, 0];
-  rolledString = [" ", " ", " ", " ", " ", " "];
-  stats = [{index: 0, at: -1, name: "Strength"}, 
-           {index: 1, at: -1, name: "Dexterity"}, 
-           {index: 2, at: -1, name: "Constitution"}, 
-           {index: 3, at: -1, name: "Intelligence"}, 
-           {index: 4, at: -1, name: "Wisdom"}, 
-           {index: 5, at: -1, name: "Charisma"}];
+  public  rolledString = [" ", " ", " ", " ", " ", " "];
+  private rolledStats = [0, 0, 0, 0, 0, 0];
+  private stats = [
+    {index: 0, at: -1, name: "Strength"}, 
+    {index: 1, at: -1, name: "Dexterity"}, 
+    {index: 2, at: -1, name: "Constitution"}, 
+    {index: 3, at: -1, name: "Intelligence"}, 
+    {index: 4, at: -1, name: "Wisdom"}, 
+    {index: 5, at: -1, name: "Charisma"}
+  ];
 
   // statForm: All of the values interactible through the UI
-  statForm = this.fb.group({
+  public statForm = this.fb.group({
 
     characterName: "",
 
@@ -76,27 +78,27 @@ export class StatFormComponent {
   });
 
   // Get variables for needed form values
-  get statBlock(): any {
+  private get statBlock(): any {
     return this.statForm.get('statBlock');
   }
 
-  get boostBlock(): any {
+  private get boostBlock(): any {
     return this.statForm.get('boostBlock');
   }
 
-  get chooseRoll(): any {
-    return this.statForm.get('chooseRoll')?.value;
-  }
-
-  get chooseBoosts(): any {
+  private get chooseBoosts(): any {
     return this.statForm.get('chooseBoosts')?.value;
   }
 
-  get classKey(): any {
+  public get chooseRoll(): any {
+    return this.statForm.get('chooseRoll')?.value;
+  }
+
+  public get classKey(): any {
     return this.statForm.get('classKey')?.value;
   }
 
-  get boostLimit(): any {
+  public get boostLimit(): any {
     // Return the amount of free stat boosts given by the currently 
     // selected options (-1 for chooseRoll, +1 for chooseBoosts)
     if (this.chooseRoll && !this.chooseBoosts) return 0;
@@ -104,14 +106,14 @@ export class StatFormComponent {
     return 1;
   }
 
-  get rollSelected(): any {
+  private get rollSelected(): any {
     // Return true if chooseRoll is unselected OR if selected, 
     // if all roll stat dropdown menus have been set
     return !this.chooseRoll || this.stats.find(x => x.at == -1) == undefined;
   }
 
   //
-  getData() {
+  private getData() {
     this.backend.getAncestries().subscribe(x => this.ancestries = x);
     this.backend.getBackgrounds().subscribe(x => this.backgrounds = x);
     this.backend.getClasses().subscribe(x => this.classes = x);
@@ -119,7 +121,7 @@ export class StatFormComponent {
   }
 
   // resetStats(): restore default values to the stat block
-  resetStats() {
+  private resetStats() {
     // Set the stat block values back to their defaults
     this.statBlock.setValue(
       {
@@ -134,7 +136,7 @@ export class StatFormComponent {
   }
 
   // resetRolls(): restore default values to the roll block
-  resetRolls() {
+  private resetRolls() {
     // Set the arrays to null values
     this.rolledStats = [0, 0, 0, 0, 0, 0];
     this.rolledString = [" ", " ", " ", " ", " ", " "];
@@ -148,24 +150,30 @@ export class StatFormComponent {
                   {index: 5, at: -1, name: "Charisma"}];
   }
 
-  nameCheck(name: string) {
+  public resetBoosts(name: string) {
+    this.setAncestry(name);
+    this.boostBlock.reset();
+    this.checkCount = 0;
+  }
+
+  public nameCheck(name: string) {
     return name.match("^[\\w-'\" ]+$") != null;
   }
   
-  nameCheckSource() {
+  private nameCheckSource() {
     let name = this.statForm.get("characterName")?.value;
     return name != undefined ? this.nameCheck(name) : false;
   }
 
   // boundStat(): sets a given stat to a legal value
-  boundStat(stat: any) {
+  private boundStat(stat: any) {
     // Sets the given stat value within the 8-18 range if necessary
     if (stat.value > 18) stat.setValue(18);
     if (stat.value < 8) stat.setValue(8);
   }
 
   // boundStatBlock(): sets all stats to legal values
-  boundStatBlock() {
+  private boundStatBlock() {
     // Call boundStat for all six stats
     this.boundStat(this.statBlock['controls'].str);
     this.boundStat(this.statBlock['controls'].dex);
@@ -176,17 +184,17 @@ export class StatFormComponent {
   }
 
   // backgroundRadio(): return a Background's key ability if it exists
-  backgroundRadio(boost: string) {
+  public backgroundRadio(boost: string) {
     return this.background.current != null ? this.background.current[boost] : "N/A"
   }
 
   // classRadio(): return a Class's key ability if it exists
-  classRadio(boost: string) {
+  public classRadio(boost: string) {
     return this.class.current != null ? this.class.current[boost] : "N/A"
   }
 
   // freeCount(): count the number of free stat options chosen
-  freeCount(e: Event) {
+  public freeCount(e: Event) {
     // Increment or decrement the counter depending on
     // whether the checkbox was checked or unchecked
     this.checkCount = ((e.target as HTMLInputElement).checked 
@@ -194,14 +202,14 @@ export class StatFormComponent {
   }
 
   // freeCheck(): return whether the given free stat option can be chosen
-  freeCheck(boost: string) {
+  public freeCheck(boost: string) {
     // Check two options before allowing user to select a checkbox:
     // The boostLimit has not been exceeded AND the checkbox must not already be selected
     return (this.checkCount >= this.boostLimit) && (!this.boostBlock.controls[boost].value) ? true : null;
   }
 
   // freeDisable(): disable the free choice option if ancestry has it by default
-  freeDisable() {
+  public freeDisable() {
     // If the selected ancestry exists but does not have a set boost,
     // set the value of chooseBoosts and return true
     if (this.ancestry.current != null && this.ancestry.current['boost1'] == null) {
@@ -214,7 +222,7 @@ export class StatFormComponent {
   }
 
   // rollSelect(): reset the At index for the selected stat
-  rollSelect(stat: string, index: number) {
+  public rollSelect(stat: string, index: number) {
     // Remove the index of the unselected entry (if exists)
     this.stats.forEach(x => {if (x.at == index) x.at = -1;});
 
@@ -224,7 +232,7 @@ export class StatFormComponent {
   }
 
   // rollFilter(): return a stats list filtering out selected options
-  rollFilter(index: number) {
+  public rollFilter(index: number) {
     // Return any stats options that are not already selected, as
     // well as the option selected by the specified dropdown menu
     return this.stats.filter(x => x.at == -1 || x.at == index);
@@ -232,7 +240,7 @@ export class StatFormComponent {
 
   // rollSet(): set the rolled stats into the stat block according to
   //            the dropdown options chosen by the user
-  rollSet() {
+  private rollSet() {
 
     let arr = [0, 0, 0, 0, 0, 0];
 
@@ -264,7 +272,7 @@ export class StatFormComponent {
 
   // calculate(): calculate and set the stat block with all boosts and flaws
   //              from the user's chosen ancestry, background, and class
-  calculate() {
+  public calculate() {
     // Reset the stat block to default values
     this.resetStats();
 
@@ -315,7 +323,7 @@ export class StatFormComponent {
   }
 
   // boostStat(): increase or decrease the specified stat by 2
-  boostStat(boost: string, isBoost: boolean) {
+  private boostStat(boost: string, isBoost: boolean) {
     let change = 2;
 
     // If marked as flaw and free choice is off, negate change
@@ -360,7 +368,7 @@ export class StatFormComponent {
   }
 
   // rollStats(): randomly generate rolled stats using Dice functions
-  rollStats() {
+  public rollStats() {
     // Reset any saved roll values
     this.resetRolls();
     let roll = new Dice();
@@ -394,7 +402,7 @@ export class StatFormComponent {
   }
 
   // setAncestry(): save the selected ancestry and show details
-  setAncestry(name: string) {
+  public setAncestry(name: string) {
     // If default option selected, set the ancestry to null
     if (name == "---") {
       this.ancestry.details = "No ancestry selected";
@@ -427,7 +435,7 @@ export class StatFormComponent {
   }
 
   // setBackground(): save the selected background and show details
-  setBackground(name: string) {
+  public setBackground(name: string) {
     // If default option selected, set the background to null
     if (name == "---") {
       this.background.details = "No background selected";
@@ -450,7 +458,7 @@ export class StatFormComponent {
   }
   
   // setClass(): save the selected class and show details
-  setClass(name: string) {
+  public setClass(name: string) {
     // If default option selected, set the class to null
     if (name == "---") {
       this.class.details = "No class selected";
@@ -474,7 +482,7 @@ export class StatFormComponent {
   }
 
   // setRacket(): save the selected racket and show details
-  setRacket(name: string) {
+  public setRacket(name: string) {
     // If default option selected, set the racket to null
     if (name == "---") {
       this.racket.details = "";
@@ -499,7 +507,7 @@ export class StatFormComponent {
 
   // calcDisable(): disable the calculation button if any parameters
   //                have not been reached already
-  calcDisable() {
+  public calcDisable() {
     // Returns true if any of the parameters fail:
     //   * The ancestry, background, and class have not been selected
     //   * The Rogue's racket is chosen but no option has been selected
@@ -511,7 +519,7 @@ export class StatFormComponent {
     !(this.checkCount >= this.boostLimit) || !this.rollSelected;
   }
 
-  saveCharacter() {
+  public saveCharacter() {
 
     const newName = this.statForm.get('characterName')?.value
 

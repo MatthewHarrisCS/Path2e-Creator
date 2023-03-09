@@ -20,7 +20,7 @@
                 </option>
             </select><br/>
             <input type="checkbox" id="freeBox" formControlName="chooseBoosts" 
-                [attr.disabled]="freeDisable()" (change)="setAncestry(a.value); boostBlock.reset(); checkCount = 0">
+                [attr.disabled]="freeDisable()" (change)="resetBoosts(a.value)">
             <label for="freeBox">Free choice</label><br/>
             <label [textContent]="ancestry.details"></label>
         </div>
@@ -84,7 +84,7 @@
         <!--  Roll Stats  --->
         <div class="rollBox">
             <h3>Roll Stats</h3>
-            <input type="checkbox" id="rollBox" formControlName="chooseRoll" (change)="setAncestry(a.value); boostBlock.reset(); checkCount = 0">
+            <input type="checkbox" id="rollBox" formControlName="chooseRoll" (change)="resetBoosts(a.value)">
             <label for="rollBox" style="padding-top: 10px;">Use rolled stats</label><br/>
             <div *ngFor="let block of rolledString; index as i" id="statBlock" >
                 <label>{{block}} </label>
