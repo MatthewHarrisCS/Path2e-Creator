@@ -11,13 +11,6 @@ export class AuthService {
         @InjectRepository(User) private users: Repository<User>,
     ) {}
 
-    login(loginDto: LoginDto) {
-        return this.users.findOneBy({
-            email: loginDto.email,
-            password: loginDto.password
-        });
-    }
-
     getUser(email: string) {
         return this.users.findOneBy({
             email: email

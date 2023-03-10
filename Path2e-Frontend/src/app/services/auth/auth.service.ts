@@ -16,6 +16,10 @@ export class AuthService {
   logUser(login: any): Observable<User> {
     // find the entry and return true if successfully logged in
     return this.http.post<User>(this.urlBase + "/login", login, {withCredentials: true});
+  }  
+  getSession(): Observable<User> {
+    // find the entry and return true if successfully logged in
+    return this.http.get<User>(this.urlBase + "/login", {withCredentials: true});
   }
 
   setCurrentUser(user: User) {

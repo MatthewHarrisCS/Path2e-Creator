@@ -1,26 +1,38 @@
-import { Body, Controller, Post, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { LoginDto } from '../dtos/login.dto';
 import { AuthService } from '../service/auth.service';
-import { LocalAuthGuard } from '../utils/local-guard';
+import { LocalAuthGuard, LocalSessionGuard } from '../utils/local-guards';
+import { Request } from 'express';
+import * as bcrypt from 'bcrypt';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private service: AuthService) {}
+    constructor(@Inject('AUTH_SERVICE') private readonly service: AuthService) {}
 
     @UseGuards(LocalAuthGuard)
     @Post('/login')
     async login(@Body() loginDto: LoginDto) {
         if (loginDto.email == null || loginDto.password == null) return null;
-        const logged = await this.service.login(loginDto);
+        const currUser = await this.service.getUser(loginDto.email);
         
-        if (logged == null) {
-            return logged;
+        if (currUser == null) return null;
+        const hashCheck = await bcrypt.compare(loginDto.password, currUser.password);
+        
+        console.log(currUser);
+        if (hashCheck) {
+            return { email: currUser.email, username: currUser.username}
         } else {
-            return {
-                email: logged.email, 
-                username: logged.username
-            };
+            return null;
         }
+    }
+
+    @UseGuards(LocalSessionGuard)
+    @Get('/login')
+    async getSession(@Req() req: Request) {
+
+        // KEEP WORKING - GET PARAMS FROM REQ.USER
+        return { email: req.params.email, username: req.params.username };
+
     }
 
     @Post('/register')

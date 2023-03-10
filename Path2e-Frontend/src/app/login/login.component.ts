@@ -11,7 +11,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class LoginComponent {
 
-  constructor(private fb: FormBuilder, private auth: AuthService) {}
+  constructor(private fb: FormBuilder, private auth: AuthService, private cookie: CookieService) {}
 
   public authenticated = false;
 
@@ -20,22 +20,23 @@ export class LoginComponent {
     password: ""
   });
 
+  ngOnInit() {
+    this.auth.getSession().subscribe(x => console.log(x))
+  }
+
   login() {
     if (!this.loginDisable()) {
 
       const email = this.loginForm.get('email')?.value;
       const password = this.loginForm.get('password')?.value;
-      if (password == undefined) return;
 
       // Hash algorithm to avoid storing plaintext passwords
-      const cpassword = SHA256(password).toString();
-      this.auth.logUser({email: email, password: cpassword})
+      this.auth.logUser({email: email, password: password})
         .subscribe(x => 
           {
             console.log(x);
             if (x != null) {
               this.auth.setCurrentUser(x);
-              localStorage.setItem('currentUser', JSON.stringify(x));
               this.authenticated = true;
             }
           });
@@ -45,7 +46,6 @@ export class LoginComponent {
   logout() {
     this.loginForm.setValue({email: "", password: ""});
     this.auth.setCurrentUser({email: "", username: ""});
-    localStorage.removeItem('currentUser');
     this.authenticated = false;
   }
 

@@ -12,6 +12,6 @@ export class User {
     @IsAlphanumeric()
     username: string;
 
-    @Column("char", { length: 64 })
+    @Column("char", { length: 60 })
     password: string;
 }

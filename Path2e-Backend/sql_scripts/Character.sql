@@ -132,7 +132,7 @@ CREATE TABLE charactersheet (
     hp  INT NOT NULL CHECK (hp >= 12),
     str INT NOT NULL CHECK (str >= 8),
     dex INT NOT NULL CHECK (dex >= 8),
-    con INT NOT NULL CHECK (con >= 8), 
+    con INT NOT NULL CHECK (con >= 8),
     itl INT NOT NULL CHECK (itl >= 8),
     wis INT NOT NULL CHECK (wis >= 8),
     cha INT NOT NULL CHECK (cha >= 8),
