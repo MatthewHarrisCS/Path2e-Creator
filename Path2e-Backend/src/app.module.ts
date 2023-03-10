@@ -12,6 +12,7 @@ import { RacketModule } from './api/racket/racket.module';
 import { CharacterSheet } from './typeorm/entities/characterSheet';
 import { CharacterModule } from './api/character/character.module';
 import { AuthModule } from './api/auth/auth.module';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -23,7 +24,10 @@ import { AuthModule } from './api/auth/auth.module';
       password: 'path2e-pw', // FOR DEV
       database: 'path2e_db',
       entities: [User, Ancestry, Background, Class, Racket, CharacterSheet],
-      synchronize: true }), 
+      synchronize: true }),
+    PassportModule.register({
+        session: true,
+      }),
     AuthModule,
     AncestryModule, 
     BackgroundModule, 
