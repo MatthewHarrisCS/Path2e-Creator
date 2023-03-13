@@ -1,5 +1,23 @@
-<div [formGroup]="loginForm">
+<div *ngIf="!register; then loginDiv else regDiv"></div>
+<ng-template #loginDiv [formGroup]="loginForm">
     <input type="text" formControlName="email" placeholder="Email"><br>
     <input type="password" formControlName="password" placeholder="Password"><br>
-    <button (click)="login()" [disabled]="loginDisable()">Submit</button>
-</div>
+    <label [hidden]="!failed">Error: Incorrect email or password. Please try again.</label><br>
+    <button (click)="login()" [disabled]="loginDisable()">Submit</button><br>
+    <button (click)="regUser = true;">Create New Account</button>
+</ng-template>
+<ng-template #regDiv {formGroup}="">
+    <input type="text" #e formControlName="email" placeholder="Email"><br>
+    <label>{{e.value.length <= 0 ? "" : (emailCheck(e.value) ? "" : 
+        "Please enter a valid email")}}</label><br/>
+    <input type="text" #u formControlName="username" placeholder="Username"><br>
+    <label>{{u.value.length <= 0 ? "" : (usernameCheck(u.value) ? "" : 
+        "Allowed characters: \na-z, A-Z, and 0-9")}}</label><br/>
+    <input type="password" #p1 formControlName="password" placeholder="Password"><br>
+    <input type="password" #p2 formControlName="password2" placeholder="Confirm Password"><br>
+    <label>{{p1.value.length <= 0 && p2.value.length <= 0 ? "" : 
+        p1.value.length < 8 || p2.value.length < 8 ? "Password must be at least 8 characters long" : 
+        (usernameCheck(u.value) ? "" : 
+        "Please confirm entered passwords match")}}</label><br/>
+    <button (click)="regUser = false;">Return</button>
+</ng-template>

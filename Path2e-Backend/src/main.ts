@@ -16,6 +16,7 @@ async function bootstrap() {
   });
   app.use(
     session({
+      name: 'path2e.sid',
       secret: 'VaderIsLukesDad', // FOR DEV - REPLACE WITH ENVIRONMENTAL VARIABLE
       resave: false,
       saveUninitialized: false,
@@ -28,5 +29,5 @@ async function bootstrap() {
   app.use(passport.initialize());
   app.use(passport.session());
   await app.listen(4201);
-} 
+}
 bootstrap();
