@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
-import { SHA256 } from 'crypto-js';
-import { CookieService } from 'ngx-cookie-service'; 
+import { catchError, of } from 'rxjs';
+import { Registration } from 'src/models/registration';
 
 @Component({
   selector: 'login',
@@ -11,17 +11,29 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class LoginComponent {
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private cookie: CookieService) {}
+  constructor(private fb: FormBuilder, private auth: AuthService) {}
 
   public authenticated = false;
+  public failed = false;
+  public regUser = false;
+  public regUserCheck = true;
 
   public loginForm = this.fb.group({
     email: "",
     password: ""
   });
 
+  public regForm = this.fb.group({
+    email: "",
+    username: "",
+    password: "",
+    password2: ""
+  });
+
   ngOnInit() {
-    this.auth.getSession().subscribe(x => 
+    this.auth.getSession()
+    .pipe(catchError(err => {return of(null);}))
+    .subscribe(x => 
       {
         if (x != null) {
           this.auth.setCurrentUser(x);
@@ -39,9 +51,9 @@ export class LoginComponent {
 
       // Hash algorithm to avoid storing plaintext passwords
       this.auth.logUser({email: email, password: password})
+        .pipe(catchError(err => {this.failed = true; return of(null);}))
         .subscribe(x => 
           {
-            console.log(x);
             if (x != null) {
               this.auth.setCurrentUser(x);
               this.authenticated = true;
@@ -50,9 +62,24 @@ export class LoginComponent {
     }
   }
 
+  register() {
+
+    const email = this.regForm.get('email')?.value;
+    const username = this.regForm.get('username')?.value;
+    const password = this.regForm.get('password')?.value;
+
+    const reg = new Registration(
+      email,
+      this.regForm.get('username')?.value,
+      this.regForm.get('password')?.value,
+      )
+    this.auth.
+  }
+
   logout() {
     this.loginForm.setValue({email: "", password: ""});
     this.auth.setCurrentUser({email: "", username: ""});
+    this.auth.logout().subscribe();
     this.authenticated = false;
   }
 
@@ -61,5 +88,17 @@ export class LoginComponent {
   loginDisable() {
     return (this.loginForm.get('email')?.value == "") 
       ||(this.loginForm.get('password')?.value == "");
+  }
+
+  emailCheck(name: string) {
+    return name.match("^([a-zA-Z0-9_.+-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$") != null;
+  }
+  
+  usernameCheck(name: string) {
+    return name.match("^[\\w]+$") != null;
+  }
+
+  passwordCheck(p1: string, p2: string) {
+    return (p1 == p2);
   }
 }
