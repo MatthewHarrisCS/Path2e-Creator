@@ -1,7 +1,6 @@
 import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy } from "passport-local";
-import { LoginDto } from "../dtos/login.dto";
 import { AuthService } from "../service/auth.service";
 import * as bcrypt from 'bcrypt';
 
@@ -26,7 +25,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
         const hashCheck = await bcrypt.compare(password, user.password);
 
         if(hashCheck) {
-            return user;
+            return {email: user.email, username: user.username};
         } else {
             throw new UnauthorizedException();
         }

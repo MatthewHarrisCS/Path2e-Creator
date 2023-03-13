@@ -21,7 +21,14 @@ export class LoginComponent {
   });
 
   ngOnInit() {
-    this.auth.getSession().subscribe(x => console.log(x))
+    this.auth.getSession().subscribe(x => 
+      {
+        if (x != null) {
+          this.auth.setCurrentUser(x);
+          this.authenticated = true;
+        }
+      }
+    );
   }
 
   login() {

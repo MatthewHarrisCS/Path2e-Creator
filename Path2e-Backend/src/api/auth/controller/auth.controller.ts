@@ -18,7 +18,6 @@ export class AuthController {
         if (currUser == null) return null;
         const hashCheck = await bcrypt.compare(loginDto.password, currUser.password);
         
-        console.log(currUser);
         if (hashCheck) {
             return { email: currUser.email, username: currUser.username}
         } else {
@@ -29,10 +28,7 @@ export class AuthController {
     @UseGuards(LocalSessionGuard)
     @Get('/login')
     async getSession(@Req() req: Request) {
-
-        // KEEP WORKING - GET PARAMS FROM REQ.USER
-        return { email: req.params.email, username: req.params.username };
-
+        return req.user;
     }
 
     @Post('/register')
