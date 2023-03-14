@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
 import { catchError, of } from 'rxjs';
-import { Registration } from 'src/models/registration';
 
 @Component({
   selector: 'login',
@@ -29,6 +28,27 @@ export class LoginComponent {
     password: "",
     password2: ""
   });
+
+  public get email(): any {
+    return this.regForm.get('email')?.value;
+  }
+  
+  public get username(): any {
+    return this.regForm.get('username')?.value;
+  }
+  
+  public get password(): any {
+    return this.regForm.get('password')?.value;
+  }
+  
+  public get password2(): any {
+    return this.regForm.get('password2')?.value;
+  }
+
+  public get passLength(): any {
+    const len = this.regForm.get('password')?.value?.length;
+    if (len != null && len >= 8) return true; else return false;
+  }
 
   ngOnInit() {
     this.auth.getSession()
@@ -64,16 +84,25 @@ export class LoginComponent {
 
   register() {
 
-    const email = this.regForm.get('email')?.value;
-    const username = this.regForm.get('username')?.value;
-    const password = this.regForm.get('password')?.value;
+    const reg = {
+      email: this.email, 
+      username: this.username, 
+      password: this.password
+    };
 
-    const reg = new Registration(
-      email,
-      this.regForm.get('username')?.value,
-      this.regForm.get('password')?.value,
-      )
-    this.auth.
+    this.auth.register(reg).subscribe(x => {
+      if (x) {
+        this.auth.logUser({email: this.email, password: this.password})
+        .pipe(catchError(err => {this.failed = true; return of(null);}))
+        .subscribe(y => 
+          {
+            if (y != null) {
+              this.auth.setCurrentUser(y);
+              this.authenticated = true;
+            }
+          });
+      }
+    });
   }
 
   logout() {
@@ -100,5 +129,13 @@ export class LoginComponent {
 
   passwordCheck(p1: string, p2: string) {
     return (p1 == p2);
+  }
+
+  regDisable() {
+    
+    return !this.emailCheck(this.email) 
+    || !this.usernameCheck(this.username)
+    || !this.passwordCheck(this.password, this.password2)
+    || !this.passLength;
   }
 }

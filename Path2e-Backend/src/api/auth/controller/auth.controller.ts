@@ -50,7 +50,14 @@ export class AuthController {
         // Hash the password before adding to the database
         createUserDto.password = await bcrypt.hash(createUserDto.password, 12);
 
-        return this.service.createUser(createUserDto);
+        try {
+            await this.service.createUser(createUserDto);
+            return true
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
+        
     }
 
 }

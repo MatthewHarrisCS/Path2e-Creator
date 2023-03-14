@@ -27,8 +27,8 @@ export class AuthService {
     return this.http.get<User>(this.urlBase + "/login", {withCredentials: true});
   }
 
-  register() {
-    
+  register(reg: any) {
+    return this.http.post(this.urlBase + "/register", reg);
   }
 
   setCurrentUser(user: User) {

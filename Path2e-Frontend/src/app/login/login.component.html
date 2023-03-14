@@ -1,12 +1,14 @@
-<div *ngIf="!register; then loginDiv else regDiv"></div>
+<div *ngIf="!regUser; then loginDiv else regDiv"></div>
 <ng-template #loginDiv [formGroup]="loginForm">
+    <h2>Log-In</h2>
     <input type="text" formControlName="email" placeholder="Email"><br>
     <input type="password" formControlName="password" placeholder="Password"><br>
     <label [hidden]="!failed">Error: Incorrect email or password. Please try again.</label><br>
     <button (click)="login()" [disabled]="loginDisable()">Submit</button><br>
     <button (click)="regUser = true;">Create New Account</button>
 </ng-template>
-<ng-template #regDiv {formGroup}="">
+<ng-template #regDiv [formGroup]="regForm">
+    <h2>Register New User</h2>
     <input type="text" #e formControlName="email" placeholder="Email"><br>
     <label>{{e.value.length <= 0 ? "" : (emailCheck(e.value) ? "" : 
         "Please enter a valid email")}}</label><br/>
@@ -17,7 +19,8 @@
     <input type="password" #p2 formControlName="password2" placeholder="Confirm Password"><br>
     <label>{{p1.value.length <= 0 && p2.value.length <= 0 ? "" : 
         p1.value.length < 8 || p2.value.length < 8 ? "Password must be at least 8 characters long" : 
-        (usernameCheck(u.value) ? "" : 
+        (passwordCheck(p1.value, p2.value) ? "" : 
         "Please confirm entered passwords match")}}</label><br/>
+    <button [disabled]="regDisable()" (click)="register()">Submit</button><br>
     <button (click)="regUser = false;">Return</button>
 </ng-template>
