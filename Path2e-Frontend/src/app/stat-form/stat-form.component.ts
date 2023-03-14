@@ -116,7 +116,8 @@ export class StatFormComponent {
     return !this.chooseRoll || this.stats.find(x => x.at == -1) == undefined;
   }
 
-  //
+  // getData(): access the database and return the lists for
+  //            character options
   private getData() {
     this.backend.getAncestries().subscribe(x => this.ancestries = x);
     this.backend.getBackgrounds().subscribe(x => this.backgrounds = x);
@@ -154,16 +155,19 @@ export class StatFormComponent {
                   {index: 5, at: -1, name: "Charisma"}];
   }
 
+  // resetBoosts(): reset the free stats and ancestry details
   public resetBoosts(name: string) {
     this.setAncestry(name);
     this.boostBlock.reset();
     this.checkCount = 0;
   }
 
+  // nameCheck(): validate the provided name using a regular expression
   public nameCheck(name: string) {
     return name.match("^[\\w-'\" ]+$") != null;
   }
   
+  // nameCheckSource(): validate the statForm name using nameCheck()
   private nameCheckSource() {
     let name = this.statForm.get("characterName")?.value;
     return name != undefined ? this.nameCheck(name) : false;
@@ -523,26 +527,31 @@ export class StatFormComponent {
     !(this.checkCount >= this.boostLimit) || !this.rollSelected;
   }
 
+  // saveCharacter(): get the character details and send them to the server
   public saveCharacter() {
 
+    // Get the character's name
     const newName = this.statForm.get('characterName')?.value
 
+    // If the name is valid, create a CharacterSheet object with the
+    // selected details for each user
     if (newName != undefined) {
       const newCharacter = new CharacterSheet(
-        /* name */ newName,
-        /* user */ this.auth.getCurrentUser().email,
-        /* ancestry */ this.ancestry.current.name,
-        /* background */ this.background.current.name,
-        /* class */ this.class.current.name,
-        /* hp  */ this.statBlock.get('hp').value,
-        /* str */ this.statBlock.get('str').value,
-        /* dex */ this.statBlock.get('dex').value,
-        /* con */ this.statBlock.get('con').value,
-        /* itl */ this.statBlock.get('itl').value,
-        /* wis */ this.statBlock.get('wis').value,
-        /* cha */ this.statBlock.get('cha').value);
-        console.log("component");
-      this.backend.saveCharacter(newCharacter).subscribe(x => console.log(x));
+        newName, /* name */
+        this.auth.getCurrentUser().email, /* user */
+        this.ancestry.current.name,       /* ancestry */
+        this.background.current.name,     /* background */
+        this.class.current.name,          /* class */ 
+        this.statBlock.get('hp').value,   /* hp */ 
+        this.statBlock.get('str').value,  /* str */ 
+        this.statBlock.get('dex').value,  /* dex */ 
+        this.statBlock.get('con').value,  /* con */ 
+        this.statBlock.get('itl').value,  /* itl */ 
+        this.statBlock.get('wis').value,  /* wis */ 
+        this.statBlock.get('cha').value); /* cha */
+      
+      // Send the CharacterSheet to the database
+      this.backend.saveCharacter(newCharacter).subscribe();
     }
   }
 }

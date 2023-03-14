@@ -20,7 +20,7 @@ export class CharacterService {
 
     createCharacter(body: CreateCharacterDto) {
         const newCharacter = this.characters.create(body);
-        const saveCharacter = this.characters.save(newCharacter)
+        const saveCharacter = this.characters.insert(newCharacter)
             .catch((err: any) => {console.log(err) });
         return saveCharacter;
     }

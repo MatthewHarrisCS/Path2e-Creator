@@ -22,11 +22,16 @@ export class UserProfileComponent {
   public user: User = {email: "", username: ""};
   public characters: CharacterList[] = [];
 
+  // getData(): get the current user and access their character list
   getData() {
     this.user = this.auth.getCurrentUser();
     this.backend.getCharacters(this.user.email).subscribe(y => this.characters = y);
   }
   
+  // setCharacter(): Get the information from the selected character
+  //
+  //  TODO - Component to hold character information
+  //
   setCharacter(name: string) {
     if(name == "---") {
       console.log("No character selected");

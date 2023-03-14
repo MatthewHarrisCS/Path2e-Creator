@@ -16,12 +16,15 @@ export class LoginComponent {
   public failed = false;
   public regUser = false;
   public regUserCheck = true;
+  public status = "";
 
+  // loginForm: all of the textbox values on the login page
   public loginForm = this.fb.group({
     email: "",
     password: ""
   });
 
+  // regForm: all of the textbox values on the registration page
   public regForm = this.fb.group({
     email: "",
     username: "",
@@ -46,10 +49,12 @@ export class LoginComponent {
   }
 
   public get passLength(): any {
+    // Return whether the password exists and is at least 8 characters
     const len = this.regForm.get('password')?.value?.length;
     if (len != null && len >= 8) return true; else return false;
   }
 
+  // Attempt to login with the session cookie on component initialization
   ngOnInit() {
     this.auth.getSession()
     .pipe(catchError(err => {return of(null);}))
@@ -63,17 +68,23 @@ export class LoginComponent {
     );
   }
 
+  // login(): use the provided credentials to attempt to log in
+  //          to the service
   login() {
     if (!this.loginDisable()) {
 
+      // Get the credentials from the loginForm
       const email = this.loginForm.get('email')?.value;
       const password = this.loginForm.get('password')?.value;
 
-      // Hash algorithm to avoid storing plaintext passwords
+      // Send the credentials to the server
       this.auth.logUser({email: email, password: password})
+        // if failed, set the error message bool to true and return null
         .pipe(catchError(err => {this.failed = true; return of(null);}))
         .subscribe(x => 
           {
+            // If a user is successfully returned, set them as 
+            // current user and set authenticated to true
             if (x != null) {
               this.auth.setCurrentUser(x);
               this.authenticated = true;
@@ -82,16 +93,21 @@ export class LoginComponent {
     }
   }
 
+  // register(): register a new user to the website
   register() {
 
+    // create a object of registration details to send to the server
     const reg = {
       email: this.email, 
       username: this.username, 
       password: this.password
     };
 
-    this.auth.register(reg).subscribe(x => {
-      if (x) {
+    // Send the details to the server
+    this.auth.register(reg).subscribe((x: any) => {
+      console.log(x);
+      // If the user is registered correctly, attempt to log them in
+      if (x == true) {
         this.auth.logUser({email: this.email, password: this.password})
         .pipe(catchError(err => {this.failed = true; return of(null);}))
         .subscribe(y => 
@@ -101,13 +117,27 @@ export class LoginComponent {
               this.authenticated = true;
             }
           });
+      // Else, set the error note for whatever failed
+                        //
+                        // TODO - IMPLEMENT ERROR MESSAGE
+                        //
+      } else if (x == false) {
+        console.log("failed");
+      } else if (x.status == "username") {
+        console.log("username in use");
+      } else if (x.status == "email") {
+        console.log("email in use");
       }
     });
   }
 
+  // logout(): log the user out of the website
   logout() {
+    // Reset the forms and set the current user null
     this.loginForm.setValue({email: "", password: ""});
+    this.regForm.setValue({email: "", username: "", password: "", password2: ""});
     this.auth.setCurrentUser({email: "", username: ""});
+    // Send a logout signal to the server and set authenticated to false
     this.auth.logout().subscribe();
     this.authenticated = false;
   }
@@ -119,20 +149,29 @@ export class LoginComponent {
       ||(this.loginForm.get('password')?.value == "");
   }
 
+  // emailCheck(): validate the provided email using a regular expression
   emailCheck(name: string) {
     return name.match("^([a-zA-Z0-9_.+-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$") != null;
   }
   
+  // usernameCheck(): validate the provided username using a regular expression
   usernameCheck(name: string) {
     return name.match("^[\\w]+$") != null;
   }
 
+  // passwordCheck(): confirm both entered passwords match
   passwordCheck(p1: string, p2: string) {
     return (p1 == p2);
   }
 
+  // regDisable(): disable the registration button if any parameters
+  //               have not been reached already
   regDisable() {
-    
+    // Returns true if any of the parameters fail:
+    //   * The email does not match the regular expression
+    //   * The username does not match the regular expression
+    //   * The two provided passwords do not match
+    //   * The password is not at least 8 characters
     return !this.emailCheck(this.email) 
     || !this.usernameCheck(this.username)
     || !this.passwordCheck(this.password, this.password2)

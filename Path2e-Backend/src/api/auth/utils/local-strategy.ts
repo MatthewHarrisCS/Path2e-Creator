@@ -14,9 +14,10 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
         });
     }
 
+    // validate(): Confirm the user is valid before accessing guarded data
     async validate(username: string, password: string) {
         
-        const user = await this.service.getUser(username);
+        const user = await this.service.getUserByEmail(username);
         if(user == null) {
             throw new UnauthorizedException();
         }

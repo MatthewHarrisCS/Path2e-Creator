@@ -12,6 +12,7 @@ export class SessionSerializer extends PassportSerializer {
         super();
     }
 
+    // serializeUser(): create a new session for the user
     serializeUser(user: User, done: (err, session: SessionDto) => void) {
         let session = new SessionDto();
         session.email = user.email;
@@ -19,8 +20,11 @@ export class SessionSerializer extends PassportSerializer {
         done(null, session);
     }
 
+    // deserializeUser(): access a logged session for a returning user
     async deserializeUser(user: User, done: (err,  session: SessionDto) => void) {
-        const currUser = await this.authService.getUser(user.email);
+
+        // If the user exists in the database, get the session
+        const currUser = await this.authService.getUserByEmail(user.email);
         if (currUser != null) {
             let session = new SessionDto();
             session.email = currUser.email;
