@@ -87,6 +87,7 @@ export class LoginComponent {
             // current user and set authenticated to true
             if (x != null) {
               this.auth.setCurrentUser(x);
+              this.regUser = false;
               this.authenticated = true;
             }
           });

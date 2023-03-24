@@ -1,18 +1,6 @@
-.container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    flex-grow: 2;
-    justify-content:space-evenly;
-}
-
-
 .nameBox {
     width: 178px;
-    height: 270px;
-    outline: auto;
-    padding: 10px;
-    padding-top: 0;
+    height: 280px;
     white-space: pre-line;
 }
     .nameBox label {
@@ -22,10 +10,7 @@
 
 .identityBox {
     width: 220px;
-    height: 270px;
-    outline: auto;
-    padding: 10px;
-    padding-top: 0;
+    height: 280px;
     white-space: pre-line;
 }
     .identityBox label {
@@ -38,14 +23,10 @@
     }
 
 .freeBox {
-    outline: auto;
-    padding: 10px;
     padding-top: 0;
 }
 
 .rollBox {
-    outline: auto;
-    padding: 10px;
     padding-top: 0;
 }
     .rollBox label {
@@ -62,8 +43,6 @@
 }
 
 .statBox {
-    outline: auto;
-    padding: 10px;
     padding-top: 0;
 }
     .statBox label {

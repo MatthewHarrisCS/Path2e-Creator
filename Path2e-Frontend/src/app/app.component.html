@@ -1,12 +1,14 @@
 <div [hidden]="l.authenticated">
-    <h1>Welcome</h1>
+    <h1 class="container">Welcome</h1>
     <login #l />
 </div>
 <div *ngIf="l.authenticated">
-    <div>
-        <h1>Path 2e Creator</h1>
-        <p>(Working title, CSS to be implemented)</p>
-        <button (click)="l.logout()">Log out</button>
+    <div class="container">
+        <div class="center">
+            <h1 align="center">Path 2e Creator</h1>
+            <p>(Working title, CSS to be implemented)</p>
+            <button (click)="l.logout()">Log out</button>
+        </div>
     </div>
     <user-profile/>
     <stat-form/>

@@ -1,1 +1,77 @@
 /* You can add global styles to this file, and also import other style files */
+
+html {
+    background: #4e2d2d;
+    color: whitesmoke;
+    height: 100%;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    display: table;
+    width: 100%;
+}
+
+.box {
+    color: black;
+    background-color: #f1bb8fe8;
+    border-radius: 8px;
+    border-width: 2px;
+    border-color: #f1bb8fe8;
+    border-style: solid;
+    margin:10px;
+    padding: 10px;
+    padding-top: 0;
+    width:200px;
+    box-shadow: 0px 2px 4px black;
+}
+    .box input {
+        border: 1px solid black;
+        border-radius: 4px;
+        background-color: #ffe0c6;
+    }
+
+    .box input:focus {
+        border: 1px solid black;
+        border-radius: 4px;
+        background-color: #fdf6f0;
+    }
+
+    .box option  {
+        background-color: #ffe0c6;
+    }
+
+    .box select {
+        background-color: #ffe0c6;
+    }
+    
+    .box button {
+        border: 1px solid black;
+        border-radius: 4px;
+        background-color: #ffe0c6;
+    }
+
+    .box button:disabled {
+        border: 1px solid grey;
+        border-radius: 4px;
+        background-color: #ffe0c646;
+    }
+
+    .box button:hover {
+        background-color: #fdf6f0;
+    }
+
+    .box button:hover:disabled {
+        background-color: #ffe0c646;
+    }
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-grow: 2;
+    justify-content:space-evenly;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

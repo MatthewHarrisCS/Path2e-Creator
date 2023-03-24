@@ -2,7 +2,7 @@
     <div class="container">
 
         <!-- Character Name --->
-        <div class="nameBox">
+        <div class="box nameBox">
             <h3>Character Name</h3>
             <label>Name your character</label><br/>
             <input type="text" id="characterName" #n formControlName="characterName" maxlength="32"><br/>
@@ -11,7 +11,7 @@
         </div>
 
         <!--  Ancestry  --->
-        <div class="identityBox">
+        <div class="box identityBox">
             <h3>Ancestry</h3>
             <label>Select an ancestry</label><br/>
             <select id="ancestrySelect" #a (change)="setAncestry(a.value)">
@@ -27,7 +27,7 @@
         </div>
 
         <!--  Background  --->
-        <div class="identityBox">
+        <div class="box identityBox">
             <h3>Background</h3>
             <label>Select a background</label><br/>
             <select id="backgroundSelect" #b (change)="setBackground(b.value)">
@@ -49,7 +49,7 @@
         </div>
 
         <!--  Class  --->
-        <div class="identityBox">
+        <div class="box identityBox">
             <h3>Class</h3>
             <label>Select a class</label><br/>
             <select id="classSelect" #c (change)="setClass(c.value);">
@@ -83,7 +83,7 @@
         </div>
 
         <!--  Roll Stats  --->
-        <div class="rollBox">
+        <div class="box rollBox">
             <h3>Roll Stats</h3>
             <input type="checkbox" id="rollBox" formControlName="chooseRoll" (change)="resetBoosts(a.value)">
             <label for="rollBox" style="padding-top: 10px;">Use rolled stats</label><br/>
@@ -100,7 +100,7 @@
         </div>
 
         <!--  Free Stats  --->
-        <div class="freeBox" formGroupName="boostBlock">
+        <div class="box freeBox" formGroupName="boostBlock">
             <h3>Free Stats</h3>
             <p>({{boostLimit != 0 ? "Choose " + boostLimit : "N/A"}})</p>
             <input type="checkbox" [attr.disabled]="freeCheck('strBoosted')" 
@@ -130,7 +130,7 @@
 
     <!--  Stats  --->
     <div class="container">
-        <div class="statBox" formGroupName="statBlock">
+        <div class="box statBox" formGroupName="statBlock">
             <h3>Stats</h3>
             <div>
                 <label>Health Points</label>
