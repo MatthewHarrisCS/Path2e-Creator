@@ -115,6 +115,7 @@ export class LoginComponent {
             if (y != null) {
               this.auth.setCurrentUser(y);
               this.authenticated = true;
+              this.status = "";
             }
           });
       // Else, set the error note for whatever failed
@@ -122,11 +123,20 @@ export class LoginComponent {
                         // TODO - IMPLEMENT ERROR MESSAGE
                         //
       } else if (x == false) {
-        console.log("failed");
-      } else if (x.status == "username") {
-        console.log("username in use");
-      } else if (x.status == "email") {
-        console.log("email in use");
+        this.status = "Error: unable to register at this time, please try again.";
+      } else {
+
+        this.status = "Error: a user with this ";
+
+        if (x.email && x.username) {
+          this.status = this.status.concat("email and username");
+        } else if (x.email && !x.username) {
+          this.status = this.status.concat("email");
+        } else {
+          this.status = this.status.concat("username");
+        }
+
+        this.status = this.status.concat(" already exists, please try again.");
       }
     });
   }

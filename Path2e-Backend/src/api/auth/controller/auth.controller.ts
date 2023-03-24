@@ -60,19 +60,19 @@ export class AuthController {
 
         // Search the database for any user with the same email OR username
         const search = await this.service.findUser(createUserDto);
-        console.log(search);
+        let result = {email: false, username: false};
 
-        // If search finds an existing user, return the taken property
+        // If search finds an existing user, return the taken properties
         if (search != null) {
+            if (search.email == createUserDto.email) {
+                console.log("email");
+                result.email = true;
+            } 
             if (search.username == createUserDto.username) {
                 console.log("username");
-                return {status: "username"};
-            } else if (search.email == createUserDto.email) {
-                console.log("email");
-                return {status: "email"};
-            } else {
-                return false;
+                result.username = true;
             }
+            return result;
         }
 
         // Hash the provided password before adding the user to the database

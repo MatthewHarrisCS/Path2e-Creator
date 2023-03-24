@@ -25,5 +25,6 @@
         (passwordCheck(p1.value, p2.value) ? "" : 
         "Please confirm entered passwords match")}}</label><br/>
     <button [disabled]="regDisable()" (click)="register()">Submit</button><br>
+    <label>{{status}}</label><br>
     <button (click)="regUser = false;">Return</button>
 </ng-template>
