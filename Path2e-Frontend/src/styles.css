@@ -1,7 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 
+body {
+    --background-1: #4e2d2d;
+    --background-2: #6e4040;
+    --background-3: #995858;
+    --box-1: #f1bb8fe8;
+    --box-2: #ffd7b6;
+    --box-3: #ffe0c6;
+    --box-4: #fdf6f0;
+    --disabled: #ffe0c646;
+
+    background: var(--background-1);
+}
+
 html {
-    background: #4e2d2d;
     color: whitesmoke;
     height: 100%;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -9,12 +21,24 @@ html {
     width: 100%;
 }
 
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 11px;
+  }
+::-webkit-scrollbar-track {
+    background: var(--background-2);
+  }
+::-webkit-scrollbar-thumb {
+    background-color: var(--background-3);
+    border-radius: var(--background-1);
+  }
+
 .box {
     color: black;
-    background-color: #f1bb8fe8;
+    background-color: var(--box-1);
     border-radius: 8px;
     border-width: 2px;
-    border-color: #f1bb8fe8;
+    border-color: var(--box-1);
     border-style: solid;
     margin:10px;
     padding: 10px;
@@ -25,41 +49,54 @@ html {
     .box input {
         border: 1px solid black;
         border-radius: 4px;
-        background-color: #ffe0c6;
+        background-color: var(--box-3);
     }
 
     .box input:focus {
         border: 1px solid black;
         border-radius: 4px;
-        background-color: #fdf6f0;
+        background-color: var(--box-4);
     }
 
     .box option  {
-        background-color: #ffe0c6;
+        background-color: var(--box-3);
     }
 
     .box select {
-        background-color: #ffe0c6;
+        background-color: var(--box-3);
     }
     
     .box button {
         border: 1px solid black;
         border-radius: 4px;
-        background-color: #ffe0c6;
+        background-color: var(--box-3);
     }
 
     .box button:disabled {
         border: 1px solid grey;
         border-radius: 4px;
-        background-color: #ffe0c646;
+        background-color: var(--disabled);
     }
 
     .box button:hover {
-        background-color: #fdf6f0;
+        background-color: var(--box-4);
     }
 
     .box button:hover:disabled {
-        background-color: #ffe0c646;
+        background-color: var(--disabled);
+    }
+
+    .box select::-webkit-scrollbar {
+        width: 11px;
+    }
+    
+    .box select::-webkit-scrollbar-track {
+        background: var(--box-1);
+    }
+    
+    .box select::-webkit-scrollbar-thumb {
+        background-color: var(--box-2);
+        border-radius: var(--box-1);
     }
 
 .container {
