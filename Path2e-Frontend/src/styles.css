@@ -25,9 +25,11 @@ html {
 ::-webkit-scrollbar {
     width: 11px;
   }
+
 ::-webkit-scrollbar-track {
     background: var(--background-2);
   }
+  
 ::-webkit-scrollbar-thumb {
     background-color: var(--background-3);
     border-radius: var(--background-1);

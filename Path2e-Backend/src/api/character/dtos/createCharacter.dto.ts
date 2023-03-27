@@ -11,4 +11,6 @@ export class CreateCharacterDto {
     itl: number;
     wis: number;
     cha: number;
+    backgroundChoice: boolean;
+    gameClassChoice: boolean;
 }

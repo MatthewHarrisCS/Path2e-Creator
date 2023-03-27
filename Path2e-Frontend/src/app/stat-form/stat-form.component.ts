@@ -98,6 +98,10 @@ export class StatFormComponent {
     return this.statForm.get('chooseRoll')?.value;
   }
 
+  public get backgroundKey(): any {
+    return this.statForm.get('backgroundKey')?.value;
+  }
+
   public get classKey(): any {
     return this.statForm.get('classKey')?.value;
   }
@@ -531,13 +535,13 @@ export class StatFormComponent {
   public saveCharacter() {
 
     // Get the character's name
-    const newName = this.statForm.get('characterName')?.value
+    const newName = this.statForm.get('characterName')?.value;
 
     // If the name is valid, create a CharacterSheet object with the
     // selected details for each user
     if (newName != undefined) {
       const newCharacter = new CharacterSheet(
-        newName, /* name */
+        newName,                          /* name */
         this.auth.getCurrentUser().email, /* user */
         this.ancestry.current.name,       /* ancestry */
         this.background.current.name,     /* background */
@@ -548,8 +552,10 @@ export class StatFormComponent {
         this.statBlock.get('con').value,  /* con */ 
         this.statBlock.get('itl').value,  /* itl */ 
         this.statBlock.get('wis').value,  /* wis */ 
-        this.statBlock.get('cha').value); /* cha */
-      
+        this.statBlock.get('cha').value,  /* cha */
+        this.backgroundKey,               /* backgroundKey */
+        this.classKey);                   /* gameClassKey */
+
       // Send the CharacterSheet to the database
       this.backend.saveCharacter(newCharacter).subscribe();
     }

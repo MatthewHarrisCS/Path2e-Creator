@@ -11,6 +11,8 @@ export class CharacterSheet {
         public con: number,
         public itl: number,
         public wis: number,
-        public cha: number
+        public cha: number,
+        public backgroundChoice: boolean,
+        public gameClassChoice: boolean
     ) {}
 }

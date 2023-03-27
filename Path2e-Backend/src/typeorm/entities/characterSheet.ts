@@ -64,4 +64,10 @@ export class CharacterSheet {
     @Column("int")
     @Min(10)
     cha: number;
+    
+    @Column("bool")
+    backgroundChoice: boolean;
+    
+    @Column("bool")
+    gameClassChoice: boolean;
 }

@@ -21,6 +21,7 @@ export class UserProfileComponent {
 
   public user: User = {email: "", username: ""};
   public characters: CharacterList[] = [];
+  public character: CharacterList | undefined;
 
   // getData(): get the current user and access their character list
   getData() {
@@ -29,14 +30,15 @@ export class UserProfileComponent {
   }
   
   // setCharacter(): Get the information from the selected character
-  //
-  //  TODO - Component to hold character information
-  //
   setCharacter(name: string) {
-    if(name == "---") {
-      console.log("No character selected");
-    } else {
-      this.characters.find((x: CharacterList) => x.name == name ? console.log(x) : null);
+    if(name != "---") {
+      this.characters.find((x: CharacterList) => {console.log(x); if(x.name == name) this.character = x;});
+    }
+  }
+
+  getStat(name: string) {
+    if(name != "---") {
+      this.characters.find((x: CharacterList) => {console.log(x); if(x.name == name) this.character = x;});
     }
   }
 }

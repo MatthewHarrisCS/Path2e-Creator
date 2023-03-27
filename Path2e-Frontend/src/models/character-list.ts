@@ -16,5 +16,7 @@ export class CharacterList {
         public str: number,
         public user: string,
         public wis: number,
+        public gameClassChoice: boolean,
+        public backgroundChoice: boolean
     ) {}
 }

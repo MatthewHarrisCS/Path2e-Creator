@@ -2,8 +2,65 @@
     <h3>View Characters for {{user.username}}</h3>
     <select id="characterSelect" #c (change)="setCharacter(c.value)">
         <option>---</option>
-        <option *ngFor="let character of characters">
-            {{character.name}}
+        <option *ngFor="let currCharacter of characters">
+            {{currCharacter.name}}
         </option>
     </select><br/>
+    
+    <div *ngIf="c.value != '---'">
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td>{{character?.name}}</td>
+            </tr>
+            <tr>
+                <td>Class:</td>
+                <td>{{character?.gameClass?.name}}</td>
+            </tr>
+            <tr>
+                <td>Ancestry:</td>
+                <td>{{character?.ancestry?.name}}</td>
+            </tr>
+            <tr>
+                <td>Background:</td>
+                <td>{{character?.background?.name}}</td>
+            </tr>
+            <tr>
+                <td>Health Points:</td>
+                <td>{{character?.hp}}</td>
+            </tr>
+            <tr>
+                <td>Strength:</td>
+                <td>{{character?.str}}</td>
+            </tr>
+            <tr>
+                <td>Dexterity:</td>
+                <td>{{character?.dex}}</td>
+            </tr>
+            <tr>
+                <td>Constitution:</td>
+                <td>{{character?.con}}</td>
+            </tr>
+            <tr>
+                <td>Intelligence:</td>
+                <td>{{character?.itl}}</td>
+            </tr>
+            <tr>
+                <td>Wisdom:</td>
+                <td>{{character?.wis}}</td>
+            </tr>
+            <tr>
+                <td>Charisma:</td>
+                <td>{{character?.cha}}</td>
+            </tr>
+            <tr>
+                <td>Class Boost:</td>
+                <td>{{character?.gameClassChoice ? character?.gameClass?.keyAbility1 : character?.gameClass?.keyAbility2}}</td>
+            </tr>
+            <tr>
+                <td>Background Boost:</td>
+                <td>{{character?.backgroundChoice ? character?.background?.keyAbility1 : character?.background?.keyAbility2}}</td>
+            </tr>
+        </table>
+    </div>
 </div>

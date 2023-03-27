@@ -136,6 +136,8 @@ CREATE TABLE charactersheet (
     itl INT NOT NULL CHECK (itl >= 8),
     wis INT NOT NULL CHECK (wis >= 8),
     cha INT NOT NULL CHECK (cha >= 8),
+    backgroundChoice BOOL,
+    gameClassChoice BOOL,
     PRIMARY KEY (name, user),
     FOREIGN KEY (user) REFERENCES user (email)
 		ON DELETE CASCADE ON UPDATE CASCADE,
@@ -144,6 +146,6 @@ CREATE TABLE charactersheet (
 	FOREIGN KEY (gameClass) REFERENCES class (name)
 );
 
-INSERT INTO characterSheet VALUES ( "Duke of the Dreadmarsh", "tony.duke.evers@delphigym.com", "Goblin", "Merchant", "Alchemist", 12, 10, 10, 10, 10, 10, 10);
+-- INSERT INTO characterSheet VALUES ( "Duke of the Dreadmarsh", "tony.duke.evers@delphigym.com", "Goblin", "Merchant", "Alchemist", 12, 10, 10, 10, 10, 10, 10, true, true);
 
 SELECT * FROM characterSheet;

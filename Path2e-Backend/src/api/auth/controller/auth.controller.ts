@@ -27,7 +27,7 @@ export class AuthController {
             // If password correct, return the user
             return { email: currUser.email, username: currUser.username}
         } else {
-            return null;
+            return null; 
         }
     }
 
