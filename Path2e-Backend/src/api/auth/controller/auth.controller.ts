@@ -87,7 +87,5 @@ export class AuthController {
             console.log(e);
             return false;
         }
-        
     }
-
 }

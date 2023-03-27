@@ -1,21 +1,16 @@
 <app-top-nav></app-top-nav>
 
+<p align="center">(Working title, full CSS to be implemented)</p>
+
 <div class [hidden]="l.authenticated">
-    
     <div class="container">
-        <div class="center">
-            <p>(Working title, full CSS to be implemented)</p>
-            <login #l />
-        </div>
+        <div class="center"><login #l /></div>
     </div>
 </div>
+
 <div *ngIf="l.authenticated">
     <div class="container">
-        <div class="center">
-            <p>(Working title, full CSS to be implemented)</p>
-            <button (click)="l.logout()">Log out</button>
-        </div>
+        <div class="center"><button (click)="l.logout()">Log out</button></div>
     </div>
-    <user-profile/>
-    <stat-form/>
+    <router-outlet/>
 </div>
