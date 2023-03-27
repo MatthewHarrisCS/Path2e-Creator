@@ -10,6 +10,7 @@ export class CharacterList {
         public con: number,
         public dex: number,
         public gameClass: GameClass,
+        public level: number,
         public hp: number,
         public itl: number,
         public name: string,

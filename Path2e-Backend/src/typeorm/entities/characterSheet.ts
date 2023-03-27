@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
-import { IsAlphanumeric, IsEmail, Min, MinLength, NotContains } from "class-validator";
+import { IsAlphanumeric, IsEmail, Max, Min, MinLength, NotContains } from "class-validator";
 import { User } from "./user";
 import { Ancestry } from "./ancestry";
 import { Background } from "./background";
@@ -18,6 +18,11 @@ export class CharacterSheet {
     @JoinColumn({ name: "user" })
     @PrimaryColumn("varchar", { length: 64 })
     user: string;
+
+    @Column('int', { default: true })
+    @Min(1)
+    @Max(60)
+    level: number = 1;
 
     @ManyToOne(() => Ancestry, (ancestry) => ancestry.name, {
         onDelete: "CASCADE", onUpdate: "CASCADE", nullable: false

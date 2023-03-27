@@ -1,4 +1,6 @@
 <div class="identityBox">
+
+    <!-- Character Dropdown Menu --->
     <h3>View Characters for {{user.username}}</h3>
     <select id="characterSelect" #c (change)="setCharacter(c.value)">
         <option>---</option>
@@ -7,11 +9,24 @@
         </option>
     </select><br/>
     
-    <div *ngIf="c.value != '---'">
+    <!-- Display the character details if a character has been selected --->
+    <div *ngIf="c.value == '---'; then noCharacter; else showCharacter"></div>
+
+    <!-- No Character Selected --->
+    <ng-template #noCharacter>
+        <div>No character selected</div>
+    </ng-template>
+
+    <!-- Display Selected Character --->
+    <ng-template #showCharacter>
         <table>
             <tr>
                 <td>Name:</td>
                 <td>{{character?.name}}</td>
+            </tr>
+            <tr>
+                <td>Level:</td>
+                <td>{{character?.level}}</td>
             </tr>
             <tr>
                 <td>Class:</td>
@@ -32,24 +47,18 @@
             <tr>
                 <td>Strength:</td>
                 <td>{{character?.str}}</td>
-            </tr>
-            <tr>
                 <td>Dexterity:</td>
                 <td>{{character?.dex}}</td>
             </tr>
             <tr>
                 <td>Constitution:</td>
                 <td>{{character?.con}}</td>
-            </tr>
-            <tr>
                 <td>Intelligence:</td>
                 <td>{{character?.itl}}</td>
             </tr>
             <tr>
                 <td>Wisdom:</td>
                 <td>{{character?.wis}}</td>
-            </tr>
-            <tr>
                 <td>Charisma:</td>
                 <td>{{character?.cha}}</td>
             </tr>
@@ -62,5 +71,5 @@
                 <td>{{character?.backgroundChoice ? character?.background?.keyAbility1 : character?.background?.keyAbility2}}</td>
             </tr>
         </table>
-    </div>
+    </ng-template>
 </div>

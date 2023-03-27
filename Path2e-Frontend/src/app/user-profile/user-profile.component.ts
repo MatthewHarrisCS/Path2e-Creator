@@ -26,19 +26,24 @@ export class UserProfileComponent {
   // getData(): get the current user and access their character list
   getData() {
     this.user = this.auth.getCurrentUser();
-    this.backend.getCharacters(this.user.email).subscribe(y => this.characters = y);
+    this.backend.getCharacters(this.user.email)
+      .subscribe(y => this.characters = y);
   }
   
   // setCharacter(): Get the information from the selected character
   setCharacter(name: string) {
     if(name != "---") {
-      this.characters.find((x: CharacterList) => {console.log(x); if(x.name == name) this.character = x;});
+      this.characters.find((x: CharacterList) => {
+        console.log(x); if(x.name == name) this.character = x;
+      });
     }
   }
 
   getStat(name: string) {
     if(name != "---") {
-      this.characters.find((x: CharacterList) => {console.log(x); if(x.name == name) this.character = x;});
+      this.characters.find((x: CharacterList) => {
+        console.log(x); if(x.name == name) this.character = x;
+      });
     }
   }
 }

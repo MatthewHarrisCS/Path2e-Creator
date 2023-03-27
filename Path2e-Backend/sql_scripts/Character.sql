@@ -126,6 +126,7 @@ INSERT INTO background VALUES ("Warrior", "", "Strength", "Constitution");
 CREATE TABLE charactersheet (
 	name VARCHAR(32) NOT NULL,
 	user VARCHAR(64) NOT NULL,
+    level INT DEFAULT 1,
     ancestry VARCHAR(16) NOT NULL, -- FOREIGN KEY
     background VARCHAR(16) NOT NULL, -- FOREIGN KEY
     gameClass VARCHAR(16) NOT NULL, -- FOREIGN KEY
