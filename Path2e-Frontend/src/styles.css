@@ -114,3 +114,9 @@ html {
     flex-direction: column;
     justify-content: center;
 }
+
+.toEdge {
+    width: 100%;
+    margin: -8px 0 8px -8px;
+    padding: 0 16px 0 0;
+}

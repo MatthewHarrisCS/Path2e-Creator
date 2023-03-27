@@ -1,0 +1,50 @@
+.menu {
+    background: #403e3f;
+    text-align: center;
+    position: fixed;
+    top: 8px;
+    z-index: 1;
+}
+
+.buffer {
+    padding-bottom: 8px;
+}
+
+.logo {
+    fill: whitesmoke;
+    height: 50px;
+    width: 50px;
+    margin-bottom: 7px;
+    margin-right: 5px;
+    overflow: visible;
+}
+
+.logo-text {
+    color: whitesmoke;
+    vertical-align: middle;
+    position: relative;
+    bottom: 27px;
+    font-style: italic;
+    font-weight: bold;
+    margin-right: 25px;
+    user-select: none;
+    line-height: 10px;
+    font-size: 35px;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+.button {
+    fill: whitesmoke;
+    height: 35px;
+    width: 35px;
+    margin: 15px;
+    overflow: visible;
+}
+
+.button:hover {
+    cursor: pointer;
+    stroke: whitesmoke;
+    stroke-width: 5%;
+}

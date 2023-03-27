@@ -1,9 +1,10 @@
+<app-top-nav></app-top-nav>
+
 <div class [hidden]="l.authenticated">
     
     <div class="container">
         <div class="center">
-            <h1 align="center">Welcome to Path2e Creator</h1>
-            <p align="center">(Working title, full CSS to be implemented)</p>
+            <p>(Working title, full CSS to be implemented)</p>
             <login #l />
         </div>
     </div>
@@ -11,7 +12,6 @@
 <div *ngIf="l.authenticated">
     <div class="container">
         <div class="center">
-            <h1 align="center">Path 2e Creator</h1>
             <p>(Working title, full CSS to be implemented)</p>
             <button (click)="l.logout()">Log out</button>
         </div>
