@@ -13,7 +13,7 @@ export class CharacterService {
 
     findCharacters(user) {
         return this.characters.find({
-            relations: ['ancestry', 'background', 'gameClass'],
+            relations: ['heritage', 'background', 'gameClass'],
             where: { user: user }
         });
     }

@@ -1,6 +1,8 @@
 USE path2e_db;
 DROP TABLE IF EXISTS characterSheet;
+DROP TABLE IF EXISTS heritage;
 DROP TABLE IF EXISTS racket;
+DROP TABLE IF EXISTS baseWeapon;
 DROP TABLE IF EXISTS background;
 DROP TABLE IF EXISTS characterStats;
 DROP TABLE IF EXISTS characterMain;
@@ -55,6 +57,13 @@ CREATE TABLE background (
 		CHECK (keyAbility2 IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma", "Racket"))
 );
 
+CREATE TABLE heritage(
+	name VARCHAR(16) NOT NULL,
+	ancestryName VARCHAR(16),
+    PRIMARY KEY(name, ancestryName),
+    FOREIGN KEY (ancestryName) REFERENCES ancestry (name)
+);
+
 CREATE TABLE racket (
 	name VARCHAR(16) PRIMARY KEY,
     train1 VARCHAR(32),
@@ -62,6 +71,15 @@ CREATE TABLE racket (
     keyAbility VARCHAR(12) 
 		CHECK (keyAbility IN ("Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"))
 );
+
+CREATE TABLE baseWeapon (
+	name VARCHAR(32) PRIMARY KEY,
+    type VARCHAR(6) NOT NULL
+		CHECK (type IN ("Melee", "Ranged")),
+	category VARCHAR(16) NOT NULL
+		CHECK (category IN ("Simple", "Martial", "Advanced", "Ammunition"))
+        /* INCOMPLETE */
+    );
 
 INSERT INTO ancestry VALUES ("Dwarf", 10, "Medium", 20, "Constitution", "Wisdom", "Charisma");
 INSERT INTO ancestry VALUES ("Elf", 6, "Medium", 30, "Dexterity", "Intelligence", "Constitution");
@@ -123,11 +141,41 @@ INSERT INTO background VALUES ("Street Urchin", "", "Dexterity", "Constitution")
 INSERT INTO background VALUES ("Tinker", "", "Dexterity", "Intelligence");
 INSERT INTO background VALUES ("Warrior", "", "Strength", "Constitution");
 
+INSERT INTO heritage VALUES ("Ancient-Blooded", "Dwarf");
+INSERT INTO heritage VALUES ("Death Warden", "Dwarf");
+INSERT INTO heritage VALUES ("Forge", "Dwarf");
+INSERT INTO heritage VALUES ("Rock", "Dwarf");
+INSERT INTO heritage VALUES ("Strong-Blooded", "Dwarf");
+INSERT INTO heritage VALUES ("Artic", "Elf");
+INSERT INTO heritage VALUES ("Cavern", "Elf");
+INSERT INTO heritage VALUES ("Seer", "Elf");
+INSERT INTO heritage VALUES ("Whisper", "Elf");
+INSERT INTO heritage VALUES ("Woodland", "Elf");
+INSERT INTO heritage VALUES ("Chameleon", "Gnome");
+INSERT INTO heritage VALUES ("Fey-Touched", "Gnome");
+INSERT INTO heritage VALUES ("Sensate", "Gnome");
+INSERT INTO heritage VALUES ("Umbral", "Gnome");
+INSERT INTO heritage VALUES ("Wellspring", "Gnome");
+INSERT INTO heritage VALUES ("Charade", "Goblin");
+INSERT INTO heritage VALUES ("Irongut", "Goblin");
+INSERT INTO heritage VALUES ("Razortooth", "Goblin");
+INSERT INTO heritage VALUES ("Snow", "Goblin");
+INSERT INTO heritage VALUES ("Unbreakable", "Goblin");
+INSERT INTO heritage VALUES ("Gutsy", "Halfling");
+INSERT INTO heritage VALUES ("Hillock", "Halfling");
+INSERT INTO heritage VALUES ("Nomadic", "Halfling");
+INSERT INTO heritage VALUES ("Twilight", "Halfling");
+INSERT INTO heritage VALUES ("Wildwood", "Halfling");
+INSERT INTO heritage VALUES ("Half-Elf", "Human");
+INSERT INTO heritage VALUES ("Half-Orc", "Human");
+INSERT INTO heritage VALUES ("Skilled", "Human");
+INSERT INTO heritage VALUES ("Versatile", "Human");
+
 CREATE TABLE charactersheet (
 	name VARCHAR(32) NOT NULL,
 	user VARCHAR(64) NOT NULL,
     level INT DEFAULT 1,
-    ancestry VARCHAR(16) NOT NULL, -- FOREIGN KEY
+    heritage VARCHAR(16) NOT NULL, -- FOREIGN KEY
     background VARCHAR(16) NOT NULL, -- FOREIGN KEY
     gameClass VARCHAR(16) NOT NULL, -- FOREIGN KEY
     hp  INT NOT NULL CHECK (hp >= 12),
@@ -142,7 +190,7 @@ CREATE TABLE charactersheet (
     PRIMARY KEY (name, user),
     FOREIGN KEY (user) REFERENCES user (email)
 		ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY (ancestry) REFERENCES ancestry (name),
+	FOREIGN KEY (heritage) REFERENCES heritage (name),
 	FOREIGN KEY (background) REFERENCES background (name),
 	FOREIGN KEY (gameClass) REFERENCES class (name)
 );

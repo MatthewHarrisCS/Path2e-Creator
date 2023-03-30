@@ -120,9 +120,6 @@ export class LoginComponent {
             }
           });
       // Else, set the error note for whatever failed
-                        //
-                        // TODO - IMPLEMENT ERROR MESSAGE
-                        //
       } else if (x == false) {
         this.status = "Error: unable to register at this time, please try again.";
       } else {

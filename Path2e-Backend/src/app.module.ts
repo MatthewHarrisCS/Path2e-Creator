@@ -14,6 +14,8 @@ import { CharacterModule } from './api/character/character.module';
 import { AuthModule } from './api/auth/auth.module';
 import { PassportModule } from '@nestjs/passport';
 import { Session } from './typeorm/entities/session';
+import { HeritageModule } from './api/heritage/heritage.module';
+import { Heritage } from './typeorm/entities/heritage';
 
 @Module({
   imports: [
@@ -29,7 +31,8 @@ import { Session } from './typeorm/entities/session';
         Ancestry, 
         Background, 
         Class, 
-        Racket, 
+        Racket,
+        Heritage,
         CharacterSheet, 
         Session
       ],
@@ -42,6 +45,7 @@ import { Session } from './typeorm/entities/session';
     BackgroundModule, 
     ClassModule, 
     RacketModule,
+    HeritageModule,
     CharacterModule]
 })
 export class AppModule {}

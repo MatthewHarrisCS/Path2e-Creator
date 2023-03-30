@@ -1,9 +1,10 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
-import { IsAlphanumeric, IsEmail, Max, Min, MinLength, NotContains } from "class-validator";
+import { IsAlphanumeric, Max, Min } from "class-validator";
 import { User } from "./user";
 import { Ancestry } from "./ancestry";
 import { Background } from "./background";
 import { Class } from "./class";
+import { Heritage } from "./heritage";
 
 @Entity({ name: 'charactersheet' } )
 export class CharacterSheet {
