@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { Class } from 'src/typeorm/entities/class';
+import { Class } from 'src/schemas/class';
 import { ClassController } from './controller/class.controller';
 import { ClassService } from './service/class.service';
 

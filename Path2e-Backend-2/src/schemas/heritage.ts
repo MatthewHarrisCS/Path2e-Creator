@@ -1,7 +1,11 @@
 import { Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { Ancestry } from "./ancestry";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { HydratedDocument } from "mongoose";
 
-@Entity({ name: 'heritage' } )
+export type HeritageDocument = HydratedDocument<Heritage>;
+
+@Schema()
 export class Heritage {
 
     @PrimaryColumn("varchar", { length: 16 })

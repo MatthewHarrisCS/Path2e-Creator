@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from 'src/typeorm/entities/user';
+import { User } from 'src/schemas/user';
 import { CreateUserDto } from '../dtos/createUser.dto';
 
 @Injectable()
@@ -27,6 +27,11 @@ export class AuthService {
     // findUser(): Return a user from the database if an entry
     //             exists with the given email OR username
     findUser(body: CreateUserDto) {
+
+        //
+        // TMP
+        //
+        return this.getUserByEmail("temp");
     }
 
     // createUser(): Insert the provided user into the database 

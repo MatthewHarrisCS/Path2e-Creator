@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Background } from 'src/typeorm/entities/background';
+import { Background } from 'src/schemas/background';
 
 @Injectable()
 export class BackgroundService {

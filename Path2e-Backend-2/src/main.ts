@@ -2,13 +2,11 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as session from 'express-session';
 import * as passport from 'passport';
-import { TypeormStore } from 'connect-typeorm/out';
-import { DataSource } from 'typeorm';
-import { Session } from './typeorm/entities/session';
+import { Session } from './schemas/session';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const sessionRepo = app.get(DataSource).getRepository(Session);
+  // const sessionRepo = app.get(DataSource).getRepository(Session);
   app.enableCors({
     origin: 'http://localhost:4200', // FOR DEV
     methods: ["GET", "POST"],
@@ -20,7 +18,7 @@ async function bootstrap() {
       secret: 'VaderIsLukesDad', // FOR DEV - REPLACE WITH ENVIRONMENTAL VARIABLE
       resave: false,
       saveUninitialized: false,
-      store: new TypeormStore().connect(sessionRepo),
+      // store: ,
       cookie: { 
         maxAge: 300000 // 5 minute
       }

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Racket } from 'src/typeorm/entities/racket';
+import { Racket } from 'src/schemas/racket';
 import { Repository } from 'typeorm';
 
 @Injectable()

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Heritage } from 'src/typeorm/entities/heritage';
+import { Heritage } from 'src/schemas/heritage';
 import { Repository } from 'typeorm';
 
 @Injectable()

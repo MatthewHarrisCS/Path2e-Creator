@@ -1,13 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import { Ancestry } from 'src/typeorm/entities/ancestry';
-import { Repository } from 'typeorm/repository/Repository';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { ANCESTRY_LIST } from 'src/base-db';
+import { Ancestry } from 'src/schemas/ancestry';
 
 @Injectable()
 export class AncestryService {
 
     constructor(
+        @InjectModel(Ancestry.name) private model: Model<Ancestry>
     ) {}
 
     findAncestries() {
+        return this.model.find();
+    }
+
+    resetAncestries() {
+        return this.model.insertMany(ANCESTRY_LIST);
     }
 }

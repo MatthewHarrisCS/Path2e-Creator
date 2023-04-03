@@ -1,6 +1,6 @@
 import { Inject } from "@nestjs/common";
 import { PassportSerializer } from "@nestjs/passport";
-import { User } from "src/typeorm/entities/user";
+import { User } from "src/schemas/user";
 import { SessionDto } from "../dtos/session.dto";
 import { AuthService } from "../service/auth.service";
 

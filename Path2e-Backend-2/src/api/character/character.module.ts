@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CharacterSheet } from 'src/typeorm/entities/characterSheet';
+import { CharacterSheet } from 'src/schemas/characterSheet';
 import { CharacterController } from './controller/character.controller';
 import { CharacterService } from './service/character.service';
 
