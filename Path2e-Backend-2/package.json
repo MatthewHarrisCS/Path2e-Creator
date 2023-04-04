@@ -32,6 +32,7 @@
     "@types/passport-local": "^1.0.35",
     "bcrypt": "^5.1.0",
     "class-validator": "^0.14.0",
+    "connect-mongodb-session": "^3.1.1",
     "connect-typeorm": "^2.0.0",
     "express-session": "^1.17.3",
     "mongodb": "^3.7.3",

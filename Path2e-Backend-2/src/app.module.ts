@@ -16,11 +16,12 @@ import { Session } from './schemas/session';
 import { HeritageModule } from './api/heritage/heritage.module';
 import { Heritage } from './schemas/heritage';
 import { MongooseModule } from '@nestjs/mongoose';
+import { mongoUser } from './env';
 
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb+srv://path2e-user:mb_tiSvcKemX3V@cluster0.qvpd6pf.mongodb.net/test'
+      mongoUser
       ),
     PassportModule.register({
         session: true,

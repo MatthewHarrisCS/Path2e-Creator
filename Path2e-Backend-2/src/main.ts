@@ -3,19 +3,20 @@ import { AppModule } from './app.module';
 import * as session from 'express-session';
 import * as passport from 'passport';
 import { Session } from './schemas/session';
+import { corsOrigin, sessionName, sessionSecret } from './env';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   // const sessionRepo = app.get(DataSource).getRepository(Session);
   app.enableCors({
-    origin: 'http://localhost:4200', // FOR DEV
+    origin: corsOrigin,
     methods: ["GET", "POST"],
     credentials: true,
   });
   app.use(
     session({
-      name: 'path2e.sid',
-      secret: 'VaderIsLukesDad', // FOR DEV - REPLACE WITH ENVIRONMENTAL VARIABLE
+      name: sessionName,
+      secret: sessionSecret,
       resave: false,
       saveUninitialized: false,
       // store: ,
