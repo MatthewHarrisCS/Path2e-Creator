@@ -3,10 +3,12 @@ import { AppModule } from './app.module';
 import * as session from 'express-session';
 import * as passport from 'passport';
 import { Session } from './schemas/session';
-import { corsOrigin, sessionName, sessionSecret } from './env';
+import { mongoUser, corsOrigin, sessionName, sessionSecret } from './env';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  var MongoDBStore = require('connect-mongodb-session')(session);
+
   // const sessionRepo = app.get(DataSource).getRepository(Session);
   app.enableCors({
     origin: corsOrigin,
@@ -19,7 +21,11 @@ async function bootstrap() {
       secret: sessionSecret,
       resave: false,
       saveUninitialized: false,
-      // store: ,
+      store: new MongoDBStore({
+        uri: mongoUser,
+        databaseName: 'test',
+        collection: 'sessions'
+      }),
       cookie: { 
         maxAge: 300000 // 5 minute
       }

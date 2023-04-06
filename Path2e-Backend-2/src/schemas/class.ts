@@ -1,30 +1,24 @@
-import { IsAlphanumeric, Min } from "class-validator";
+import { isAlphanumeric, Min } from "class-validator";
 import { Column, Entity, PrimaryColumn } from "typeorm";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
-import { ValidStat } from "src/validators/validStat";
+import { validStat } from "src/validators/validStat";
 
 export type ClassDocument = HydratedDocument<Class>;
 
 @Schema()
 export class Class {
 
-    @Prop({ required: true })
-    @IsAlphanumeric()
+    @Prop({ required: true, validator: isAlphanumeric })
     name: string;
 
-    @Prop({ required: true })
-    @Min(6)
+    @Prop({ required: true, min: 6 })
     hp: number;
 
-    @Prop({ required: true })
-    @IsAlphanumeric()
-    @ValidStat()
+    @Prop({ required: true, validator: validStat })
     keyAbility1: string;
 
-    @Prop({ required: true })
-    @IsAlphanumeric()
-    @ValidStat()
+    @Prop({ required: true, validator: validStat })
     keyAbility2: string;
 }
 

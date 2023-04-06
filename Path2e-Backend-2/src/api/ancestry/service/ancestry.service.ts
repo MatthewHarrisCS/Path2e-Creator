@@ -14,4 +14,8 @@ export class AncestryService {
     findAncestries() {
         return this.model.find();
     }
+
+    resetAncestries() {
+        return this.model.insertMany(ANCESTRY_LIST);
+    }
 }

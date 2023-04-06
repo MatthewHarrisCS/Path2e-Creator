@@ -543,7 +543,7 @@ export class StatFormComponent {
       const newCharacter = new CharacterSheet(
         newName,                          /* name */
         this.auth.getCurrentUser().email, /* user */
-        this.heritage.current.name,       /* heritage */
+        this.ancestry.current.name,       /* heritage */
         this.background.current.name,     /* background */
         this.class.current.name,          /* class */ 
         this.statBlock.get('hp').value,   /* hp */ 

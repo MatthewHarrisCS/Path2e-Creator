@@ -1,37 +1,31 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Min } from "class-validator";
 import { HydratedDocument } from 'mongoose';
-import { ValidStat } from 'src/validators/validStat';
+import { validStat } from 'src/validators/validStat';
 
 export type AncestryDocument = HydratedDocument<Ancestry>;
 
 @Schema()
 export class Ancestry {
 
-    @Prop({ required: true })
+    @Prop({ required: true, unique: true})
     name: string;
 
-    @Prop({ required: true })
-    @Min(0)
+    @Prop({ required: true, min: 0 })
     hp: number;
 
     @Prop({ required: true })
     size: string;
 
-    @Prop({ required: true })
-    @Min(0)
+    @Prop({ required: true, min: 0 })
     speed: number;
 
-    @Prop({ required: true })
-    @ValidStat()
+    @Prop({ validator: validStat })
     boost1: string;
 
-    @Prop({ required: true })
-    @ValidStat()
+    @Prop({ validator: validStat })
     boost2: string;
 
-    @Prop({ required: true })
-    @ValidStat()
+    @Prop({ validator: validStat })
     flaw: string;
 }
 
