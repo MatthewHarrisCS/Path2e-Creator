@@ -5,18 +5,20 @@ import { HydratedDocument } from "mongoose";
 
 export type RacketDocument = HydratedDocument<Racket>;
 
-@Schema()
+@Schema({_id: false})
 export class Racket {
 
-    @Prop({ required: true, validator: isAlphanumeric })
+    @Prop({ required: true, unique: true, validator: isAlphanumeric })
     name: string;
 
-    @Prop({ required: true, validator: isAlphanumeric })
+    @Prop({ validator: isAlphanumeric })
     train1: string;
     
-    @Prop({ required: true, validator: isAlphanumeric })
+    @Prop({ validator: isAlphanumeric })
     train2: string;
 
-    @Prop({ required: true, validator: validStat })
+    @Prop({ validator: validStat })
     keyAbility: string;
 }
+
+export const RacketSchema = SchemaFactory.createForClass(Racket);

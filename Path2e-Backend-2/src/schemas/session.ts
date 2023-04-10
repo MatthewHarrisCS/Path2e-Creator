@@ -4,8 +4,9 @@ import { HydratedDocument } from "mongoose";
 
 export type SessionDocument = HydratedDocument<Session>;
 
-@Schema()
+@Schema({})
 export class Session implements ISession {
+    
     @Prop({ required: true })
     public expiredAt = Date.now();
 

@@ -17,6 +17,7 @@ import { HeritageModule } from './api/heritage/heritage.module';
 import { Heritage } from './schemas/heritage';
 import { MongooseModule } from '@nestjs/mongoose';
 import { mongoUser } from './env';
+import { DebugModule } from './api/debug/debug.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { mongoUser } from './env';
     PassportModule.register({
         session: true,
       }),
+    DebugModule,
     AuthModule,
     AncestryModule, 
     BackgroundModule, 

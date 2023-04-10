@@ -1,13 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { isAlphanumeric } from 'class-validator';
 import { HydratedDocument } from 'mongoose';
 import { validStat } from 'src/validators/validStat';
 
 export type AncestryDocument = HydratedDocument<Ancestry>;
 
-@Schema()
+@Schema({_id: false})
 export class Ancestry {
 
-    @Prop({ required: true, unique: true})
+    @Prop({ required: true, unique: true, validator: isAlphanumeric })
     name: string;
 
     @Prop({ required: true, min: 0 })

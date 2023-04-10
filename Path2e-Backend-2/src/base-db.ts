@@ -322,3 +322,122 @@ export const RACKET_LIST: any = [
         keyAbility: null
     }
 ]
+
+export const HERITAGE_LIST: any = [
+    {
+        name: "Ancient-Blooded",
+        ancestryName: "Dwarf"
+    },
+    {
+        name: "Death Warden",
+        ancestryName: "Dwarf"
+    },
+    {
+        name: "Forge",
+        ancestryName: "Dwarf"
+    },
+    {
+        name: "Rock",
+        ancestryName: "Dwarf"
+    },
+    {
+        name: "Strong-Blooded",
+        ancestryName: "Dwarf"
+    },
+    {
+        name: "Artic",
+        ancestryName: "Elf"
+    },
+    {
+        name: "Cavern",
+        ancestryName: "Elf"
+    },
+    {
+        name: "Seer",
+        ancestryName: "Elf"
+    },
+    {
+        name: "Whisper",
+        ancestryName: "Elf"
+    },
+    {
+        name: "Woodland",
+        ancestryName: "Elf"
+    },
+    {
+        name: "Chameleon",
+        ancestryName: "Gnome"
+    },
+    {
+        name: "Fey-Touched",
+        ancestryName: "Gnome"
+    },
+    {
+        name: "Sensate",
+        ancestryName: "Gnome"
+    },
+    {
+        name: "Umbral",
+        ancestryName: "Gnome"
+    },
+    {
+        name: "Wellspring",
+        ancestryName: "Gnome"
+    },
+    {
+        name: "Charade",
+        ancestryName: "Goblin"
+    },
+    {
+        name: "Irongut",
+        ancestryName: "Goblin"
+    },
+    {
+        name: "Razortooth",
+        ancestryName: "Goblin"
+    },
+    {
+        name: "Snow",
+        ancestryName: "Goblin"
+    },
+    {
+        name: "Unbreakable",
+        ancestryName: "Goblin"
+    },
+    {
+        name: "Gutsy",
+        ancestryName: "Halfling"
+    },
+    {
+        name: "Hillock",
+        ancestryName: "Halfling"
+    },
+    {
+        name: "Nomadic",
+        ancestryName: "Halfling"
+    },
+    {
+        name: "Twilight",
+        ancestryName: "Halfling"
+    },
+    {
+        name: "Wildwood",
+        ancestryName: "Halfling"
+    },
+    {
+        name: "Half-Elf",
+        ancestryName: "Human"
+    },
+    {
+        name: "Half-Orc",
+        ancestryName: "Human"
+    },
+    {
+        name: "Skilled",
+        ancestryName: "Human"
+    },
+    {
+        name: "Versatile",
+        ancestryName: "Human"
+    }
+]

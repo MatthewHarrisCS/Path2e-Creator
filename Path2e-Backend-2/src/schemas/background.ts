@@ -5,19 +5,19 @@ import { HydratedDocument } from "mongoose";
 
 export type BackgroundDocument = HydratedDocument<Background>;
 
-@Schema()
+@Schema({_id: false })
 export class Background {
 
-    @Prop({ required: true, validator: isAlphanumeric})
+    @Prop({ required: true, unique: true, validator: isAlphanumeric })
     name: string;
 
-    @Prop({ required: true, validator: isAlphanumeric })
+    @Prop({ validator: isAlphanumeric })
     feat: string;
 
     @Prop({ required: true, validator: validStat })
     keyAbility1: string;
 
-    @Prop({ required: true, validator: validStat })
+    @Prop({ validator: validStat })
     keyAbility2: string;
 }
 

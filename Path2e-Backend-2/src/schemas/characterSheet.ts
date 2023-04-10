@@ -1,79 +1,71 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
-import { IsAlphanumeric, Max, Min } from "class-validator";
+import { isAlphanumeric, isEmail } from "class-validator";
 import { User } from "./user";
 import { Ancestry } from "./ancestry";
 import { Background } from "./background";
 import { Class } from "./class";
 import { Heritage } from "./heritage";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { HydratedDocument } from "mongoose";
 
-@Entity({ name: 'charactersheet' } )
-export class CharacterSheet {
+export type CharacterDocument = HydratedDocument<CharacterSheet>;
+export type StatsDocument = HydratedDocument<Stats>;
 
-    @PrimaryColumn("varchar", { length: 32 })
-    @IsAlphanumeric()
-    name: string;
 
-    @ManyToOne(() => User, (user) => user.email, {
-        onDelete: "CASCADE", onUpdate: "CASCADE"
-    })
-    @JoinColumn({ name: "user" })
-    @PrimaryColumn("varchar", { length: 64 })
-    user: string;
+@Schema({_id: false})
+export class Stats {
 
-    @Column('int', { default: true })
-    @Min(1)
-    @Max(60)
-    level: number = 1;
-
-    @ManyToOne(() => Ancestry, (ancestry) => ancestry.name, {
-        onDelete: "CASCADE", onUpdate: "CASCADE", nullable: false
-    })
-    @JoinColumn({ name: "ancestry"}) 
-    ancestry: string;
-
-    @ManyToOne(() => Background, (background) => background.name, {
-        onDelete: "CASCADE", onUpdate: "CASCADE", nullable: false
-    })
-    @JoinColumn({ name: "background" })
-    background: string; 
-
-    @ManyToOne(() => Class, (gameClass) => gameClass.name, {
-        onDelete: "CASCADE", onUpdate: "CASCADE", nullable: false
-    })
-    @JoinColumn({ name: "class" })
-    gameClass: string;
-
-    @Column("int") 
-    @Min(12) 
+    @Prop({ required: true, min: 12 })
     hp: number;
     
-    @Column("int")
-    @Min(10)
+    @Prop({ required: true, min: 10 })
     str: number;
     
-    @Column("int")
-    @Min(10)
+    @Prop({ required: true, min: 10 })
     dex: number;
     
-    @Column("int")
-    @Min(10)
+    @Prop({ required: true, min: 10 })
     con: number;
     
-    @Column("int")
-    @Min(10)
+    @Prop({ required: true, min: 10 })
     itl: number;
     
-    @Column("int")
-    @Min(10)
+    @Prop({ required: true, min: 10 })
     wis: number;
     
-    @Column("int")
-    @Min(10)
+    @Prop({ required: true, min: 10 })
     cha: number;
+}
+
+@Schema()
+export class CharacterSheet {
+
+    @Prop({ required: true, unique: true, validator: isAlphanumeric })
+    name: string;
+
+    @Prop({ required: true, unique: true, validator: isEmail })
+    user: string;
+
+    @Prop({ required: true, default: true, min: 1, max: 60 })
+    level: number = 1;
+
+    @Prop({ required: true })
+    ancestry: Ancestry;
+
+    @Prop({ required: true })
+    background: Background; 
+
+    @Prop({ required: true })
+    gameClass: Class;
+
+    @Prop({ required: true })
+    stats: Stats;
     
-    @Column("bool")
+    @Prop({ required: true })
     backgroundChoice: boolean;
     
-    @Column("bool")
+    @Prop({ required: true })
     gameClassChoice: boolean;
 }
+
+export const CharacterSchema = SchemaFactory.createForClass(CharacterSheet);

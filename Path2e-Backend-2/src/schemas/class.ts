@@ -6,10 +6,10 @@ import { validStat } from "src/validators/validStat";
 
 export type ClassDocument = HydratedDocument<Class>;
 
-@Schema()
+@Schema({_id: false})
 export class Class {
 
-    @Prop({ required: true, validator: isAlphanumeric })
+    @Prop({ required: true, unique: true, validator: isAlphanumeric })
     name: string;
 
     @Prop({ required: true, min: 6 })
@@ -18,7 +18,7 @@ export class Class {
     @Prop({ required: true, validator: validStat })
     keyAbility1: string;
 
-    @Prop({ required: true, validator: validStat })
+    @Prop({ validator: validStat }) 
     keyAbility2: string;
 }
 
