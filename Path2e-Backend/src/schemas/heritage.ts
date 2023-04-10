@@ -12,7 +12,6 @@ export class Heritage {
 
     @Prop({ required: true, validator: isAlphanumeric })
     ancestryName: string;
-
 }
 
 export const HeritageSchema = SchemaFactory.createForClass(Heritage);

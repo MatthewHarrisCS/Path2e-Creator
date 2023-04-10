@@ -6,6 +6,7 @@ import { Background } from 'src/models/background';
 import { CharacterList } from 'src/models/character-list';
 import { CharacterSheet } from 'src/models/character-sheet';
 import { GameClass } from 'src/models/game-class';
+import { Heritage } from 'src/models/heritage';
 import { Racket } from 'src/models/racket';
 
 @Injectable({ providedIn: 'root' })
@@ -30,6 +31,11 @@ export class BackendService {
     return this.http.get<GameClass[]>(this.urlBase + "/class");
   }
   
+  // getRackets(): return the racket list from the database
+  getHeritages(): Observable<Heritage[]> {
+    return this.http.get<Heritage[]>(this.urlBase + "/heritage");
+  }
+
   // getRackets(): return the racket list from the database
   getRackets(): Observable<Racket[]> {
     return this.http.get<Racket[]>(this.urlBase + "/racket");

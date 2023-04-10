@@ -9,6 +9,7 @@ import { BackendService } from '../services/backend/backend.service';
 import { Background } from 'src/models/background';
 import { CharacterSheet } from 'src/models/character-sheet';
 import { AuthService } from '../services/auth/auth.service';
+import { Heritage } from 'src/models/heritage';
 
 @Component({
   selector: 'stat-form',
@@ -31,11 +32,13 @@ export class StatFormComponent {
   public ancestries: Ancestry[] = [];
   public backgrounds: Background[] = [];
   public classes: GameClass[] = [];
+  public heritages: Heritage[] = [];
   public rackets: Racket[] = [];
 
   public ancestry = new Identifier("No ancestry selected", false, null);
   public background = new Identifier("No background selected", false, null);
   public class = new Identifier("No class selected", false, null);
+  public heritage = new Identifier("", false, null);
   public racket = new Identifier("", false, null);
 
   private checkCount = 0;
@@ -126,6 +129,7 @@ export class StatFormComponent {
     this.backend.getAncestries().subscribe(x => this.ancestries = x);
     this.backend.getBackgrounds().subscribe(x => this.backgrounds = x);
     this.backend.getClasses().subscribe(x => this.classes = x);
+    this.backend.getHeritages().subscribe(x => this.heritages = x);
     this.backend.getRackets().subscribe(x => this.rackets = x);
   }
 
@@ -444,6 +448,9 @@ export class StatFormComponent {
       this.ancestry.selected = true;
       this.ancestry.current = currentAncestry;
     }
+
+    // Reset the heritage
+    this.setHeritage("---");
   }
 
   // setBackground(): save the selected background and show details
@@ -491,6 +498,28 @@ export class StatFormComponent {
       this.class.selected = true;
       this.class.current = currentClass;
     }
+  }
+
+  // setRacket(): save the selected racket and show details
+  public setHeritage(name: string) {
+    // If default option selected, set the racket to null
+    if (name == "---") {
+      this.heritage.details = "";
+      this.heritage.selected = false;
+      this.heritage.current = null;
+    } else {
+      // Find the selected racket in the list
+      let currentHeritage = this.heritages.find((x: Heritage) => x.name == name);
+      
+      // Set the selected boolean and save the racket database entry
+      this.heritage.details = currentHeritage?.name + " " + currentHeritage?.ancestryName + " selected.";
+      this.heritage.selected = true;
+      this.heritage.current = currentHeritage;
+    }
+  }
+
+  public heritageFilter() {
+    return this.heritages.filter(x => x.ancestryName == this.ancestry.current?.name);
   }
 
   // setRacket(): save the selected racket and show details
@@ -543,16 +572,10 @@ export class StatFormComponent {
       const newCharacter = new CharacterSheet(
         newName,                          /* name */
         this.auth.getCurrentUser().email, /* user */
-        this.ancestry.current.name,       /* heritage */
-        this.background.current.name,     /* background */
-        this.class.current.name,          /* class */ 
-        this.statBlock.get('hp').value,   /* hp */ 
-        this.statBlock.get('str').value,  /* str */ 
-        this.statBlock.get('dex').value,  /* dex */ 
-        this.statBlock.get('con').value,  /* con */ 
-        this.statBlock.get('itl').value,  /* itl */ 
-        this.statBlock.get('wis').value,  /* wis */ 
-        this.statBlock.get('cha').value,  /* cha */
+        this.ancestry.current,            /* ancestry */
+        this.background.current,          /* background */
+        this.class.current,               /* class */ 
+        this.statBlock.getRawValue(),     /* stats */
         this.backgroundKey,               /* backgroundKey */
         this.classKey);                   /* gameClassKey */
 

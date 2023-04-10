@@ -9,29 +9,28 @@ import { HydratedDocument } from "mongoose";
 export type CharacterDocument = HydratedDocument<CharacterSheet>;
 export type StatsDocument = HydratedDocument<Stats>;
 
-
 @Schema({_id: false})
 export class Stats {
 
     @Prop({ required: true, min: 12 })
     hp: number;
     
-    @Prop({ required: true, min: 10 })
+    @Prop({ required: true, min: 8 })
     str: number;
     
-    @Prop({ required: true, min: 10 })
+    @Prop({ required: true, min: 8 })
     dex: number;
     
-    @Prop({ required: true, min: 10 })
+    @Prop({ required: true, min: 8 })
     con: number;
     
-    @Prop({ required: true, min: 10 })
+    @Prop({ required: true, min: 8 })
     itl: number;
     
-    @Prop({ required: true, min: 10 })
+    @Prop({ required: true, min: 8 })
     wis: number;
     
-    @Prop({ required: true, min: 10 })
+    @Prop({ required: true, min: 8 })
     cha: number;
 }
 

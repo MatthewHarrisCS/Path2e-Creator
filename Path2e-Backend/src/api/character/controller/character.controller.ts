@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { Query } from '@nestjs/common/decorators';
 import { CreateCharacterDto } from '../dtos/createCharacter.dto';
 import { CharacterService } from '../service/character.service';
+import { PostCharacterDto } from '../dtos/postCharacter.dto';
 
 @Controller('api/character')
 export class CharacterController {

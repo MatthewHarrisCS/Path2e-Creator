@@ -6,17 +6,19 @@ export class CharacterList {
     constructor(
         public ancestry: Ancestry,
         public background: Background,
-        public cha: number,
-        public con: number,
-        public dex: number,
         public gameClass: GameClass,
         public level: number,
-        public hp: number,
-        public itl: number,
         public name: string,
-        public str: number,
+        public stats: {
+            cha: number,
+            con: number,
+            dex: number,
+            hp: number,
+            itl: number,
+            str: number,
+            wis: number
+        },
         public user: string,
-        public wis: number,
         public gameClassChoice: boolean,
         public backgroundChoice: boolean
     ) {}
