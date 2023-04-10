@@ -7,10 +7,10 @@ import { Heritage } from 'src/schemas/heritage';
 export class HeritageService {
 
     constructor(
-        @InjectModel(Heritage.name) private model: Model<Heritage>
+        @InjectModel(Heritage.name) private heritages: Model<Heritage>
     ) {}
 
     findHeritages() {
-        return this.model.find();
+        return this.heritages.find();
     }
 }

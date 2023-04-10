@@ -7,10 +7,10 @@ import { Background } from 'src/schemas/background';
 export class BackgroundService {
 
     constructor(
-        @InjectModel(Background.name) private model: Model<Background>
+        @InjectModel(Background.name) private backgrounds: Model<Background>
     ) {}
 
     findBackgrounds() {
-        return this.model.find();
+        return this.backgrounds.find();
     }
 }

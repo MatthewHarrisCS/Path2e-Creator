@@ -7,10 +7,10 @@ import { Class } from 'src/schemas/class';
 export class ClassService {
 
     constructor(
-        @InjectModel(Class.name) private model: Model<Class>
+        @InjectModel(Class.name) private classes: Model<Class>
     ) {}
 
     findClasses() {
-        return this.model.find();
+        return this.classes.find();
     }
 }

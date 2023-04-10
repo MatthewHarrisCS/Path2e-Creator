@@ -13,19 +13,19 @@ import { Racket } from 'src/schemas/racket';
 export class DebugService {
 
     constructor(
-        @InjectModel(Ancestry.name) private ancestryModel: Model<Ancestry>,
-        @InjectModel(Background.name) private backgroundModel: Model<Background>,
-        @InjectModel(Class.name) private classModel: Model<Class>,
-        @InjectModel(Heritage.name) private heritageModel: Model<Heritage>,
-        @InjectModel(Racket.name) private racketModel: Model<Racket>,
-        @InjectModel(CharacterSheet.name) private characterModel: Model<CharacterSheet>
+        @InjectModel(Ancestry.name) private ancestries: Model<Ancestry>,
+        @InjectModel(Background.name) private backgrounds: Model<Background>,
+        @InjectModel(Class.name) private classes: Model<Class>,
+        @InjectModel(Heritage.name) private heritages: Model<Heritage>,
+        @InjectModel(Racket.name) private rackets: Model<Racket>,
+        @InjectModel(CharacterSheet.name) private characters: Model<CharacterSheet>
     ) {}
 
     populateDatabases() {
-        this.ancestryModel.insertMany(base.ANCESTRY_LIST);
-        this.backgroundModel.insertMany(base.BACKGROUND_LIST);
-        this.classModel.insertMany(base.CLASS_LIST);
-        this.heritageModel.insertMany(base.HERITAGE_LIST);
-        return this.racketModel.insertMany(base.RACKET_LIST);
+        this.ancestries.insertMany(base.ANCESTRY_LIST);
+        this.backgrounds.insertMany(base.BACKGROUND_LIST);
+        this.classes.insertMany(base.CLASS_LIST);
+        this.heritages.insertMany(base.HERITAGE_LIST);
+        return this.rackets.insertMany(base.RACKET_LIST);
     }
 }

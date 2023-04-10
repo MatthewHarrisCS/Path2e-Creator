@@ -7,10 +7,10 @@ import { Racket } from 'src/schemas/racket';
 export class RacketService {
 
     constructor(
-        @InjectModel(Racket.name) private model: Model<Racket>
+        @InjectModel(Racket.name) private rackets: Model<Racket>
     ) {}
 
     findRackets() {
-        return this.model.find();
+        return this.rackets.find();
     }
 }

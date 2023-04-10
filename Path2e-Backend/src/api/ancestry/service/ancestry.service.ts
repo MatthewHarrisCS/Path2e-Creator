@@ -7,10 +7,10 @@ import { Ancestry } from 'src/schemas/ancestry';
 export class AncestryService {
 
     constructor(
-        @InjectModel(Ancestry.name) private model: Model<Ancestry>
+        @InjectModel(Ancestry.name) private ancestries: Model<Ancestry>
     ) {}
 
     findAncestries() {
-        return this.model.find();
+        return this.ancestries.find();
     }
 }
