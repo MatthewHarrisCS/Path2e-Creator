@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { ANCESTRY_LIST } from 'src/base-db';
 import { Ancestry } from 'src/schemas/ancestry';
 
 @Injectable()
@@ -13,9 +12,5 @@ export class AncestryService {
 
     findAncestries() {
         return this.model.find();
-    }
-
-    resetAncestries() {
-        return this.model.insertMany(ANCESTRY_LIST);
     }
 }

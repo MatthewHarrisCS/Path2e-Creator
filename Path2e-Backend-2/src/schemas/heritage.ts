@@ -1,5 +1,3 @@
-import { Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
-import { Ancestry } from "./ancestry";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
 import { isAlphanumeric } from "class-validator";

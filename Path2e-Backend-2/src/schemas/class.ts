@@ -1,5 +1,4 @@
-import { isAlphanumeric, Min } from "class-validator";
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { isAlphanumeric } from "class-validator";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
 import { validStat } from "src/validators/validStat";

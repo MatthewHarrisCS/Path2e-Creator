@@ -1,6 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { isAlphanumeric, isEmail } from "class-validator";
-import { User } from "./user";
 import { Ancestry } from "./ancestry";
 import { Background } from "./background";
 import { Class } from "./class";

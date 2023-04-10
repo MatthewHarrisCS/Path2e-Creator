@@ -10,10 +10,4 @@ export class AncestryController {
         const ancestries = await this.service.findAncestries();
         return ancestries;
     }
-    
-    @Get('/reset')
-    async resetAncestries() {
-        const success = await this.service.resetAncestries();
-        return success;
-    }
 }
