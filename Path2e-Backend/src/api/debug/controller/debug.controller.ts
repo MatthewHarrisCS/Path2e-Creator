@@ -6,8 +6,8 @@ export class DebugController {
     constructor(private service: DebugService) {}
 
     @Get('/reset')
-    async resetDatabases() {
-        const success = await this.service.resetDatabases();
+    async populateDatabases() {
+        const success = await this.service.populateDatabases();
         return success;
     }
 }

@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Ancestry } from 'src/typeorm/entities/ancestry';
+import { Ancestry, AncestrySchema } from 'src/schemas/ancestry';
 import { AncestryController } from './controller/ancestry.controller';
 import { AncestryService } from './service/ancestry.service';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Ancestry])],
+  imports: [MongooseModule.forFeature([{ name: Ancestry.name, schema: AncestrySchema }])],
   controllers: [AncestryController],
   providers: [AncestryService]
 })

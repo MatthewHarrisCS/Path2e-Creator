@@ -1,45 +1,33 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Ancestry } from './typeorm/entities/ancestry';
-import { User } from './typeorm/entities/user';
+import { Ancestry } from './schemas/ancestry';
+import { User } from './schemas/user';
 import { AncestryModule } from './api/ancestry/ancestry.module';
 import { BackgroundModule } from './api/background/background.module';
-import { Background } from './typeorm/entities/background';
-import { Class } from './typeorm/entities/class';
+import { Background } from './schemas/background';
+import { Class } from './schemas/class';
 import { ClassModule } from './api/class/class.module';
-import { Racket } from './typeorm/entities/racket';
+import { Racket } from './schemas/racket';
 import { RacketModule } from './api/racket/racket.module';
-import { CharacterSheet } from './typeorm/entities/characterSheet';
+import { CharacterSheet } from './schemas/characterSheet';
 import { CharacterModule } from './api/character/character.module';
 import { AuthModule } from './api/auth/auth.module';
 import { PassportModule } from '@nestjs/passport';
-import { Session } from './typeorm/entities/session';
+import { Session } from './schemas/session';
 import { HeritageModule } from './api/heritage/heritage.module';
-import { Heritage } from './typeorm/entities/heritage';
+import { Heritage } from './schemas/heritage';
+import { MongooseModule } from '@nestjs/mongoose';
+import { mongoUser } from './env';
+import { DebugModule } from './api/debug/debug.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost', // FOR DEV
-      port: 3306,
-      username: 'matthewharriscs', // FOR DEV
-      password: 'path2e-pw', // FOR DEV
-      database: 'path2e_db',
-      entities: [
-        User, 
-        Ancestry, 
-        Background, 
-        Class, 
-        Racket,
-        Heritage,
-        CharacterSheet, 
-        Session
-      ],
-      synchronize: true }),
+    MongooseModule.forRoot(
+      mongoUser
+      ),
     PassportModule.register({
         session: true,
       }),
+    DebugModule,
     AuthModule,
     AncestryModule, 
     BackgroundModule, 

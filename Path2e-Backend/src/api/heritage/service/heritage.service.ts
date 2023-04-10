@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Heritage } from 'src/typeorm/entities/heritage';
-import { Repository } from 'typeorm';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Heritage } from 'src/schemas/heritage';
 
 @Injectable()
 export class HeritageService {
 
     constructor(
-        @InjectRepository(Heritage) private heritages: Repository<Heritage>,
+        @InjectModel(Heritage.name) private model: Model<Heritage>
     ) {}
 
     findHeritages() {
-        return this.heritages.find();
+        return this.model.find();
     }
 }

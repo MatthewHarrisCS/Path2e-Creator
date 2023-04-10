@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Racket } from 'src/typeorm/entities/racket';
+import { Racket, RacketSchema } from 'src/schemas/racket';
 import { RacketController } from './controller/racket.controller';
 import { RacketService } from './service/racket.service';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Racket])],
+  imports: [MongooseModule.forFeature([{ name: Racket.name, schema: RacketSchema }])],
   controllers: [RacketController],
   providers: [RacketService]
 })

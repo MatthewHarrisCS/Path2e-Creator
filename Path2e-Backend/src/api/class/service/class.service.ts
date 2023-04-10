@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Class } from 'src/typeorm/entities/class';
-import { Repository } from 'typeorm';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Class } from 'src/schemas/class';
 
 @Injectable()
 export class ClassService {
 
     constructor(
-        @InjectRepository(Class) private classes: Repository<Class>,
+        @InjectModel(Class.name) private model: Model<Class>
     ) {}
 
     findClasses() {
-        return this.classes.find();
+        return this.model.find();
     }
 }

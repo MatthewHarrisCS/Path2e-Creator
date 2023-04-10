@@ -21,7 +21,7 @@ export class DebugService {
         @InjectModel(CharacterSheet.name) private characterModel: Model<CharacterSheet>
     ) {}
 
-    resetDatabases() {
+    populateDatabases() {
         this.ancestryModel.insertMany(base.ANCESTRY_LIST);
         this.backgroundModel.insertMany(base.BACKGROUND_LIST);
         this.classModel.insertMany(base.CLASS_LIST);

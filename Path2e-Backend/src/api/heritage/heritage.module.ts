@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Heritage } from 'src/typeorm/entities/heritage';
+import { Heritage, HeritageSchema } from 'src/schemas/heritage';
 import { HeritageController } from './controller/heritage.controller';
 import { HeritageService } from './service/heritage.service';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Heritage])],
+  imports: [MongooseModule.forFeature([{ name: Heritage.name, schema: HeritageSchema }])],
   controllers: [HeritageController],
   providers: [HeritageService]
 })

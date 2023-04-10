@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Racket } from 'src/typeorm/entities/racket';
-import { Repository } from 'typeorm';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Racket } from 'src/schemas/racket';
 
 @Injectable()
 export class RacketService {
 
     constructor(
-        @InjectRepository(Racket) private rackets: Repository<Racket>,
+        @InjectModel(Racket.name) private model: Model<Racket>
     ) {}
 
     findRackets() {
-        return this.rackets.find();
+        return this.model.find();
     }
 }

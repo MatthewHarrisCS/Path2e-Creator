@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Background } from 'src/typeorm/entities/background';
-import { Repository } from 'typeorm';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Background } from 'src/schemas/background';
 
 @Injectable()
 export class BackgroundService {
 
     constructor(
-        @InjectRepository(Background) private backgrounds: Repository<Background>,
+        @InjectModel(Background.name) private model: Model<Background>
     ) {}
 
     findBackgrounds() {
-        return this.backgrounds.find();
+        return this.model.find();
     }
 }

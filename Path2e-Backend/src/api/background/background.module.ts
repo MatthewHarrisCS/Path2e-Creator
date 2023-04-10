@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Background } from 'src/typeorm/entities/background';
+import { Background, BackgroundSchema } from 'src/schemas/background';
 import { BackgroundController } from './controller/background.controller';
 import { BackgroundService } from './service/background.service';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Background])],
+  imports: [MongooseModule.forFeature([{ name: Background.name, schema: BackgroundSchema }])],
   controllers: [BackgroundController],
   providers: [BackgroundService]
 })

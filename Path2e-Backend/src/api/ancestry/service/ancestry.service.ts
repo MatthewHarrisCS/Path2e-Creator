@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Ancestry } from 'src/typeorm/entities/ancestry';
-import { Repository } from 'typeorm/repository/Repository';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Ancestry } from 'src/schemas/ancestry';
 
 @Injectable()
 export class AncestryService {
 
     constructor(
-        @InjectRepository(Ancestry) private ancestries: Repository<Ancestry>,
+        @InjectModel(Ancestry.name) private model: Model<Ancestry>
     ) {}
 
     findAncestries() {
-        return this.ancestries.find();
+        return this.model.find();
     }
 }
