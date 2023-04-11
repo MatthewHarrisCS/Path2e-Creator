@@ -24,7 +24,12 @@
                 [attr.disabled]="freeDisable()" (change)="resetBoosts(a.value)">
             <label for="freeBox">Free choice</label><br/>
             <label [textContent]="ancestry.details"></label>
-
+        </div>
+        
+        <!-- Heritage --->
+        <div class="box identityBox">
+            <h3>Heritage</h3>
+            <label>Select a heritage</label><br/>
             <select id="heritageSelect" [disabled]="ancestry.current == null"  #h (change)="setHeritage(h.value)">
                 <option>---</option>
                 <option *ngFor="let heritage of heritageFilter()">
@@ -60,7 +65,7 @@
         <div class="box identityBox">
             <h3>Class</h3>
             <label>Select a class</label><br/>
-            <select id="classSelect" #c (change)="setClass(c.value);">
+            <select id="classSelect" #c (change)="setClass(c.value); r.options.selectedIndex = 0;">
                 <option>---</option>
                 <option *ngFor="let class of classes">
                     {{class.name}}

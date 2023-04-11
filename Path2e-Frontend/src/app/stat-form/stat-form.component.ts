@@ -498,6 +498,9 @@ export class StatFormComponent {
       this.class.selected = true;
       this.class.current = currentClass;
     }
+
+    // Reset the racket
+    this.setRacket("---");
   }
 
   // setRacket(): save the selected racket and show details
@@ -550,14 +553,15 @@ export class StatFormComponent {
   //                have not been reached already
   public calcDisable() {
     // Returns true if any of the parameters fail:
-    //   * The ancestry, background, and class have not been selected
-    //   * The Rogue's racket is chosen but no option has been selected
-    //   * There are still free stat options available
-    //   * Roll Stats has been selected but not all options have been set
-    return (!this.nameCheckSource()) ||
-    !this.ancestry.selected || !this.background.selected || 
-    !this.class.selected || (!this.classKey && !this.racket.selected) ||
-    !(this.checkCount >= this.boostLimit) || !this.rollSelected;
+    // * The ancestry, heritage, background, and class have not been selected
+    // * The Rogue's racket is chosen but no option has been selected
+    // * There are still free stat options available
+    // * Roll Stats has been selected but not all options have been set
+    return (!this.nameCheckSource()) 
+    || !this.ancestry.selected || !this.heritage.selected
+    || !this.background.selected || !this.class.selected 
+    || (this.class.current?.name == "Rogue" && !this.classKey && !this.racket.selected) 
+    || (this.checkCount < this.boostLimit) || !this.rollSelected;
   }
 
   // saveCharacter(): get the character details and send them to the server
@@ -575,6 +579,8 @@ export class StatFormComponent {
         this.ancestry.current,            /* ancestry */
         this.background.current,          /* background */
         this.class.current,               /* class */ 
+        this.heritage.current,            /* heritage */ 
+        this.racket.current,              /* racket */ 
         this.statBlock.getRawValue(),     /* stats */
         this.backgroundKey,               /* backgroundKey */
         this.classKey);                   /* gameClassKey */

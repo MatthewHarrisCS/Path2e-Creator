@@ -1,6 +1,8 @@
 import { Ancestry } from "./ancestry";
 import { Background } from "./background";
 import { GameClass } from "./game-class";
+import { Heritage } from "./heritage";
+import { Racket } from "./racket";
 
 export class CharacterSheet {
     constructor(
@@ -9,6 +11,8 @@ export class CharacterSheet {
         public ancestry: Ancestry,
         public background: Background,
         public gameClass: GameClass,
+        public heritage: Heritage,
+        public racket: Racket,
         public stats: {
             hp: number,
             str: number,

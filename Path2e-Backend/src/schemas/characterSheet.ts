@@ -5,6 +5,7 @@ import { Class } from "./class";
 import { Heritage } from "./heritage";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
+import { Racket } from "./racket";
 
 export type CharacterDocument = HydratedDocument<CharacterSheet>;
 export type StatsDocument = HydratedDocument<Stats>;
@@ -40,7 +41,7 @@ export class CharacterSheet {
     @Prop({ required: true, unique: true, validator: isAlphanumeric })
     name: string;
 
-    @Prop({ required: true, unique: true, validator: isEmail })
+    @Prop({ required: true, validator: isEmail })
     user: string;
 
     @Prop({ required: true, default: true, min: 1, max: 60 })
@@ -54,6 +55,12 @@ export class CharacterSheet {
 
     @Prop({ required: true })
     gameClass: Class;
+
+    @Prop({ required: true })
+    heritage: Heritage
+
+    @Prop()
+    racket: Racket
 
     @Prop({ required: true })
     stats: Stats;

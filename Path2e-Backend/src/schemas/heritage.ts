@@ -4,7 +4,7 @@ import { isAlphanumeric } from "class-validator";
 
 export type HeritageDocument = HydratedDocument<Heritage>;
 
-@Schema()
+@Schema({_id: false})
 export class Heritage {
 
     @Prop({ required: true, validator: isAlphanumeric })
