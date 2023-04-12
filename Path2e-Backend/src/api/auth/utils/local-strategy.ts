@@ -26,7 +26,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
         const hashCheck = await bcrypt.compare(password, user.password);
 
         if(hashCheck) {
-            return {email: user.email, username: user.username};
+            return {_id: user._id, email: user.email, username: user.username};
         } else {
             throw new UnauthorizedException();
         }

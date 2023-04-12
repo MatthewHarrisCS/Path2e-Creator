@@ -19,14 +19,14 @@ export class UserProfileComponent {
     this.getData();
   }
 
-  public user: User = {email: "", username: ""};
+  public user: User = {_id: "", email: "", username: ""};
   public characters: CharacterList[] = [];
   public character: CharacterList | undefined;
 
   // getData(): get the current user and access their character list
   getData() {
     this.user = this.auth.getCurrentUser();
-    this.backend.getCharacters(this.user.email)
+    this.backend.getCharacters(this.user._id)
       .subscribe(y => this.characters = y);
   }
   

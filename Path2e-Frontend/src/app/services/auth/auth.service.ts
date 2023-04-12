@@ -10,7 +10,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  private user: User = {email: "", username: ""};
+  private user: User = {_id: "", email: "", username: ""};
   private urlBase: string = "http://localhost:4201/auth";
 
   // logUser(): log the user into the website

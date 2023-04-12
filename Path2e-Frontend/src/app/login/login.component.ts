@@ -144,7 +144,7 @@ export class LoginComponent {
     // Reset the forms and set the current user null
     this.loginForm.setValue({email: "", password: ""});
     this.regForm.setValue({email: "", username: "", password: "", password2: ""});
-    this.auth.setCurrentUser({email: "", username: ""});
+    this.auth.setCurrentUser({_id: "", email: "", username: ""});
     // Send a logout signal to the server and set authenticated to false
     this.auth.logout().subscribe();
     this.authenticated = false;
@@ -176,10 +176,10 @@ export class LoginComponent {
   //               have not been reached already
   regDisable() {
     // Returns true if any of the parameters fail:
-    //   * The email does not match the regular expression
-    //   * The username does not match the regular expression
-    //   * The two provided passwords do not match
-    //   * The password is not at least 8 characters
+    // * The email does not match the regular expression
+    // * The username does not match the regular expression
+    // * The two provided passwords do not match
+    // * The password is not at least 8 characters
     return !this.emailCheck(this.email) 
     || !this.usernameCheck(this.username)
     || !this.passwordCheck(this.password, this.password2)

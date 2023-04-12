@@ -36,7 +36,7 @@
                     {{heritage.name}}
                 </option>
             </select><br/>
-            <label [textContent]="heritage.details"></label>
+            <label>{{!this.ancestry.selected ? "Select an ancestry first" : heritage.details}}</label><br/>
         </div>
 
         <!--  Background  --->
@@ -180,7 +180,7 @@
     <div class="calculate container">
         <div>
             <button name="Calculate" (click)="calculate()" [disabled]="calcDisable()">Calculate</button>
-            <button name="Save"  (click)="saveCharacter()" [disabled]="calcDisable()">Save to Database</button>
+            <button name="Save"  (click)="saveCharacter()" [disabled]="calcDisable() || !calculated">Save to Database</button>
         </div>
     </div>
 </div>

@@ -42,8 +42,8 @@ export class BackendService {
   }
 
   // getCharacters(): return the user's saved character list from the database
-  getCharacters(email: string): Observable<CharacterList[]> {
-    let params = new HttpParams().set("user", email)
+  getCharacters(_id: string): Observable<CharacterList[]> {
+    let params = new HttpParams().set("user", _id)
     return this.http.get<CharacterList[]>(this.urlBase + "/character", {params: params});
   }
 

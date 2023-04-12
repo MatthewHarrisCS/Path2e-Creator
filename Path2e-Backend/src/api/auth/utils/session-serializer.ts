@@ -27,6 +27,7 @@ export class SessionSerializer extends PassportSerializer {
         const currUser = await this.authService.getUserByEmail(user.email);
         if (currUser != null) {
             let session = new SessionDto();
+            session._id = currUser.id;
             session.email = currUser.email;
             session.username = currUser.username;
             done(null, session);

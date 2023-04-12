@@ -41,7 +41,7 @@ export class CharacterSheet {
     @Prop({ required: true, unique: true, validator: isAlphanumeric })
     name: string;
 
-    @Prop({ required: true, validator: isEmail })
+    @Prop({ required: true })
     user: string;
 
     @Prop({ required: true, default: true, min: 1, max: 60 })

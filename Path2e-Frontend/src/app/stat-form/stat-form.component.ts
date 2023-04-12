@@ -38,10 +38,11 @@ export class StatFormComponent {
   public ancestry = new Identifier("No ancestry selected", false, null);
   public background = new Identifier("No background selected", false, null);
   public class = new Identifier("No class selected", false, null);
-  public heritage = new Identifier("", false, null);
-  public racket = new Identifier("", false, null);
+  public heritage = new Identifier("No heritage selected", false, null);
+  public racket = new Identifier("No racket selected", false, null);
 
   private checkCount = 0;
+  public calculated = false;
 
   public  rolledString = [" ", " ", " ", " ", " ", " "];
   private rolledStats = [0, 0, 0, 0, 0, 0];
@@ -336,6 +337,9 @@ export class StatFormComponent {
 
     // Bound any stats whose values fell outside the 8-18 bound
     this.boundStatBlock();
+
+    // Set the calculated flag true
+    this.calculated = true;
   }
 
   // boostStat(): increase or decrease the specified stat by 2
@@ -507,7 +511,7 @@ export class StatFormComponent {
   public setHeritage(name: string) {
     // If default option selected, set the racket to null
     if (name == "---") {
-      this.heritage.details = "";
+      this.heritage.details = "No heritage selected";
       this.heritage.selected = false;
       this.heritage.current = null;
     } else {
@@ -529,7 +533,7 @@ export class StatFormComponent {
   public setRacket(name: string) {
     // If default option selected, set the racket to null
     if (name == "---") {
-      this.racket.details = "";
+      this.racket.details = "No racket selected";
       this.racket.selected = false;
       this.racket.current = null;
     } else {
@@ -574,16 +578,16 @@ export class StatFormComponent {
     // selected details for each user
     if (newName != undefined) {
       const newCharacter = new CharacterSheet(
-        newName,                          /* name */
-        this.auth.getCurrentUser().email, /* user */
-        this.ancestry.current,            /* ancestry */
-        this.background.current,          /* background */
-        this.class.current,               /* class */ 
-        this.heritage.current,            /* heritage */ 
-        this.racket.current,              /* racket */ 
-        this.statBlock.getRawValue(),     /* stats */
-        this.backgroundKey,               /* backgroundKey */
-        this.classKey);                   /* gameClassKey */
+        newName,                        /* name */
+        this.auth.getCurrentUser()._id, /* user */
+        this.ancestry.current,          /* ancestry */
+        this.background.current,        /* background */
+        this.class.current,             /* class */ 
+        this.heritage.current,          /* heritage */ 
+        this.racket.current,            /* racket */ 
+        this.statBlock.getRawValue(),   /* stats */
+        this.backgroundKey,             /* backgroundKey */
+        this.classKey);                 /* gameClassKey */
 
       // Send the CharacterSheet to the database
       this.backend.saveCharacter(newCharacter).subscribe();
