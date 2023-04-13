@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { User } from 'src/schemas/user';
 import { CreateUserDto } from '../dtos/createUser.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +15,13 @@ export class AuthService {
     //                   an entry exists with the given email
     getUserByEmail(email: string) {
         return this.users.findOne({ email: email });
+    }
+
+    // getUserById(): Return a user from the database if 
+    //                an entry exists with the given _id
+    getUserById(_id: Types.ObjectId) {
+        const user = this.users.findOne({ _id: _id });
+        return user;
     }
 
     // findUser(): Return a user from the database if an entry

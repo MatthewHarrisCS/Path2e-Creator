@@ -1,5 +1,14 @@
 <div class="identityBox">
 
+    <div>
+        <input type="text" [formControl]="newEmail" #ne><br/>
+        <!--<button name="emailButton" (click)="" [disabled]="ne.value == ''"></button>-->
+    </div><div>
+        <input type="text" [formControl]="newUsername" #nu><br/>
+    </div><div>
+        <input type="text" [formControl]="newPassword" #np><br/>
+    </div>
+
     <!-- Character Dropdown Menu --->
     <h3>View Characters for {{user.username}}</h3>
     <select id="characterSelect" #c (change)="setCharacter(c.value)">
@@ -64,11 +73,15 @@
             </tr>
             <tr>
                 <td>Class Boost:</td>
-                <td>{{character?.gameClassChoice ? character?.gameClass?.keyAbility1 : character?.gameClass?.keyAbility2}}</td>
+                <td>{{character?.gameClassChoice ? 
+                      character?.gameClass?.keyAbility1 : 
+                      character?.gameClass?.keyAbility2}}</td>
             </tr>
             <tr>
                 <td>Background Boost:</td>
-                <td>{{character?.backgroundChoice ? character?.background?.keyAbility1 : character?.background?.keyAbility2}}</td>
+                <td>{{character?.backgroundChoice ? 
+                      character?.background?.keyAbility1 : 
+                      character?.background?.keyAbility2}}</td>
             </tr>
         </table>
     </ng-template>

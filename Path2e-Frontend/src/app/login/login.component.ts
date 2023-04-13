@@ -144,7 +144,7 @@ export class LoginComponent {
     // Reset the forms and set the current user null
     this.loginForm.setValue({email: "", password: ""});
     this.regForm.setValue({email: "", username: "", password: "", password2: ""});
-    this.auth.setCurrentUser({_id: "", email: "", username: ""});
+    this.auth.setCurrentUser({_id: "", username: ""});
     // Send a logout signal to the server and set authenticated to false
     this.auth.logout().subscribe();
     this.authenticated = false;

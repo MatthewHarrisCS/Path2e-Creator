@@ -1,5 +1,6 @@
+import { Types } from "mongoose";
+
 export class SessionDto {
-    _id: string;
-    email: string;
+    _id: Types.ObjectId;
     username: string;
 }
