@@ -25,7 +25,6 @@ export class SessionSerializer extends PassportSerializer {
 
         // If the user exists in the database, get the session
         const currUser = await this.authService.getUserById(user._id);
-        console.log(currUser);
         if (currUser != null) {
             let session = new SessionDto();
             session._id = currUser._id;

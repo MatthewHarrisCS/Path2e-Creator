@@ -1,50 +1,52 @@
-<div *ngIf="!regUser; then loginDiv else regDiv"></div>
+<div [hidden]="hidden">
+    <div *ngIf="!regUser; then loginDiv else regDiv"></div>
 
-<!-- Login Page --->
-<ng-template #loginDiv [formGroup]="loginForm">
-    <div class="container">
-        <div class="box">
-            <h2>Log-In</h2>
-            <input type="text" formControlName="email" placeholder="Email"><br><br>
-            <input type="password" formControlName="password" placeholder="Password"><br>
-            <label [hidden]="!failed">Error: Incorrect email or password. Please try again.</label><br>
-            <button (click)="login()" [disabled]="loginDisable()">Submit</button><br><br>
-            <button (click)="regUser = true;">Create New Account</button>
+    <!-- Login Page --->
+    <ng-template #loginDiv [formGroup]="loginForm">
+        <div class="container">
+            <div class="box">
+                <h2>Log-In</h2>
+                <input type="text" formControlName="email" placeholder="Email"><br><br>
+                <input type="password" formControlName="password" placeholder="Password"><br>
+                <label [hidden]="!failed">Error: Incorrect email or password. Please try again.</label><br>
+                <button (click)="login()" [disabled]="loginDisable()">Submit</button><br><br>
+                <button (click)="regUser = true;">Create New Account</button>
+            </div>
         </div>
-    </div>
-</ng-template>
+    </ng-template>
 
-<!-- Registration Page --->
-<ng-template #regDiv [formGroup]="regForm">
-    <div class="container">
-        <div class="box">
-            <h2>Registration</h2>
+    <!-- Registration Page --->
+    <ng-template #regDiv [formGroup]="regForm">
+        <div class="container">
+            <div class="box">
+                <h2>Registration</h2>
 
-            <!-- Email --->
-            <input type="text" #e formControlName="email" placeholder="Email"><br>
-            <label>{{e.value.length <= 0 ? "" : (emailCheck(e.value) ? "" : 
-                "Please enter a valid email")}}</label><br/>
+                <!-- Email --->
+                <input type="text" #e formControlName="email" placeholder="Email"><br>
+                <label>{{e.value.length <= 0 ? "" : (emailCheck(e.value) ? "" : 
+                    "Please enter a valid email")}}</label><br/>
 
-            <!-- Username --->
-            <input type="text" #u formControlName="username" placeholder="Username"><br>
-            <label>{{u.value.length <= 0 ? "" : (usernameCheck(u.value) ? "" : 
-                "Allowed characters: \na-z, A-Z, and 0-9")}}</label><br/>
+                <!-- Username --->
+                <input type="text" #u formControlName="username" placeholder="Username"><br>
+                <label>{{u.value.length <= 0 ? "" : (usernameCheck(u.value) ? "" : 
+                    "Allowed characters: \na-z, A-Z, and 0-9")}}</label><br/>
 
-            <!-- Password and Confirm Password --->
-            <input type="password" #p1 formControlName="password"  placeholder="Password"><br>
-            <input type="password" #p2 formControlName="password2" placeholder="Confirm Password"><br>
-            <!-- 
-            ---- If either password form is empty, show nothing
-            ---- If the password is less than 8 characters, warn the user
-            ---- If the passwords don't match, warn the user
-            --->
-            <label>{{p1.value.length <= 0 && p2.value.length <= 0 ? "" : 
-                p1.value.length < 8 ? "Password must be at least 8 characters long" : 
-                (passwordCheck(p1.value, p2.value) ? "" : 
-                "Please confirm entered passwords match")}}</label><br/>
-            <button [disabled]="regDisable()" (click)="register()">Submit</button><br>
-            <label>{{status}}</label><br>
-            <button (click)="regUser = false;">Return to Log-In</button>
+                <!-- Password and Confirm Password --->
+                <input type="password" #p1 formControlName="password"  placeholder="Password"><br>
+                <input type="password" #p2 formControlName="password2" placeholder="Confirm Password"><br>
+                <!-- 
+                ---- If either password form is empty, show nothing
+                ---- If the password is less than 8 characters, warn the user
+                ---- If the passwords don't match, warn the user
+                --->
+                <label>{{p1.value.length <= 0 && p2.value.length <= 0 ? "" : 
+                    p1.value.length < 8 ? "Password must be at least 8 characters long" : 
+                    (passwordCheck(p1.value, p2.value) ? "" : 
+                    "Please confirm entered passwords match")}}</label><br/>
+                <button [disabled]="regDisable()" (click)="register()">Submit</button><br>
+                <label>{{status}}</label><br>
+                <button (click)="regUser = false;">Return to Log-In</button>
+            </div>
         </div>
-    </div>
-</ng-template>
+    </ng-template>
+</div>

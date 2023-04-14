@@ -1,11 +1,6 @@
-import { isAlphanumeric, isEmail } from "class-validator";
-import { Ancestry } from "./ancestry";
-import { Background } from "./background";
-import { Class } from "./class";
-import { Heritage } from "./heritage";
+import { isAlphanumeric } from "class-validator";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { HydratedDocument } from "mongoose";
-import { Racket } from "./racket";
+import { HydratedDocument, Types } from "mongoose";
 
 export type CharacterDocument = HydratedDocument<CharacterSheet>;
 export type StatsDocument = HydratedDocument<Stats>;
@@ -47,21 +42,21 @@ export class CharacterSheet {
     @Prop({ required: true, default: true, min: 1, max: 60 })
     level: number = 1;
 
-    @Prop({ required: true })
-    ancestry: Ancestry;
+    @Prop({ required: true, ref: "Ancestry" })
+    ancestry: Types.ObjectId;
 
-    @Prop({ required: true })
-    background: Background; 
+    @Prop({ required: true, ref: "Background" })
+    background: Types.ObjectId;
 
-    @Prop({ required: true })
-    gameClass: Class;
+    @Prop({ required: true, ref: "Class" })
+    gameClass: Types.ObjectId;
 
-    @Prop({ required: true })
-    heritage: Heritage
-
-    @Prop()
-    racket: Racket
-
+    @Prop({ required: true, ref: "Heritage" })
+    heritage: Types.ObjectId;
+    
+    @Prop({ ref: "Racket"})
+    racket: Types.ObjectId;
+    
     @Prop({ required: true })
     stats: Stats;
     

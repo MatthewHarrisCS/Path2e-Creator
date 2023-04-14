@@ -65,11 +65,9 @@ export class AuthController {
         // If search finds an existing user, return the taken properties
         if (search != null) {
             if (search.email == createUserDto.email) {
-                console.log("email");
                 result.email = true;
             } 
             if (search.username == createUserDto.username) {
-                console.log("username");
                 result.username = true;
             }
             return result;

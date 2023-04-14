@@ -12,6 +12,7 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder, private auth: AuthService) {}
 
+  public hidden = true;
   public authenticated = false;
   public failed = false;
   public regUser = false;
@@ -63,6 +64,10 @@ export class LoginComponent {
         if (x != null) {
           this.auth.setCurrentUser(x);
           this.authenticated = true;
+          console.log("hi");
+        } else {
+          this.hidden = false;
+          console.log("hello");
         }
       }
     );
@@ -87,6 +92,7 @@ export class LoginComponent {
             // current user and set authenticated to true
             if (x != null) {
               this.auth.setCurrentUser(x);
+              this.hidden = true;
               this.regUser = false;
               this.authenticated = true;
             }
@@ -116,6 +122,7 @@ export class LoginComponent {
             if (y != null) {
               this.auth.setCurrentUser(y);
               this.authenticated = true;
+              this.hidden = true;
               this.status = "";
             }
           });
@@ -148,6 +155,7 @@ export class LoginComponent {
     // Send a logout signal to the server and set authenticated to false
     this.auth.logout().subscribe();
     this.authenticated = false;
+    this.hidden = false;
   }
 
   //loginDisable(): disable the submit button if either the email

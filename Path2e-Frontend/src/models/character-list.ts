@@ -13,7 +13,7 @@ export class CharacterList {
             cha: number,
             con: number,
             dex: number,
-            hp: number,
+            hp:  number,
             itl: number,
             str: number,
             wis: number
