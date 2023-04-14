@@ -4,12 +4,13 @@ import { GameClass } from 'src/models/game-class';
 import { Identifier } from 'src/models/identifier';
 import { Racket } from 'src/models/racket';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Dice } from 'src/dice';
+import { Dice } from 'src/functions/dice';
 import { BackendService } from '../services/backend/backend.service';
 import { Background } from 'src/models/background';
 import { CharacterSheet } from 'src/models/character-sheet';
 import { AuthService } from '../services/auth/auth.service';
 import { Heritage } from 'src/models/heritage';
+import { RegExp } from 'src/functions/regexp';
 
 @Component({
   selector: 'stat-form',
@@ -173,7 +174,7 @@ export class StatFormComponent {
 
   // nameCheck(): validate the provided name using a regular expression
   public nameCheck(name: string) {
-    return name.match("^[\\w-'\" ]+$") != null;
+    return RegExp.characterName(name);
   }
   
   // nameCheckSource(): validate the statForm name using nameCheck()
@@ -391,14 +392,13 @@ export class StatFormComponent {
   public rollStats() {
     // Reset any saved roll values
     this.resetRolls();
-    let roll = new Dice();
     let diceToRoll = [0, 0, 0, 0];
 
     // For each of the six stats
     for (let i = 0; i < 6; i++) {
       // Roll four d6 dice (1-6) and save them to an array
       for (let j = 0; j < 4; j++) {
-        diceToRoll[j] = roll.d6();
+        diceToRoll[j] = Dice.d6();
       }
 
       // Sort the dice rolls from least to greatest

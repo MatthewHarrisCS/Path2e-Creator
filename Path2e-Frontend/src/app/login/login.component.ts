@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
 import { catchError, of } from 'rxjs';
+import { RegExp } from 'src/functions/regexp';
 
 @Component({
   selector: 'login',
@@ -167,12 +168,12 @@ export class LoginComponent {
 
   // emailCheck(): validate the provided email using a regular expression
   emailCheck(name: string) {
-    return name.match("^([a-zA-Z0-9_.+-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$") != null;
+    return RegExp.email(name);
   }
   
   // usernameCheck(): validate the provided username using a regular expression
   usernameCheck(name: string) {
-    return name.match("^[\\w]+$") != null;
+    return RegExp.username(name);
   }
 
   // passwordCheck(): confirm both entered passwords match
@@ -188,8 +189,8 @@ export class LoginComponent {
     // * The username does not match the regular expression
     // * The two provided passwords do not match
     // * The password is not at least 8 characters
-    return !this.emailCheck(this.email) 
-    || !this.usernameCheck(this.username)
+    return !RegExp.email(this.email) 
+    || !RegExp.username(this.username)
     || !this.passwordCheck(this.password, this.password2)
     || !this.passLength;
   }
