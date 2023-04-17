@@ -10,8 +10,14 @@ export class User {
     @Prop({ required: true, unique: true, validator: isEmail })
     email: string;
 
-    @Prop({ required: true, unique: true, validator: isAlphanumeric })
+    @Prop({ required: true, validator: isAlphanumeric })
     username: string;
+
+    @Prop({ required: true, unique: true, 
+        default: function() {
+            return this.username.toLowerCase();
+        } })
+    lowercase: string;
 
     @Prop({ required: true })
     password: string;

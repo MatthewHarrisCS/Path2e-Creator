@@ -65,10 +65,8 @@ export class LoginComponent {
         if (x != null) {
           this.auth.setCurrentUser(x);
           this.authenticated = true;
-          console.log("hi");
         } else {
           this.hidden = false;
-          console.log("hello");
         }
       }
     );

@@ -20,13 +20,13 @@ export class AuthService {
     // getUserByEmail(): Return a user from the database if 
     //                   an entry exists with the given email
     getUserByEmail(email: string) {
-        return this.users.findOne({ email: email });
+        return this.users.findOne({ email: email.toLowerCase() });
     }
 
     // getUserByUsername(): Return a user from the database if an
     //                      entry exists with the given username
     getUserByUsername(username: string) {
-        return this.users.findOne({ username: username });
+        return this.users.findOne({ lowercase: username.toLowerCase() });
     }
 
     // findUser(): Return a user from the database if an entry
@@ -42,6 +42,7 @@ export class AuthService {
         return this.users.create(body);
     }
 
+    // updateUser(): Find the provided user and update the given parameter
     updateUser(_id: Types.ObjectId, param: any) {
         return this.users.findByIdAndUpdate(_id, param);
     }

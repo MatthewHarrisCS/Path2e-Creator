@@ -73,6 +73,6 @@ export class UserProfileComponent {
   }
 
   passwordCheck(p1: string, p2: string) {
-    return p1 == p2 && p1.length > 8;
+    return p1 == p2 && p1.length >= 8;
   }
 }

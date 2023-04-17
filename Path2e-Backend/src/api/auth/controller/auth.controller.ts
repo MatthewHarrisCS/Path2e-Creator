@@ -59,6 +59,9 @@ export class AuthController {
     @Post('/register')
     async register(@Body() createUserDto: CreateUserDto) {
 
+        // Set the provided email to lower case
+        createUserDto.email = createUserDto.email.toLowerCase();
+
         // Search the database for any user with the same email OR username
         const search = await this.service.findUser(createUserDto);
         let result = {email: false, username: false};
@@ -88,41 +91,79 @@ export class AuthController {
         }
     }
 
+    // updateEmail(): Change the email for the user
     @UseGuards(LocalSessionGuard)
     @Post('/update/email')
     async updateEmail(@Body() updateEmailDto: UpdateUserDto) {
+        // Check the database to see if the email address already exists
         const inUse = await this.service.getUserByEmail(updateEmailDto.email);
 
-        if (inUse) {
-            return false;
+        // If the address is already used by another user, return
+        if (inUse != null && inUse._id != updateEmailDto._id) {
+            return "Taken";
         } else {
-            await this.service.updateUser(
-                updateEmailDto._id,
-                { email: updateEmailDto.email}
-            );
-            return true;
+            // Update the user's email address and return false if exception
+            try {
+                await this.service.updateUser(
+                    updateEmailDto._id,
+                    { email: updateEmailDto.email }
+                );
+            
+                return true;
+            } catch(e) {
+                console.log(e);
+                return false;
+            }
         }
     }
 
+    // updateUsername(): Change the username for the user
     @UseGuards(LocalSessionGuard)
     @Post('/update/username')
     async updateUsername(@Body() updateUsernameDto: UpdateUserDto) {
+        // Check the database to see if the username already exists
         const inUse = await this.service.getUserByUsername(updateUsernameDto.username);
 
-        if (inUse) {
-            return false;
+        // If the username is already used by another user, return
+        if (inUse != null && inUse._id != updateUsernameDto._id) {
+            return "Taken";
         } else {
-            await this.service.updateUser(
-                updateUsernameDto._id,
-                { username: updateUsernameDto.username}
-            );
-            return true;
+            try {
+                // Update the user's username (and the stored lowercase) 
+                // and return false if exception
+                await this.service.updateUser(
+                    updateUsernameDto._id,
+                    { username: updateUsernameDto.username,
+                      lowercase: updateUsernameDto.username.toLowerCase() }
+                );
+
+                return true;
+            } catch(e) {
+                console.log(e);
+                return false;
+            }
         }
     }
-
+    
+    // updatePassword(): Change the password for the user
     @UseGuards(LocalSessionGuard)
     @Post('/update/password')
     async updatePassword(@Body() updatePasswordDto: UpdateUserDto) {
-        
+
+        // Hash the new password before insertion
+        const bpassword = await bcrypt.hash(updatePasswordDto.password, 12);
+
+        // Update the user's email address and return false if exception
+        try {
+            await this.service.updateUser(
+                updatePasswordDto._id,
+                { password: bpassword }
+            );
+
+            return true;
+        } catch(e) {
+            console.log(e)
+            return false;
+        }
     }
 }
