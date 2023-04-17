@@ -11,17 +11,22 @@ export class AuthService {
         @InjectModel(User.name) private users: Model<User>
     ) {}
 
+    // getUserById(): Return a user from the database if 
+    //                an entry exists with the given _id
+    getUserById(_id: Types.ObjectId) {
+        return this.users.findOne({ _id: _id });
+    }
+
     // getUserByEmail(): Return a user from the database if 
     //                   an entry exists with the given email
     getUserByEmail(email: string) {
         return this.users.findOne({ email: email });
     }
 
-    // getUserById(): Return a user from the database if 
-    //                an entry exists with the given _id
-    getUserById(_id: Types.ObjectId) {
-        const user = this.users.findOne({ _id: _id });
-        return user;
+    // getUserByUsername(): Return a user from the database if an
+    //                      entry exists with the given username
+    getUserByUsername(username: string) {
+        return this.users.findOne({ username: username });
     }
 
     // findUser(): Return a user from the database if an entry
@@ -34,7 +39,10 @@ export class AuthService {
 
     // createUser(): Insert the provided user into the database 
     createUser(body: CreateUserDto) {
-        const newUser = this.users.create(body);
-        return newUser;
+        return this.users.create(body);
+    }
+
+    updateUser(_id: Types.ObjectId, param: any) {
+        return this.users.findByIdAndUpdate(_id, param);
     }
 }

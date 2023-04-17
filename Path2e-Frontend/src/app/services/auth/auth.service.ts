@@ -33,6 +33,28 @@ export class AuthService {
     return this.http.post(this.urlBase + "/register", reg);
   }
 
+  // updateEmail(): replace the user's registered email with a new one
+  updateEmail(newEmail: string) {
+    console.log("update");
+    return this.http.post(this.urlBase + "/update/email", 
+      {_id: this.user._id, email: newEmail}, 
+      {withCredentials: true});
+  }
+
+  // updateUsername(): replace the user's registered username with a new one
+  updateUsername(newUsername: string) {
+    return this.http.post(this.urlBase + "/update/username",
+      {_id: this.user._id, username: newUsername}, 
+      {withCredentials: true});
+  }
+  
+  // updatePassword(): replace the user's registered password with a new one
+  updatePassword(newPassword: string) {
+    return this.http.post(this.urlBase + "/update/password",
+      {_id: this.user._id, password: newPassword}, 
+      {withCredentials: true});
+  }
+
   // setCurrentUser(): save the current user information to the service
   setCurrentUser(user: User) {
     this.user = user;

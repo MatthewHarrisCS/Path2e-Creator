@@ -103,8 +103,7 @@ export class LoginComponent {
 
   // register(): register a new user to the website
   register() {
-
-    // create a object of registration details to send to the server
+    // Create a object of registration details to send to the server
     const reg = {
       email: this.email, 
       username: this.username, 
@@ -168,17 +167,17 @@ export class LoginComponent {
 
   // emailCheck(): validate the provided email using a regular expression
   emailCheck(name: string) {
-    return RegExp.email(name);
+    return RegExp.email(name) && name != "" && name.length >= 1;
   }
   
   // usernameCheck(): validate the provided username using a regular expression
   usernameCheck(name: string) {
-    return RegExp.username(name);
+    return RegExp.username(name) && name != "" && name.length >= 8;
   }
 
   // passwordCheck(): confirm both entered passwords match
   passwordCheck(p1: string, p2: string) {
-    return (p1 == p2);
+    return (p1 == p2) && p1.length >= 8;
   }
 
   // regDisable(): disable the registration button if any parameters

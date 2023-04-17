@@ -5,6 +5,7 @@ import { LocalAuthGuard, LocalSessionGuard } from '../utils/local-guards';
 import { Request, Response } from 'express';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../dtos/createUser.dto';
+import { UpdateUserDto } from '../dtos/updateUser.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -85,5 +86,43 @@ export class AuthController {
             console.log(e);
             return false;
         }
+    }
+
+    @UseGuards(LocalSessionGuard)
+    @Post('/update/email')
+    async updateEmail(@Body() updateEmailDto: UpdateUserDto) {
+        const inUse = await this.service.getUserByEmail(updateEmailDto.email);
+
+        if (inUse) {
+            return false;
+        } else {
+            await this.service.updateUser(
+                updateEmailDto._id,
+                { email: updateEmailDto.email}
+            );
+            return true;
+        }
+    }
+
+    @UseGuards(LocalSessionGuard)
+    @Post('/update/username')
+    async updateUsername(@Body() updateUsernameDto: UpdateUserDto) {
+        const inUse = await this.service.getUserByUsername(updateUsernameDto.username);
+
+        if (inUse) {
+            return false;
+        } else {
+            await this.service.updateUser(
+                updateUsernameDto._id,
+                { username: updateUsernameDto.username}
+            );
+            return true;
+        }
+    }
+
+    @UseGuards(LocalSessionGuard)
+    @Post('/update/password')
+    async updatePassword(@Body() updatePasswordDto: UpdateUserDto) {
+        
     }
 }

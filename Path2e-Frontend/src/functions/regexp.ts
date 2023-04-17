@@ -10,6 +10,7 @@ export class RegExp {
     return str.match("^[\\w]+$") != null;
   }
 
+  // characterName(): validate the provided name using a regular expression
   public static characterName(str: string) {
     return str.match("^[\\w-'\" ]+$") != null;
   }
