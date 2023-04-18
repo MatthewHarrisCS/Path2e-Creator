@@ -29,13 +29,24 @@ export class UserProfileComponent {
     this.backend.getCharacters(this.user._id)
       .subscribe(y => this.characters = y);
   }
+
   
   // setCharacter(): Get the information from the selected character
   setCharacter(name: string) {
     if(name != "---") {
       this.characters.find((x: CharacterList) => {
-        console.log(x); if(x.name == name) this.character = x;
+        if(x.name == name) this.character = x; 
+        console.log(this.character);
       });
     }
+  }
+
+  // deleteCharacter(): Delete the selected character from the database
+  deleteCharacter() {
+    if (this.character?._id == undefined) {
+      return;
+    }
+    return this.backend.deleteCharacter(this.character?._id).subscribe(x => 
+      this.getData());
   }
 }

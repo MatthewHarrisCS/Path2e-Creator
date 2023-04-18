@@ -44,11 +44,17 @@ export class BackendService {
   // getCharacters(): return the user's saved character list from the database
   getCharacters(_id: string): Observable<CharacterList[]> {
     let params = new HttpParams().set("user", _id)
-    return this.http.get<CharacterList[]>(this.urlBase + "/character", {params: params});
+    return this.http.get<CharacterList[]>(this.urlBase + "/character", {withCredentials: true, params: params});
   }
 
   // saveCharacter(): save a user's character to the database
   saveCharacter(body: CharacterSheet): Observable<CharacterSheet> {
-    return this.http.post<CharacterSheet>((this.urlBase + "/character"), body);
+    return this.http.post<CharacterSheet>((this.urlBase + "/character"), body, {withCredentials: true});
+  }
+
+  // deleteCharacter(): delete a specified character from the database
+  deleteCharacter(_id: string) {
+    return this.http.delete((this.urlBase + "/character"), 
+      {withCredentials: true, body: {id: _id}});
   }
 }

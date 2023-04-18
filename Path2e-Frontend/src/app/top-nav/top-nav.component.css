@@ -41,13 +41,18 @@
     width: 35px;
     margin: 15px;
     overflow: visible;
+    outline: none;
 }
-
-.button:hover {
-    cursor: pointer;
-    stroke: whitesmoke;
-    stroke-width: 5%;
-}
+    .button:hover {
+        cursor: pointer;
+        stroke: whitesmoke;
+        stroke-width: 5%;
+    }
+    
+    .button:focus {
+        stroke: whitesmoke;
+        stroke-width: 5%;
+    }
 
 .active {
     stroke: whitesmoke;

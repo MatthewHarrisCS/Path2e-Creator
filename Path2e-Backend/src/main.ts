@@ -12,7 +12,7 @@ async function bootstrap() {
   // const sessionRepo = app.get(DataSource).getRepository(Session);
   app.enableCors({
     origin: corsOrigin,
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "DELETE"],
     credentials: true,
   });
   app.use(
@@ -27,7 +27,7 @@ async function bootstrap() {
         collection: 'sessions'
       }),
       cookie: { 
-        maxAge: 300000 // 5 minute
+        maxAge: 900000 // 15 minute
       }
     }),
   );

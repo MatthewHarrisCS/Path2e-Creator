@@ -7,7 +7,7 @@
         <option *ngFor="let currCharacter of characters">
             {{currCharacter.name}}
         </option>
-    </select><br/>
+    </select><br/><br/>
     
     <!-- Display the character details if a character has been selected --->
     <div *ngIf="c.value == '---'; then noCharacter; else showCharacter"></div>
@@ -74,6 +74,7 @@
                       character?.background?.keyAbility1 : 
                       character?.background?.keyAbility2}}</td>
             </tr>
-        </table>
+        </table><br/>
+        <button (click)="deleteCharacter()">Delete {{character?.name}}</button>
     </ng-template>
 </div>

@@ -4,6 +4,7 @@ import { GameClass } from "./game-class";
 
 export class CharacterList {
     constructor(
+        public _id: string,
         public ancestry: Ancestry,
         public background: Background,
         public gameClass: GameClass,
