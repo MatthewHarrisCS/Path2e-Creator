@@ -10,7 +10,7 @@ import { Background } from 'src/models/background';
 import { CharacterSheet } from 'src/models/character-sheet';
 import { AuthService } from '../services/auth/auth.service';
 import { Heritage } from 'src/models/heritage';
-import { RegExp } from 'src/functions/regexp';
+import { RegExpressions } from 'src/functions/regexp';
 
 @Component({
   selector: 'stat-form',
@@ -174,7 +174,7 @@ export class StatFormComponent {
 
   // nameCheck(): validate the provided name using a regular expression
   public nameCheck(name: string) {
-    return RegExp.characterName(name);
+    return RegExpressions.characterName(name);
   }
   
   // nameCheckSource(): validate the statForm name using nameCheck()

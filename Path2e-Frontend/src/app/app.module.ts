@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth/auth.service';
 import { TopNavComponent } from './top-nav/top-nav.component';
 import { AppRoutingModule } from './app-routing.module';
+import { OptionsComponent } from './options/options.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AppRoutingModule } from './app-routing.module';
     StatFormComponent,
     UserProfileComponent,
     LoginComponent,
-    TopNavComponent
+    TopNavComponent,
+    OptionsComponent
   ],
   imports: [
     BrowserModule,

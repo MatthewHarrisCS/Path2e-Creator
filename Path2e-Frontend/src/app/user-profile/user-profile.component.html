@@ -1,29 +1,5 @@
 <div class="identityBox">
 
-    <!-- --->
-    <!-- TEMPORARY: User update fields --->
-    <!-- --->
-    <div>
-        <input type="text" placeholder="New email" 
-            [formControl]="newEmail" #ne><br/>
-        <button name="emailButton" (click)="updateEmail(ne.value)" 
-            [disabled]="!emailCheck(ne.value)">Submit Email</button>
-    </div>
-    <div>
-        <input type="text" placeholder="New username" 
-            [formControl]="newUsername" #nu><br/>
-        <button name="usernameButton" (click)="updateUsername(nu.value)" 
-            [disabled]="!usernameCheck(nu.value)">Submit Username</button>
-    </div>
-    <div>
-        <input type="password" placeholder="New password" 
-            [formControl]="newPassword" #np1><br/>
-        <input type="password" placeholder="Confirm new password" 
-            [formControl]="newPassword" #np2><br/>
-        <button name="passwordButton" (click)="updatePassword(np1.value)" 
-            [disabled]="!passwordCheck(np1.value, np2.value)">Submit Email</button>
-    </div>
-
     <!-- Character Dropdown Menu --->
     <h3>View Characters for {{user.username}}</h3>
     <select id="characterSelect" #c (change)="setCharacter(c.value)">

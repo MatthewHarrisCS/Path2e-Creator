@@ -1,0 +1,25 @@
+<div>
+    <h3>Change settings for {{user.username}}</h3>
+
+    <!-- New email form --->
+    <input type="text" placeholder="New email" 
+        [formControl]="newEmail" #ne><br/>
+    <button name="emailButton" (click)="updateEmail(ne.value)" 
+        [disabled]="!emailCheck(ne.value)">Submit Email</button>
+</div>
+<div>
+    <!-- New username form --->
+    <input type="text" placeholder="New username" 
+        [formControl]="newUsername" #nu><br/>
+    <button name="usernameButton" (click)="updateUsername(nu.value)" 
+        [disabled]="!usernameCheck(nu.value)">Submit Username</button>
+</div>
+<div>
+    <!-- New password form --->
+    <input type="password" placeholder="New password" 
+        [formControl]="newPassword" #np1><br/>
+    <input type="password" placeholder="Confirm new password" 
+        [formControl]="newPassword" #np2><br/>
+    <button name="passwordButton" (click)="updatePassword(np1.value)" 
+        [disabled]="!passwordCheck(np1.value, np2.value)">Submit Email</button>
+</div>

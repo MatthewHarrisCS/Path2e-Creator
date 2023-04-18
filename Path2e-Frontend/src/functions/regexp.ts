@@ -1,4 +1,4 @@
-export class RegExp {
+export class RegExpressions {
     
   // email(): validate the provided email using a regular expression
   public static email(str: string) {
