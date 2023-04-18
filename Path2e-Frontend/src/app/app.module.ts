@@ -11,6 +11,7 @@ import { AuthService } from './services/auth/auth.service';
 import { TopNavComponent } from './top-nav/top-nav.component';
 import { AppRoutingModule } from './app-routing.module';
 import { OptionsComponent } from './options/options.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { OptionsComponent } from './options/options.component';
     UserProfileComponent,
     LoginComponent,
     TopNavComponent,
-    OptionsComponent
+    OptionsComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
