@@ -1,0 +1,18 @@
+
+<div class="modal">
+    <div class="window">
+        <ng-content/>
+
+        <div *ngIf="confirm; then confirmation; else ok"></div>
+
+                
+        <ng-template #ok>
+            <button>OK</button>
+        </ng-template>
+
+        <ng-template #confirmation>
+            <button>Cancel</button>
+            <button>OK</button>
+        </ng-template>
+    </div>
+</div>

@@ -29,7 +29,6 @@ export class UserProfileComponent {
     this.backend.getCharacters(this.user._id)
       .subscribe(y => this.characters = y);
   }
-
   
   // setCharacter(): Get the information from the selected character
   setCharacter(name: string) {
@@ -43,9 +42,12 @@ export class UserProfileComponent {
 
   // deleteCharacter(): Delete the selected character from the database
   deleteCharacter() {
+    // Return in case of error getting the character ID
     if (this.character?._id == undefined) {
       return;
     }
+
+    // Contact the backend and delete the character
     return this.backend.deleteCharacter(this.character?._id).subscribe(x => 
       this.getData());
   }

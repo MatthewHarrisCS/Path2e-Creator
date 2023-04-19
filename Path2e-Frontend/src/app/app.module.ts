@@ -12,6 +12,7 @@ import { TopNavComponent } from './top-nav/top-nav.component';
 import { AppRoutingModule } from './app-routing.module';
 import { OptionsComponent } from './options/options.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ModalWindowComponent } from './modal-window/modal-window.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     LoginComponent,
     TopNavComponent,
     OptionsComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ModalWindowComponent
   ],
   imports: [
     BrowserModule,

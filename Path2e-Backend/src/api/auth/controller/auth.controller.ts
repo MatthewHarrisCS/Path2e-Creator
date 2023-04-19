@@ -26,7 +26,7 @@ export class AuthController {
         const hashCheck = await bcrypt.compare(loginDto.password, currUser.password);
         if (hashCheck) {
             // If password correct, return the user
-            return { _id: currUser._id, email: currUser.email, username: currUser.username}
+            return { _id: currUser._id, email: currUser.email, username: currUser.username }
         } else {
             return null; 
         }
