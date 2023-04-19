@@ -1,14 +1,18 @@
-import { Component, ContentChild } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'modal', 
-  inputs: ['header', 'confirm'],
+  inputs: ['header', 'open'],
   templateUrl: './modal-window.component.html',
   styleUrls: ['./modal-window.component.css']
 })
 export class ModalWindowComponent {
-  
+
   public header: string = "";
-  public confirm: boolean = false;
+  public open: boolean = false;
+
+  closeWindow() {
+    this.open = false;
+  }
 
 }

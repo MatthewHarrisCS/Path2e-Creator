@@ -1,25 +1,43 @@
-<div>
-    <h3>Change settings for {{user.username}}</h3>
+<modal header="Confirm Update" [open]="modalEmail || modalUsername || modalPassword">
+    <p [hidden]="!modalEmail">Change your email to {{ne.value}}?</p>
+    <p [hidden]="!modalUsername">Change your username to {{nu.value}}?</p>
+    <p [hidden]="!modalPassword">Change your password?</p>
+    <button name="cancelButton" (click)="modalFalse()">Cancel</button>
+    <button name="emailConfirmButton" [hidden]="!modalEmail" (click)="updateEmail(ne.value)">Confirm Email</button>
+    <button name="usernameConfirmButton" [hidden]="!modalUsername" (click)="updateUsername(nu.value)" >Confirm Username</button>
+    <button name="passwordConfirmButton" [hidden]="!modalPassword" (click)="updatePassword(np1.value)" >Confirm Password</button>
+</modal>
+<div class="container">
+    <div class="box">
+        <h3>Change settings for {{user.username}}</h3>
 
-    <!-- New email form --->
-    <input type="text" placeholder="New email" 
-        [formControl]="newEmail" #ne><br/>
-    <button name="emailButton" (click)="updateEmail(ne.value)" 
-        [disabled]="!emailCheck(ne.value)">Submit Email</button>
-</div>
-<div>
-    <!-- New username form --->
-    <input type="text" placeholder="New username" 
-        [formControl]="newUsername" #nu><br/>
-    <button name="usernameButton" (click)="updateUsername(nu.value)" 
-        [disabled]="!usernameCheck(nu.value)">Submit Username</button>
-</div>
-<div>
-    <!-- New password form --->
-    <input type="password" placeholder="New password" 
-        [formControl]="newPassword" #np1><br/>
-    <input type="password" placeholder="Confirm new password" 
-        [formControl]="newPassword" #np2><br/>
-    <button name="passwordButton" (click)="updatePassword(np1.value)" 
-        [disabled]="!passwordCheck(np1.value, np2.value)">Submit Email</button>
+        <div>
+            <!-- New email form --->
+            <label>Change Email</label>
+            <input type="text" placeholder="New email" 
+                [formControl]="newEmail" #ne><br/>
+            <button name="emailButton" (click)="modalEmail = true" 
+                [disabled]="!emailCheck(ne.value)">Submit Email</button>
+        </div><br/>
+
+        <div>
+            <!-- New username form --->
+            <label>Change Username</label>
+            <input type="text" placeholder="New username" 
+                [formControl]="newUsername" #nu><br/>
+            <button name="usernameButton" (click)="modalUsername = true" 
+                [disabled]="!usernameCheck(nu.value)">Submit Username</button>
+        </div><br/>
+
+        <div>
+            <!-- New password form --->
+            <label>Change Password</label>
+            <input type="password" placeholder="New password" 
+                [formControl]="newPassword" #np1><br/>
+            <input type="password" placeholder="Confirm new password" 
+                [formControl]="newPassword" #np2><br/>
+            <button name="passwordButton" (click)="modalPassword = true" 
+                [disabled]="!passwordCheck(np1.value, np2.value)">Submit Email</button>
+        </div>
+    </div>
 </div>

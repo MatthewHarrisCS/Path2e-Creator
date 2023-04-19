@@ -7,9 +7,29 @@
     height: 100%;
     overflow: auto;
     background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .window {
-    background-color: green;
+    padding: 10px;
+    padding-top: 1px;
+    background-color: var(--background-3);
+    width: max(30%, 300px);
+    margin-left: min(35%, calc(50% - 150px));
+    margin-top: 20vh;
 }
+
+:host ::ng-deep button {
+    border: 0px solid black;
+    border-radius: 0px;
+    background-color: var(--background-4);
+    cursor:pointer;
+    margin-right: 10px;
+}
+    :host ::ng-deep button:disabled {
+        background-color: var(--disabled);
+    }
+
+    :host ::ng-deep button:hover {
+        background-color: var(--background-5);
+    }

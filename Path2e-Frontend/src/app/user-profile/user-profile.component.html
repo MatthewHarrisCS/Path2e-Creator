@@ -1,80 +1,85 @@
-<div class="identityBox">
 
-    <!-- Character Dropdown Menu --->
-    <h3>View Characters for {{user.username}}</h3>
-    <select id="characterSelect" #c (change)="setCharacter(c.value)">
-        <option>---</option>
-        <option *ngFor="let currCharacter of characters">
-            {{currCharacter.name}}
-        </option>
-    </select><br/><br/>
-    
+<div class="container">
+    <div class="box">
+        <!-- Character Dropdown Menu --->
+        <h3>View Characters for {{user.username}}</h3>
+        <select id="characterSelect" #c (change)="setCharacter(c.value)">
+            <option>---</option>
+            <option *ngFor="let currCharacter of characters">
+                {{currCharacter.name}}
+            </option>
+        </select><br/><br/>
+    </div>
+</div>
+<div class="container">
     <!-- Display the character details if a character has been selected --->
     <div *ngIf="c.value == '---'; then noCharacter; else showCharacter"></div>
 
     <!-- No Character Selected --->
     <ng-template #noCharacter>
-        <div>No character selected</div>
+        <div class="box">No character selected</div>
     </ng-template>
 
     <!-- Display Selected Character --->
     <ng-template #showCharacter>
-        <table>
-            <tr>
-                <td>Name:</td>
-                <td>{{character?.name}}</td>
-            </tr>
-            <tr>
-                <td>Level:</td>
-                <td>{{character?.level}}</td>
-            </tr>
-            <tr>
-                <td>Class:</td>
-                <td>{{character?.gameClass?.name}}</td>
-            </tr>
-            <tr>
-                <td>Ancestry:</td>
-                <td>{{character?.ancestry?.name}}</td>
-            </tr>
-            <tr>
-                <td>Background:</td>
-                <td>{{character?.background?.name}}</td>
-            </tr>
-            <tr>
-                <td>Health Points:</td>
-                <td>{{character?.stats?.hp}}</td>
-            </tr>
-            <tr>
-                <td>Strength:</td>
-                <td>{{character?.stats?.str}}</td>
-                <td>Dexterity:</td>
-                <td>{{character?.stats?.dex}}</td>
-            </tr>
-            <tr>
-                <td>Constitution:</td>
-                <td>{{character?.stats?.con}}</td>
-                <td>Intelligence:</td>
-                <td>{{character?.stats?.itl}}</td>
-            </tr>
-            <tr>
-                <td>Wisdom:</td>
-                <td>{{character?.stats?.wis}}</td>
-                <td>Charisma:</td>
-                <td>{{character?.stats?.cha}}</td>
-            </tr>
-            <tr>
-                <td>Class Boost:</td>
-                <td>{{character?.gameClassChoice ? 
-                      character?.gameClass?.keyAbility1 : 
-                      character?.gameClass?.keyAbility2}}</td>
-            </tr>
-            <tr>
-                <td>Background Boost:</td>
-                <td>{{character?.backgroundChoice ? 
-                      character?.background?.keyAbility1 : 
-                      character?.background?.keyAbility2}}</td>
-            </tr>
-        </table><br/>
-        <button (click)="deleteCharacter()">Delete {{character?.name}}</button>
+        <div class="box displayBox">
+            <table>
+                <tr>
+                    <td>Name:</td>
+                    <td>{{character?.name}}</td>
+                </tr>
+                <tr>
+                    <td>Level:</td>
+                    <td>{{character?.level}}</td>
+                </tr>
+                <tr>
+                    <td>Class:</td>
+                    <td>{{character?.gameClass?.name}}</td>
+                </tr>
+                <tr>
+                    <td>Ancestry:</td>
+                    <td>{{character?.ancestry?.name}}</td>
+                </tr>
+                <tr>
+                    <td>Background:</td>
+                    <td>{{character?.background?.name}}</td>
+                </tr>
+                <tr>
+                    <td>Health Points:</td>
+                    <td>{{character?.stats?.hp}}</td>
+                </tr>
+                <tr>
+                    <td>Strength:</td>
+                    <td>{{character?.stats?.str}}</td>
+                    <td>Dexterity:</td>
+                    <td>{{character?.stats?.dex}}</td>
+                </tr>
+                <tr>
+                    <td>Constitution:</td>
+                    <td>{{character?.stats?.con}}</td>
+                    <td>Intelligence:</td>
+                    <td>{{character?.stats?.itl}}</td>
+                </tr>
+                <tr>
+                    <td>Wisdom:</td>
+                    <td>{{character?.stats?.wis}}</td>
+                    <td>Charisma:</td>
+                    <td>{{character?.stats?.cha}}</td>
+                </tr>
+                <tr>
+                    <td>Class Boost:</td>
+                    <td>{{character?.gameClassChoice ? 
+                        character?.gameClass?.keyAbility1 : 
+                        character?.gameClass?.keyAbility2}}</td>
+                </tr>
+                <tr>
+                    <td>Background Boost:</td>
+                    <td>{{character?.backgroundChoice ? 
+                        character?.background?.keyAbility1 : 
+                        character?.background?.keyAbility2}}</td>
+                </tr>
+            </table><br/>
+            <button (click)="deleteCharacter()">Delete {{character?.name}}</button>
+        </div>
     </ng-template>
 </div>

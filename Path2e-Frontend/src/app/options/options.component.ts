@@ -16,6 +16,11 @@ export class OptionsComponent {
     private auth: AuthService) {}
     
   public user: User = {_id: "", username: ""};
+
+  public modalEmail: boolean = false;
+  public modalUsername: boolean = false;
+  public modalPassword: boolean = false;
+
   public newEmail = this.fb.control("", [Validators.required, Validators.email]);
   public newUsername = this.fb.control("", [Validators.required]);
   public newPassword = this.fb.control("", [Validators.required]);
@@ -28,6 +33,7 @@ export class OptionsComponent {
   //                the database and update the previous one
   updateEmail(newEmail: string) {
     this.auth.updateEmail(newEmail).subscribe();
+    this.modalEmail = false;
   }
 
   // updateUsername(): Send the provided new username to the
@@ -42,12 +48,14 @@ export class OptionsComponent {
         this.auth.setCurrentUser(newUser);
       }
     });
+    this.modalUsername = false;
   }
 
   // updatePassword(): Send the provided new password to the
   //                   database and update the previous one
   updatePassword(newPassword: string) {
     this.auth.updatePassword(newPassword).subscribe();
+    this.modalPassword = false;
   }
 
   // emailCheck(): Return true if the provided email is valid
@@ -64,5 +72,11 @@ export class OptionsComponent {
   //                  pass the length requirement
   passwordCheck(p1: string, p2: string) {
     return p1 == p2 && p1.length >= 8;
+  }
+
+  modalFalse() {
+    this.modalEmail = false;
+    this.modalUsername = false;
+    this.modalPassword = false;
   }
 }

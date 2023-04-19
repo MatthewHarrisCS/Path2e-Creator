@@ -1,18 +1,7 @@
 
-<div class="modal">
+<div class="modal" [hidden]="!open">
     <div class="window">
+        <h2>{{header}}</h2>
         <ng-content/>
-
-        <div *ngIf="confirm; then confirmation; else ok"></div>
-
-                
-        <ng-template #ok>
-            <button>OK</button>
-        </ng-template>
-
-        <ng-template #confirmation>
-            <button>Cancel</button>
-            <button>OK</button>
-        </ng-template>
     </div>
 </div>
