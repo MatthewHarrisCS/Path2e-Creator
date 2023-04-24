@@ -14,5 +14,4 @@ export class ModalWindowComponent {
   closeWindow() {
     this.open = false;
   }
-
 }

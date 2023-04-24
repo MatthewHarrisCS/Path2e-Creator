@@ -20,11 +20,13 @@ export class UserProfileComponent {
   }
 
   public user: User = {_id: "", username: ""};
+  public modal = false;
   public characters: CharacterList[] = [];
   public character: CharacterList | undefined;
 
   // getData(): get the current user and access their character list
   getData() {
+    this.modal = false;
     this.user = this.auth.getCurrentUser();
     this.backend.getCharacters(this.user._id)
       .subscribe(y => this.characters = y);
@@ -44,11 +46,12 @@ export class UserProfileComponent {
   deleteCharacter() {
     // Return in case of error getting the character ID
     if (this.character?._id == undefined) {
+      this.modal = false;
       return;
     }
 
     // Contact the backend and delete the character
     return this.backend.deleteCharacter(this.character?._id).subscribe(x => 
-      this.getData());
+      this.getData()); 
   }
 }

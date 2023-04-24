@@ -1,4 +1,7 @@
-
+<modal header="Delete {{c.value}}?" [open]="modal">
+    <button name="cancelButton" (click)="modal = false">Cancel</button>
+    <button (click)="deleteCharacter()">Delete {{character?.name}}</button>
+</modal>
 <div class="container">
     <div class="box">
         <!-- Character Dropdown Menu --->
@@ -17,7 +20,7 @@
 
     <!-- No Character Selected --->
     <ng-template #noCharacter>
-        <div class="box">No character selected</div>
+        <div class="box"><p>No character selected</p></div>
     </ng-template>
 
     <!-- Display Selected Character --->
@@ -79,7 +82,7 @@
                         character?.background?.keyAbility2}}</td>
                 </tr>
             </table><br/>
-            <button (click)="deleteCharacter()">Delete {{character?.name}}</button>
+            <button (click)="modal = true">Delete {{character?.name}}</button>
         </div>
     </ng-template>
 </div>
