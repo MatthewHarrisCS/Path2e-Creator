@@ -44,6 +44,7 @@ export class StatFormComponent {
 
   private checkCount = 0;
   public calculated = false;
+  public modal = false;
 
   public  rolledString = [" ", " ", " ", " ", " ", " "];
   private rolledStats = [0, 0, 0, 0, 0, 0];
@@ -166,10 +167,11 @@ export class StatFormComponent {
   }
 
   // resetBoosts(): reset the free stats and ancestry details
-  public resetBoosts(name: string) {
-    this.setAncestry(name);
+  public resetBoosts(ancestryName: string, heritageName: string) {
+    this.setAncestry(ancestryName);
     this.boostBlock.reset();
     this.checkCount = 0;
+    this.setHeritage(heritageName);
   }
 
   // nameCheck(): validate the provided name using a regular expression
@@ -592,5 +594,8 @@ export class StatFormComponent {
       // Send the CharacterSheet to the database
       this.backend.saveCharacter(newCharacter).subscribe();
     }
+    
+    // Close the modal window
+    this.modal = false;
   }
 }

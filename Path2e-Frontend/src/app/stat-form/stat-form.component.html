@@ -1,3 +1,8 @@
+<modal header="Save {{n.value}}?" [open]="modal">
+    <button name="cancelButton" (click)="modal = false">Cancel</button>
+    <button name="Save"  (click)="saveCharacter()" [disabled]="calcDisable()">Save to Database</button>
+</modal>
+
 <div [formGroup]="statForm">
     <div class="container">
 
@@ -21,7 +26,7 @@
                 </option>
             </select><br/>
             <input type="checkbox" id="freeBox" formControlName="chooseBoosts" 
-                [attr.disabled]="freeDisable()" (change)="resetBoosts(a.value)">
+                [attr.disabled]="freeDisable()" (change)="resetBoosts(a.value, h.value)">
             <label for="freeBox">Free choice</label><br/>
             <label [textContent]="ancestry.details"></label>
         </div>
@@ -98,7 +103,7 @@
         <!--  Roll Stats  --->
         <div class="box rollBox">
             <h3>Roll Stats</h3>
-            <input type="checkbox" id="rollBox" formControlName="chooseRoll" (change)="resetBoosts(a.value)">
+            <input type="checkbox" id="rollBox" formControlName="chooseRoll" (change)="resetBoosts(a.value, h.value)">
             <label for="rollBox" style="padding-top: 10px;">Use rolled stats</label><br/>
             <div *ngFor="let block of rolledString; index as i" id="statBlock" >
                 <label>{{block}} </label>
@@ -180,7 +185,7 @@
     <div class="calculate container">
         <div>
             <button name="Calculate" (click)="calculate()" [disabled]="calcDisable()">Calculate</button>
-            <button name="Save"  (click)="saveCharacter()" [disabled]="calcDisable() || !calculated">Save to Database</button>
+            <button name="Save" (click)="modal = true" [disabled]="calcDisable() || !calculated">Save to Database</button>
         </div>
     </div>
 </div>
